@@ -1,0 +1,81 @@
+import Link from "next/link";
+
+interface Friend {
+  id: string;
+  rank: number;
+  name: string;
+  initials: string;
+  points: string;
+  color: string;
+  isCurrentUser?: boolean;
+}
+
+interface FriendRankingProps {
+  friends: Friend[];
+}
+
+export function FriendRanking({ friends }: FriendRankingProps) {
+  return (
+    <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800">
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-xl font-display font-bold">Friend Ranking</h2>
+        <Link href="/leaderboard" className="text-primary text-sm font-semibold hover:underline">
+          View All
+        </Link>
+      </div>
+      <div className="space-y-4">
+        {friends.map((friend) => (
+          <div
+            key={friend.id}
+            className={`flex items-center gap-3 p-3 rounded-xl transition-colors ${
+              friend.isCurrentUser
+                ? "bg-primary/10 border border-primary/20 ring-1 ring-primary/5"
+                : "hover:bg-slate-50 dark:hover:bg-slate-800"
+            }`}
+          >
+            <div
+              className={`w-8 text-center font-display font-bold ${
+                friend.isCurrentUser ? "text-primary" : "text-slate-400"
+              }`}
+            >
+              {friend.rank}
+            </div>
+            <div
+              className={`h-10 w-10 rounded-full flex items-center justify-center text-white ring-2 ring-white dark:ring-slate-900`}
+              style={{ backgroundColor: friend.color }}
+            >
+              {friend.initials}
+            </div>
+            <div className="flex-1">
+              <p
+                className={`text-sm font-bold ${
+                  friend.isCurrentUser ? "text-primary" : ""
+                }`}
+              >
+                {friend.isCurrentUser ? `You (${friend.name})` : friend.name}
+              </p>
+              <div className="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full mt-1">
+                <div
+                  className="h-1.5 rounded-full"
+                  style={{
+                    width: `${Math.min(100, (parseInt(friend.points.replace(/[^0-9]/g, "")) / 25) * 100)}%`,
+                    backgroundColor: friend.isCurrentUser ? "#92400E" : friend.color,
+                  }}
+                />
+              </div>
+            </div>
+            <div className="text-right">
+              <p
+                className={`text-xs font-bold ${
+                  friend.isCurrentUser ? "text-primary" : "text-slate-500"
+                }`}
+              >
+                {friend.points}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}

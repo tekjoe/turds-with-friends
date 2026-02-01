@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Social Leaderboard &amp; Friends - PoopPoints</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec5b",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#102216",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display transition-colors duration-300">
+<!-- Navigation Bar -->
+<nav class="sticky top-0 z-50 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between h-16 items-center">
+<div class="flex items-center gap-2">
+<div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-icons">query_stats</span>
+</div>
+<span class="text-xl font-bold tracking-tight">PoopPoints<span class="text-primary">.</span></span>
+</div>
+<div class="hidden md:flex items-center space-x-8">
+<a class="text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary font-medium" href="#">Dashboard</a>
+<a class="text-primary font-semibold" href="#">Leaderboard</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary font-medium" href="#">Logs</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary font-medium" href="#">Bristol Scale</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-icons">notifications</span>
+</button>
+<img alt="Profile" class="w-10 h-10 rounded-full border-2 border-primary" data-alt="User profile picture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXVbMHwabRJlSQJ817ug93tIlq01HRTB3rV_gUgfN8sSDQx4MOYZnBMb4efejF7mctomBoimlbThBACSHTpMf1a1tCHYVB4nxHaQwTttkpYiCPcY0rPmVLN9qet7z_GVI6X9tpj5oFPcdvYbObk0GRjeoaJsf03yH4QgEUQAcltqd50pG-4qNfdz0TcAAm9e6SjF2FLe2fOJLZRhHS0t7wQ8niyQQffOikQTF5B9-D_Kt9Pb3175ad__VCHZ8i8EBOjDWmVtPP4wc"/>
+</div>
+</div>
+</div>
+</nav>
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="flex flex-col md:flex-row gap-8">
+<!-- Left Column: Leaderboard -->
+<div class="flex-1">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
+<div>
+<h1 class="text-3xl font-bold">Leaderboard</h1>
+<p class="text-slate-500 dark:text-slate-400">Compete for the ultimate gut health status.</p>
+</div>
+<div class="inline-flex p-1 bg-slate-100 dark:bg-slate-800 rounded-xl">
+<button class="px-6 py-2 rounded-lg bg-white dark:bg-slate-700 shadow-sm text-sm font-semibold">Global</button>
+<button class="px-6 py-2 rounded-lg text-sm font-semibold text-slate-500 hover:text-slate-700 dark:hover:text-slate-300">Friends</button>
+</div>
+</div>
+<!-- Top 3 Podium Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+<!-- 2nd Place -->
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 text-center relative order-2 md:order-1 mt-4 md:mt-6">
+<div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-slate-300 text-slate-800 px-3 py-1 rounded-full font-bold text-xs uppercase tracking-wider">Silver</div>
+<img alt="Rank 2" class="w-20 h-20 rounded-full mx-auto mb-4 border-4 border-slate-200" data-alt="Second place user avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcW45MrHpjNOfSpp22fHIYp3LeTbAYKO1eCVfFR0qyk3n9HMptvD09gEpkPLh8oEVypqj5G_T-3QADIg7VgnWs9qLcMOGLvPLbhaWhQaMWJZskZllLNdODx-sVn1Z6gm2uFlGndAS_KvaBS8youC82rDTYSWVEssFyOys8nUti-QFW4913_iawKg3A6ALfJrIem8F3H0s5Kx7CU1ks1fKeIlrjc7uqJnXEzCLb-LUjFPNl04fEsN1yv2JY4L_hads8oD2jbwt08Dk"/>
+<h3 class="font-bold text-lg">Alex River</h3>
+<div class="flex items-center justify-center gap-1 text-orange-500 font-semibold mb-2">
+<span class="material-icons text-sm">local_fire_department</span> 12 Day Streak
+                        </div>
+<div class="text-2xl font-black text-primary">2,450 <span class="text-xs uppercase font-bold text-slate-400">pts</span></div>
+</div>
+<!-- 1st Place -->
+<div class="bg-white dark:bg-slate-900 p-8 rounded-xl border-2 border-primary text-center relative order-1 md:order-2 shadow-xl shadow-primary/10">
+<div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-yellow-400 text-yellow-900 px-4 py-1.5 rounded-full font-bold text-sm uppercase tracking-wider flex items-center gap-1">
+<span class="material-icons text-sm">emoji_events</span> Gold
+                        </div>
+<img alt="Rank 1" class="w-28 h-28 rounded-full mx-auto mb-4 border-4 border-yellow-400" data-alt="First place user avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4L1IMhN83C2W9Nsodog8zsSMCMHtQssjEt_MmYoI5gDWVTfPCpMRZdbAgDNsUZR4PfZNQ6QXZTTvbIKGCJP_iNAxH5LLUl1UJUOSYB2HzRsw71eueKLPUa7SbeoCtdwBDefk_gB-L8MPIEmmRSYPWqOMpbY6r7d1NM6NZ1sz44nZwLWVQEKpTGx4IyS72Mcqj_6ub_FeMQ69DdDDvjSNGWFD8219sduoiKsHbXP4FHmhX96VicHM31xKLhCTI-pJSXmp_QqIKHUE"/>
+<h3 class="font-bold text-xl">Sam Healthy</h3>
+<div class="flex items-center justify-center gap-1 text-orange-500 font-semibold mb-2">
+<span class="material-icons text-sm">local_fire_department</span> 34 Day Streak
+                        </div>
+<div class="text-3xl font-black text-primary">3,120 <span class="text-xs uppercase font-bold text-slate-400">pts</span></div>
+</div>
+<!-- 3rd Place -->
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 text-center relative order-3 mt-4 md:mt-6">
+<div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-orange-400 text-orange-950 px-3 py-1 rounded-full font-bold text-xs uppercase tracking-wider">Bronze</div>
+<img alt="Rank 3" class="w-20 h-20 rounded-full mx-auto mb-4 border-4 border-orange-200" data-alt="Third place user avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDG4DNZarxNCIbt-_DUrfQ7Uo1EAfyr7SZsN3mSMgcS6tCFf3AOhjIAkNIogi6LgBd0OOcZyTJfVLAbXtMbASPrzqUGUa8eJ226UJ7QUEK1iAqvAyVoz9rGwwy97a4tsQ_6ibkDfoZyrYpizuxQn23VZZJcdLfasWuSzH3V9Xw2UmogXARomOIR2PlkO-NOQf5wdo0qORzk4InsfuF7C7jTp3c_gyKBGB4B75KUj-umPR_iLcYjWqg4yQ0R-mhrOFYqjOrp426U2F8"/>
+<h3 class="font-bold text-lg">Jordan Peak</h3>
+<div class="flex items-center justify-center gap-1 text-orange-500 font-semibold mb-2">
+<span class="material-icons text-sm">local_fire_department</span> 8 Day Streak
+                        </div>
+<div class="text-2xl font-black text-primary">1,980 <span class="text-xs uppercase font-bold text-slate-400">pts</span></div>
+</div>
+</div>
+<!-- Leaderboard List -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+<div class="p-4 border-b border-slate-100 dark:border-slate-800 flex items-center text-xs font-bold text-slate-400 uppercase tracking-widest">
+<div class="w-12 text-center">Rank</div>
+<div class="flex-1 ml-4">User</div>
+<div class="w-32 text-center">Streak</div>
+<div class="w-32 text-right">Points</div>
+</div>
+<div class="divide-y divide-slate-100 dark:divide-slate-800">
+<!-- Rank 4 -->
+<div class="p-4 flex items-center hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<div class="w-12 text-center font-bold text-slate-500">4</div>
+<div class="flex-1 flex items-center ml-4 gap-3">
+<img alt="User 4" class="w-10 h-10 rounded-full" data-alt="Rank 4 user avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqppDagNJn_0e08WPjtap5qckaQnikvEhoIc6Hy57QBzI9_RTQie9k7gkzHq5pRKXfnkTQtAC9I6ThGis8Lxcx9lqUq-8_AhPZjUUBHksL-Y-tIyuo1k0DtpUP0MTDS7Wngi7tpbtJei0vr0L3WTX-RkNG4K7QO_XTBNA9SLYUAxi2oUImBquk_mtRNUIOS7QYSXq6TmcQJ-t-c-sf40SqDPO2umutuEqXqe4PMLiIe-7m8vD-puw4JD-7OSAFcHDdwz1oBnTOfwA"/>
+<span class="font-semibold">Oliver Smith</span>
+</div>
+<div class="w-32 flex items-center justify-center gap-1 text-orange-500">
+<span class="material-icons text-sm">local_fire_department</span> 7
+                            </div>
+<div class="w-32 text-right font-black text-slate-700 dark:text-slate-300">1,850</div>
+</div>
+<!-- Rank 5 -->
+<div class="p-4 flex items-center hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<div class="w-12 text-center font-bold text-slate-500">5</div>
+<div class="flex-1 flex items-center ml-4 gap-3">
+<img alt="User 5" class="w-10 h-10 rounded-full" data-alt="Rank 5 user avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4N5Jo-pS9La10eok8M9EB-VKXVt5giV5QxVJMO_toek37YJGhAy8k_n5qZdNfm6D9tWR_gfswpkD1StOZD8g66hWeqiDmMsmLY_ZFZkjeE5xJ1dZUu9d23acHDH2inDs8XGOxfhzu2wqS5tn99joxFimDBzGdmf5QwTXzQGs02j2snAyPezZRnD4MXcIAQoQtlF_MdFnZshPSgE2aF-PBRHRdTWnokqUGDYYfnM7r56D2l-q91cp-nU4OpZQzREFYd5XdovQwDy0"/>
+<span class="font-semibold">Emma Woods</span>
+</div>
+<div class="w-32 flex items-center justify-center gap-1 text-orange-500">
+<span class="material-icons text-sm">local_fire_department</span> 5
+                            </div>
+<div class="w-32 text-right font-black text-slate-700 dark:text-slate-300">1,720</div>
+</div>
+<!-- Current User Row (Highlighted) -->
+<div class="p-4 flex items-center bg-primary/10 border-l-4 border-primary transition-colors">
+<div class="w-12 text-center font-bold text-primary">12</div>
+<div class="flex-1 flex items-center ml-4 gap-3">
+<img alt="You" class="w-10 h-10 rounded-full" data-alt="Current user avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtde6qKyKnfbK6U1EfNVKmdZUxn4h_JfjYZMwc2IGs9pnHbWWuZjF7pDNeSXzdSM1spMg-3dP_WVAn1TCCG-lPwzbLeHqCDzOIgPCwpdZaw1y48nX--CLbJrTnrQK2D3IEuTtM83ITeVlH1Edw8EshrHkRFstZIJoxRGdttxMTWy9TC9rM_0bGpQU6fbrayq7_dt2cS3NK1rcAAxFVB980g32OZ7PP4R9xoS6SUvi01JTp2YBnzzcIQrp2KszdYfWsrPyqd_za-Xk"/>
+<span class="font-bold">You (SuperPooper)</span>
+</div>
+<div class="w-32 flex items-center justify-center gap-1 text-orange-500">
+<span class="material-icons text-sm">local_fire_department</span> 4
+                            </div>
+<div class="w-32 text-right font-black text-primary">1,145</div>
+</div>
+<!-- Rank 13 -->
+<div class="p-4 flex items-center hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<div class="w-12 text-center font-bold text-slate-500">13</div>
+<div class="flex-1 flex items-center ml-4 gap-3">
+<img alt="User 13" class="w-10 h-10 rounded-full" data-alt="Rank 13 user avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7F5Var-cmfYImirJKVbruRVlRhuQrpenCbZ_jzI1FFQXrYLLNX0vaTZX46AfEk7gW2_JlhaI1tlv7dzptOgya223rUv0A-RzXsSNglQf0WQU_Z61UFUKhuubieKDC7YFAC_frZpqiDvoB0cSxw-naMWeFOmlDRpBgNne3ZEGGPjckYaq7khi7dwHzbDfw-ERivcuBThNl41xmBdgQyXMTq1F402Gr-KkkYcKRIpuByFNH3G1_5tjtiJCH11oeAWK0V2d7Rz9Erf0"/>
+<span class="font-semibold">Marcus Lane</span>
+</div>
+<div class="w-32 flex items-center justify-center gap-1 text-orange-500">
+<span class="material-icons text-sm">local_fire_department</span> 2
+                            </div>
+<div class="w-32 text-right font-black text-slate-700 dark:text-slate-300">980</div>
+</div>
+</div>
+<div class="p-4 text-center">
+<button class="text-primary font-bold hover:underline">Show More</button>
+</div>
+</div>
+</div>
+<!-- Right Column: Social & Friends -->
+<div class="w-full md:w-80 space-y-8">
+<!-- Search for Friends -->
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<h3 class="font-bold text-lg mb-4">Find Friends</h3>
+<div class="relative">
+<span class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="w-full pl-10 pr-4 py-3 bg-slate-100 dark:bg-slate-800 border-none rounded-lg focus:ring-2 focus:ring-primary text-sm" placeholder="Username or Email..." type="text"/>
+</div>
+</div>
+<!-- Pending Invites -->
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-bold text-lg">Pending Invites</h3>
+<span class="bg-primary text-white text-[10px] px-2 py-0.5 rounded-full font-bold">2</span>
+</div>
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<img alt="Inviter 1" class="w-10 h-10 rounded-full" data-alt="User sending friend request" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7j_zbixX-zcrrJjfEIFh7au7q6IxseLsIXUb2O8gn8SQWgvqEbsSnyHgGjv9jjvuiGI8v0wlGuHk_HXuycrcW16QW6d_WeMoUlvL4_VQLaMI5PEZcCVT3m4M4f0m4znnWRVrMRnbHJrLR8M39twJz1tVLLMho_9A7wLEGvDFTE4rHN8DmodYwLEUBPcdCj8qUSCj0gIR22CpKriuXv5PhAW89jxmfdiPtBtEHJ-dFMN2VrRFxZNmMPE-0llOXVeTTaves8hpyEHI"/>
+<div class="text-sm">
+<p class="font-bold leading-tight">Leo G.</p>
+<p class="text-xs text-slate-500">2h ago</p>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="w-8 h-8 bg-primary/20 text-primary rounded-lg flex items-center justify-center hover:bg-primary/30">
+<span class="material-icons text-sm">check</span>
+</button>
+<button class="w-8 h-8 bg-slate-100 dark:bg-slate-800 text-slate-400 rounded-lg flex items-center justify-center hover:bg-slate-200">
+<span class="material-icons text-sm">close</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Friends List -->
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-bold text-lg">Friends List</h3>
+<button class="text-xs font-bold text-primary">View All</button>
+</div>
+<div class="space-y-5">
+<!-- Friend 1 -->
+<div class="flex items-center justify-between group">
+<div class="flex items-center gap-3">
+<div class="relative">
+<img alt="Friend 1" class="w-11 h-11 rounded-full border-2 border-slate-100" data-alt="Friend profile picture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgl_LfPrXbp9A-gfCdKTX1F8VrXzhsRTyIiafj9BkQKsUF-OHaoGwK9OfEPgFR31gRg2eWNF5t4OAxZlkej6VKszmvJ7TCwch0IqL2JlDZxGb8pd0w938Wp0vXB7V6MIqsMrVkEc0lXhkT9T4pIsiQ1pttmaWpcMs-SNk9qxqmhueVZlxLZOPh5_kZpx-hQQ6Tw4TA2Git_55a74d_dw1blTftaTEKaKXA9djq1QGdHMD-Gzs0TL9WWrp8DkAaXqclT3AdpISFA4o"/>
+<div class="absolute bottom-0 right-0 w-3 h-3 bg-primary border-2 border-white dark:border-slate-900 rounded-full"></div>
+</div>
+<div>
+<p class="font-bold text-sm leading-tight">Sarah Miles</p>
+<p class="text-[10px] text-slate-500 font-semibold flex items-center gap-1 uppercase">
+<span class="material-icons text-[12px] text-primary">local_hospital</span> Bristol Type 3
+                                    </p>
+</div>
+</div>
+<button class="opacity-0 group-hover:opacity-100 p-2 text-slate-400 hover:text-primary transition-opacity">
+<span class="material-icons text-lg">bolt</span>
+</button>
+</div>
+<!-- Friend 2 -->
+<div class="flex items-center justify-between group">
+<div class="flex items-center gap-3">
+<div class="relative">
+<img alt="Friend 2" class="w-11 h-11 rounded-full border-2 border-slate-100" data-alt="Friend profile picture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOPi0epQ8tduF1mXrJGYEP5d8LEnOiPuFZIBr1CDP6EeN54llrQCeqjIdmPmImmXO8zcwtMk0cpXqWtZ_Vqr_Ks2a8NfW2QPzOIAaTNaKpP3hpWonZXYpcEkQ2bEfpb7L1TDlesm6EuN2ex3HOqPiiu77WKEbZHtSScGAylA48ZjXLUoJo4f5pmiWtoXWcPp8-w9UoW5xPC7owKHmdolnp4L3jFn6eAX0naj4bHw_Asq0d_Kbug9a5vs711jqsFIDb_h7vwvLBW64"/>
+<div class="absolute bottom-0 right-0 w-3 h-3 bg-slate-300 border-2 border-white dark:border-slate-900 rounded-full"></div>
+</div>
+<div>
+<p class="font-bold text-sm leading-tight">Dave Chen</p>
+<p class="text-[10px] text-slate-500 font-semibold uppercase">Offline · 4h ago</p>
+</div>
+</div>
+<button class="p-2 text-primary hover:bg-primary/10 rounded-lg flex items-center gap-1 text-[10px] font-bold uppercase transition-colors">
+<span class="material-icons text-sm">waving_hand</span> Poke
+                            </button>
+</div>
+<!-- Friend 3 -->
+<div class="flex items-center justify-between group">
+<div class="flex items-center gap-3">
+<div class="relative">
+<img alt="Friend 3" class="w-11 h-11 rounded-full border-2 border-slate-100" data-alt="Friend profile picture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAP2-Q9lWeKE7frR2M4qdkZB4jLuMmZn1V6zaELUDKiPjb_kvdNEttWWqRv5Tkh8jHqs7L1haHEToRG_dCz0lVZaqofQdhobWtTyRmJ_-MQTr4vmjsu-2S20ctSKndwUXQzF1HxGE1kA4n-UR1jrVkzU3jFZMLZ8dFIq2l_bBdgLiGJ3eaj_mkZQIDAYRr4U2Gnm1YQ6Lc-U7FkdkdUohaQo5iuiiWD2guadDimWcuipvVc26FkqUcTqKg9VNBSkzr77sV4SVOZRw0"/>
+<div class="absolute bottom-0 right-0 w-3 h-3 bg-primary border-2 border-white dark:border-slate-900 rounded-full"></div>
+</div>
+<div>
+<p class="font-bold text-sm leading-tight">Riley Blue</p>
+<p class="text-[10px] text-slate-500 font-semibold flex items-center gap-1 uppercase">
+<span class="material-icons text-[12px] text-primary">emoji_events</span> New Badge!
+                                    </p>
+</div>
+</div>
+<button class="opacity-0 group-hover:opacity-100 p-2 text-slate-400 hover:text-primary transition-opacity">
+<span class="material-icons text-lg">celebration</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Invite Friends CTA -->
+<div class="bg-primary/10 p-6 rounded-xl border border-primary/20 text-center">
+<div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white mx-auto mb-3">
+<span class="material-icons">person_add</span>
+</div>
+<h4 class="font-bold mb-1">Spread the health!</h4>
+<p class="text-xs text-slate-600 dark:text-slate-400 mb-4">Invite friends and earn a 'Golden Fiber' badge.</p>
+<button class="w-full bg-primary hover:bg-green-500 text-white font-bold py-2 rounded-lg transition-colors">Invite Friends</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Global Rank Stats Overlay (Footer-like) -->
+<div class="fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-3 shadow-2xl z-40">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+<div class="flex items-center gap-6">
+<div class="hidden sm:block">
+<p class="text-[10px] text-slate-400 uppercase font-bold tracking-widest">Global Rank</p>
+<p class="text-lg font-black text-primary">#1,432 / 24,000</p>
+</div>
+<div class="h-10 w-px bg-slate-200 dark:bg-slate-800"></div>
+<div>
+<p class="text-[10px] text-slate-400 uppercase font-bold tracking-widest">Total Points</p>
+<p class="text-lg font-black">12,450</p>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="bg-slate-100 dark:bg-slate-800 px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+<span class="material-icons text-sm">share</span> <span class="hidden sm:inline">Share Rank</span>
+</button>
+<button class="bg-primary px-6 py-2 rounded-lg text-white text-sm font-bold flex items-center gap-2 hover:bg-green-500 transition-colors">
+<span class="material-icons text-sm">add</span> <span>Log New Movement</span>
+</button>
+</div>
+</div>
+</div>
+</body></html>

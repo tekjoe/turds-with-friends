@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Turds with Friends | Health Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Outfit:wght@400;600;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#92400E", // Warm Sienna/Brown
+                        "background-light": "#F8FAFC",
+                        "background-dark": "#0F172A",
+                    },
+                    fontFamily: {
+                        display: ["Outfit", "sans-serif"],
+                        sans: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "1rem",
+                    },
+                },
+            },
+        };
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .font-display { font-family: 'Outfit', sans-serif; }
+        .glass-card {
+            backdrop-filter: blur(8px);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen transition-colors duration-300">
+<nav class="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 border-b border-slate-200 dark:border-slate-800 glass-card">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between h-16 items-center">
+<div class="flex items-center gap-2">
+<span class="text-3xl">💩</span>
+<span class="font-display font-extrabold text-xl tracking-tight text-primary">Turds with Friends</span>
+</div>
+<div class="hidden md:flex items-center space-x-8">
+<a class="text-primary font-semibold border-b-2 border-primary pb-1" href="#">Dashboard</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-primary transition-colors" href="#">Log Movement</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-primary transition-colors" href="#">Leagues</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-primary transition-colors" href="#">Health Tips</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300" onclick="document.documentElement.classList.toggle('dark')">
+<span class="material-icons-round text-sm">dark_mode</span>
+</button>
+<div class="flex items-center gap-3 pl-4 border-l border-slate-200 dark:border-slate-700">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-bold">Flush Gordon</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Level 24 Stool Master</p>
+</div>
+<div class="h-10 w-10 rounded-full bg-primary flex items-center justify-center text-white font-bold ring-2 ring-primary/20">
+                            FG
+                        </div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+<div class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 flex items-center gap-4">
+<div class="p-3 bg-orange-100 dark:bg-orange-900/30 rounded-xl text-orange-600 dark:text-orange-400">
+<span class="material-icons-round">local_fire_department</span>
+</div>
+<div>
+<p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Current Streak</p>
+<p class="text-2xl font-display font-bold">12 Days</p>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 flex items-center gap-4">
+<div class="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-xl text-blue-600 dark:text-blue-400">
+<span class="material-icons-round">monitor_weight</span>
+</div>
+<div>
+<p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Weight Lost (7d)</p>
+<p class="text-2xl font-display font-bold">3.4 lbs</p>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 flex items-center gap-4">
+<div class="p-3 bg-green-100 dark:bg-green-900/30 rounded-xl text-green-600 dark:text-green-400">
+<span class="material-icons-round">check_circle</span>
+</div>
+<div>
+<p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Avg Consistency</p>
+<p class="text-2xl font-display font-bold">Type 4</p>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 flex items-center gap-4">
+<div class="p-3 bg-purple-100 dark:bg-purple-900/30 rounded-xl text-purple-600 dark:text-purple-400">
+<span class="material-icons-round">emoji_events</span>
+</div>
+<div>
+<p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Rank</p>
+<p class="text-2xl font-display font-bold">#4 / 12 Friends</p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<div class="lg:col-span-2 space-y-8">
+<div class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800">
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-xl font-display font-bold">Weight Loss per Movement</h2>
+<span class="text-xs font-semibold px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded text-slate-500">Last 7 Days</span>
+</div>
+<div class="h-[300px] w-full">
+<canvas id="weightChart"></canvas>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800">
+<h2 class="text-xl font-display font-bold mb-6">Consistency Breakdown (Bristol Stool Scale)</h2>
+<div class="flex flex-col md:flex-row items-center gap-8">
+<div class="w-full md:w-1/2 h-[250px]">
+<canvas id="consistencyChart"></canvas>
+</div>
+<div class="w-full md:w-1/2 grid grid-cols-1 gap-3">
+<div class="flex items-center justify-between text-sm">
+<span class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bg-amber-800"></div> Type 1 &amp; 2 (Constipated)</span>
+<span class="font-bold">15%</span>
+</div>
+<div class="flex items-center justify-between text-sm">
+<span class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bg-emerald-600"></div> Type 3 &amp; 4 (Ideal)</span>
+<span class="font-bold">70%</span>
+</div>
+<div class="flex items-center justify-between text-sm">
+<span class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bg-yellow-600"></div> Type 5 (Fiber Lacking)</span>
+<span class="font-bold">10%</span>
+</div>
+<div class="flex items-center justify-between text-sm">
+<span class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bg-rose-500"></div> Type 6 &amp; 7 (Liquid/Inflam)</span>
+<span class="font-bold">5%</span>
+</div>
+<div class="mt-4 p-4 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-100 dark:border-emerald-800 rounded-xl">
+<p class="text-xs text-emerald-800 dark:text-emerald-400 leading-relaxed italic">"Looking great, Gordon! Your consistency is primarily within the 'Ideal' range. Keep up the high-fiber diet."</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="space-y-8">
+<div class="bg-gradient-to-br from-primary to-amber-700 p-6 rounded-2xl shadow-lg text-white relative overflow-hidden">
+<div class="relative z-10">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-display font-bold text-lg">Current Streak</h3>
+<span class="material-icons-round text-3xl">auto_awesome</span>
+</div>
+<div class="text-center py-4">
+<div class="inline-block relative">
+<span class="text-6xl font-black font-display">12</span>
+<span class="absolute -top-2 -right-8 text-2xl">🔥</span>
+</div>
+<p class="text-amber-100 text-sm font-medium mt-2">Personal Best: 14 Days</p>
+</div>
+<div class="mt-4 pt-4 border-t border-white/20">
+<button class="w-full py-2 bg-white text-primary font-bold rounded-xl hover:bg-amber-50 transition-colors">Log Today's Entry</button>
+</div>
+</div>
+<div class="absolute -bottom-10 -right-10 opacity-10">
+<span class="material-icons-round text-[180px]">water_drop</span>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800">
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-xl font-display font-bold">Friend Ranking</h2>
+<a class="text-primary text-sm font-semibold hover:underline" href="#">View All</a>
+</div>
+<div class="space-y-4">
+<div class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+<div class="w-8 text-center font-display font-bold text-slate-400">1</div>
+<div class="h-10 w-10 rounded-full bg-yellow-400 flex items-center justify-center text-white ring-2 ring-white dark:ring-slate-900">
+                                JD
+                            </div>
+<div class="flex-1">
+<p class="text-sm font-bold">Johnny Deuce</p>
+<div class="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full mt-1">
+<div class="bg-yellow-400 h-1.5 rounded-full w-[95%]"></div>
+</div>
+</div>
+<div class="text-right">
+<p class="text-xs font-bold text-slate-500">2.4k pts</p>
+</div>
+</div>
+<div class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+<div class="w-8 text-center font-display font-bold text-slate-400">2</div>
+<div class="h-10 w-10 rounded-full bg-slate-300 flex items-center justify-center text-white ring-2 ring-white dark:ring-slate-900">
+                                BP
+                            </div>
+<div class="flex-1">
+<p class="text-sm font-bold">Bowl Patrol</p>
+<div class="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full mt-1">
+<div class="bg-slate-300 h-1.5 rounded-full w-[80%]"></div>
+</div>
+</div>
+<div class="text-right">
+<p class="text-xs font-bold text-slate-500">1.9k pts</p>
+</div>
+</div>
+<div class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+<div class="w-8 text-center font-display font-bold text-slate-400">3</div>
+<div class="h-10 w-10 rounded-full bg-orange-300 flex items-center justify-center text-white ring-2 ring-white dark:ring-slate-900">
+                                SH
+                            </div>
+<div class="flex-1">
+<p class="text-sm font-bold">Shatner</p>
+<div class="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full mt-1">
+<div class="bg-orange-300 h-1.5 rounded-full w-[70%]"></div>
+</div>
+</div>
+<div class="text-right">
+<p class="text-xs font-bold text-slate-500">1.8k pts</p>
+</div>
+</div>
+<div class="flex items-center gap-3 p-3 rounded-xl bg-primary/10 border border-primary/20 ring-1 ring-primary/5">
+<div class="w-8 text-center font-display font-bold text-primary">4</div>
+<div class="h-10 w-10 rounded-full bg-primary flex items-center justify-center text-white ring-2 ring-white dark:ring-slate-900">
+                                FG
+                            </div>
+<div class="flex-1">
+<p class="text-sm font-bold text-primary">You (Flush G.)</p>
+<div class="w-full bg-white dark:bg-slate-800 h-1.5 rounded-full mt-1">
+<div class="bg-primary h-1.5 rounded-full w-[65%]"></div>
+</div>
+</div>
+<div class="text-right">
+<p class="text-xs font-bold text-primary">1.6k pts</p>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-slate-100 dark:bg-slate-800/50 p-6 rounded-2xl border border-slate-200 dark:border-slate-800">
+<h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Quick Reference</h3>
+<div class="flex items-center justify-between text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase mb-2 px-1">
+<span>Constipated</span>
+<span>Normal</span>
+<span>Diarrhea</span>
+</div>
+<div class="flex gap-1 h-6 items-end mb-4">
+<div class="flex-1 bg-amber-800 h-2 rounded-l-full" title="Type 1"></div>
+<div class="flex-1 bg-amber-700 h-3" title="Type 2"></div>
+<div class="flex-1 bg-emerald-500 h-6" title="Type 3"></div>
+<div class="flex-1 bg-emerald-600 h-6" title="Type 4"></div>
+<div class="flex-1 bg-yellow-500 h-4" title="Type 5"></div>
+<div class="flex-1 bg-rose-400 h-2" title="Type 6"></div>
+<div class="flex-1 bg-rose-600 h-1 rounded-r-full" title="Type 7"></div>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400 text-center italic">The Bristol Stool Scale helps you understand your digestive health.</p>
+</div>
+</div>
+</div>
+</main>
+<script>
+        // Set up Charts
+        document.addEventListener('DOMContentLoaded', function() {
+            const isDark = document.documentElement.classList.contains('dark');
+            const gridColor = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)';
+            const textColor = isDark ? '#94a3b8' : '#64748b';
+            // Weight Chart
+            const ctxWeight = document.getElementById('weightChart').getContext('2d');
+            new Chart(ctxWeight, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'Weight Loss (lbs)',
+                        data: [0.4, 0.6, 0.3, 0.8, 0.5, 0.2, 0.6],
+                        borderColor: '#92400E',
+                        backgroundColor: 'rgba(146, 64, 14, 0.1)',
+                        fill: true,
+                        tension: 0.4,
+                        borderWidth: 3,
+                        pointRadius: 4,
+                        pointBackgroundColor: '#92400E'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { 
+                            grid: { color: gridColor },
+                            ticks: { color: textColor }
+                        },
+                        x: { 
+                            grid: { display: false },
+                            ticks: { color: textColor }
+                        }
+                    }
+                }
+            });
+            // Consistency Pie Chart
+            const ctxConsistency = document.getElementById('consistencyChart').getContext('2d');
+            new Chart(ctxConsistency, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Constipated', 'Ideal', 'Lacking Fiber', 'Inflammation'],
+                    datasets: [{
+                        data: [15, 70, 10, 5],
+                        backgroundColor: ['#78350f', '#059669', '#d97706', '#e11d48'],
+                        borderWidth: 0,
+                        hoverOffset: 10
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+        });
+    </script>
+
+</body></html>
