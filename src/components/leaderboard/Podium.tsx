@@ -58,13 +58,13 @@ export function Podium({ users }: PodiumProps) {
   });
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 w-full">
       {sortedUsers.map((user) => {
         const config = rankConfig[user.rank];
         return (
           <div
             key={user.id}
-            className={`bg-white dark:bg-slate-900 ${config.size} rounded-xl ${config.border} text-center relative ${config.shadow} ${
+            className={`bg-white dark:bg-slate-900 ${config.size} rounded-xl ${config.border} text-center relative ${config.shadow} w-full ${
               user.rank === 1 ? "order-2 md:order-2" : user.rank === 2 ? "order-1 md:order-1" : "order-3"
             }`}
           >

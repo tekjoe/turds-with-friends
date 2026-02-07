@@ -16,7 +16,7 @@ interface FriendsListProps {
 
 export function FriendsList({ friends }: FriendsListProps) {
   return (
-    <div className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+    <div className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm w-full">
       <div className="flex items-center justify-between mb-4">
         <h3 className="font-bold text-lg">Friends List</h3>
         <button className="text-xs font-bold text-primary">View All</button>

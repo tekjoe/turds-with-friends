@@ -15,7 +15,7 @@ interface LeaderboardTableProps {
 
 export function LeaderboardTable({ users }: LeaderboardTableProps) {
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+    <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden w-full">
       {/* Header */}
       <div className="p-4 border-b border-slate-100 dark:border-slate-800 flex items-center text-xs font-bold text-slate-400 uppercase tracking-widest">
         <div className="w-12 text-center">Rank</div>

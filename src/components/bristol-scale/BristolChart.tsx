@@ -124,7 +124,7 @@ export function BristolChart() {
         {stoolTypes.map((stool) => (
           <div
             key={stool.type}
-            className={`group bg-white dark:bg-slate-800 p-6 rounded-3xl border hover:shadow-xl hover:-translate-y-1 transition-all ${
+            className={`group bg-white dark:bg-slate-800 p-6 rounded-3xl border hover:shadow-xl hover:-translate-y-1 transition-all w-full ${
               stool.isNormal
                 ? "border-primary/20 dark:border-primary/20 ring-4 ring-primary/5"
                 : "border-slate-100 dark:border-slate-700"
@@ -151,7 +151,7 @@ export function BristolChart() {
         ))}
 
         {/* Info Card */}
-        <div className="bg-[#16a34a] p-6 rounded-3xl shadow-xl flex flex-col justify-center items-center text-center text-white">
+        <div className="bg-[#16a34a] p-6 rounded-3xl shadow-xl flex flex-col justify-center items-center text-center text-white w-full">
           <Icon name="info" className="text-4xl mb-2" />
           <h3 className="font-bold text-lg mb-2">Check Your Health</h3>
           <p className="text-sm opacity-90 mb-4">

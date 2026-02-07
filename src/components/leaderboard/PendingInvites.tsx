@@ -22,7 +22,7 @@ export function PendingInvites({ invites, onAccept, onDecline }: PendingInvitesP
   }
 
   return (
-    <div className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+    <div className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm w-full">
       <div className="flex items-center justify-between mb-4">
         <h3 className="font-bold text-lg">Pending Invites</h3>
         <span className="bg-primary text-white text-[10px] px-2 py-0.5 rounded-full font-bold">

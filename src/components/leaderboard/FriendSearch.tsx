@@ -7,7 +7,7 @@ export function FriendSearch() {
   const [searchQuery, setSearchQuery] = useState("");
 
   return (
-    <div className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+    <div className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm w-full">
       <h3 className="font-bold text-lg mb-4">Find Friends</h3>
       <div className="relative">
         <span className="material-symbols-rounded absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
