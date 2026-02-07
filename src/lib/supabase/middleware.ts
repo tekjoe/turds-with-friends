@@ -52,12 +52,30 @@ export async function updateSession(request: NextRequest) {
     const isProtectedRoute =
       pathname.startsWith("/dashboard") ||
       pathname.startsWith("/log") ||
-      pathname.startsWith("/leaderboard");
+      pathname.startsWith("/leaderboard") ||
+      pathname.startsWith("/settings") ||
+      pathname.startsWith("/friends") ||
+      pathname.startsWith("/activity");
 
     if (isProtectedRoute && !user) {
       const url = request.nextUrl.clone();
       url.pathname = "/login";
       return NextResponse.redirect(url);
+    }
+
+    // Redirect authenticated users without a username to onboarding
+    if (user && pathname !== "/onboarding") {
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("username")
+        .eq("id", user.id)
+        .single();
+
+      if (!profile?.username) {
+        const url = request.nextUrl.clone();
+        url.pathname = "/onboarding";
+        return NextResponse.redirect(url);
+      }
     }
 
     return supabaseResponse;

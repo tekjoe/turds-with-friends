@@ -1,10 +1,25 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 
-export function Hero() {
+interface LeaderboardUser {
+  rank: number;
+  name: string;
+  badge: string;
+  points: string;
+  avatarUrl: string | null;
+}
+
+interface HeroProps {
+  userCount: number;
+  leaderboard: LeaderboardUser[];
+  avatars: (string | null)[];
+}
+
+export function Hero({ userCount, leaderboard, avatars }: HeroProps) {
   return (
-    <section className="pt-32 pb-20 px-6 w-full">
+    <section className="pt-32 pb-20 px-6 w-full overflow-x-clip">
       <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center w-full">
         {/* Left Column - Content */}
         <div className="space-y-8">
@@ -39,15 +54,26 @@ export function Hero() {
 
           <div className="flex items-center gap-6 pt-4">
             <div className="flex -space-x-3">
-              {[1, 2, 3].map((i) => (
-                <div
-                  key={i}
-                  className="w-10 h-10 rounded-full border-2 border-white dark:border-slate-900 bg-slate-200 dark:bg-slate-700"
-                />
-              ))}
+              {avatars.map((url, i) =>
+                url ? (
+                  <Image
+                    key={i}
+                    src={url}
+                    alt=""
+                    width={40}
+                    height={40}
+                    className="w-10 h-10 rounded-full border-2 border-white dark:border-slate-900 object-cover"
+                  />
+                ) : (
+                  <div
+                    key={i}
+                    className="w-10 h-10 rounded-full border-2 border-white dark:border-slate-900 bg-slate-200 dark:bg-slate-700"
+                  />
+                )
+              )}
             </div>
             <div className="text-sm">
-              <span className="font-bold text-slate-900 dark:text-white">12,000+</span>{" "}
+              <span className="font-bold text-slate-900 dark:text-white">{userCount.toLocaleString()}+</span>{" "}
               regular users <br />
               staying healthy this week.
             </div>
@@ -60,7 +86,7 @@ export function Hero() {
           <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-accent/20 rounded-full blur-3xl -z-10"></div>
 
           <div className="bg-[#FFFFFF] dark:bg-slate-900 p-8 rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-800 relative overflow-hidden">
-            <div className="mb-8">
+            <div>
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-xl font-bold font-display flex items-center gap-2">
                   <Icon name="emoji_events" className="text-yellow-500" />
@@ -72,11 +98,7 @@ export function Hero() {
               </div>
 
               <div className="space-y-4">
-                {[
-                  { rank: 1, name: "Oliver G.", badge: "7 Day Streak 🔥", points: "2,450" },
-                  { rank: 2, name: "Sophie M.", badge: "Perfect Week 🥬", points: "2,120" },
-                  { rank: 3, name: "You (Jackson)", badge: "Ranked up! 🚀", points: "1,980" },
-                ].map((user, index) => (
+                {leaderboard.map((user, index) => (
                   <div
                     key={user.rank}
                     className={`flex items-center justify-between p-4 rounded-2xl ${
@@ -93,7 +115,17 @@ export function Hero() {
                       >
                         {user.rank}
                       </span>
-                      <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700" />
+                      {user.avatarUrl ? (
+                        <Image
+                          src={user.avatarUrl}
+                          alt={user.name}
+                          width={40}
+                          height={40}
+                          className="w-10 h-10 rounded-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700" />
+                      )}
                       <div>
                         <p className="font-bold">{user.name}</p>
                         <p className="text-xs text-slate-500">{user.badge}</p>
@@ -110,22 +142,6 @@ export function Hero() {
                     </span>
                   </div>
                 ))}
-              </div>
-            </div>
-
-            {/* Floating Icons */}
-            <div className="flex justify-center gap-8 pt-4 border-t border-slate-100 dark:border-slate-800">
-              <div className="floating flex flex-col items-center" style={{ animationDelay: "0s" }}>
-                <div className="text-4xl">💩</div>
-                <span className="text-[10px] font-bold mt-1 text-slate-400">Regular</span>
-              </div>
-              <div className="floating flex flex-col items-center" style={{ animationDelay: "0.5s" }}>
-                <div className="text-4xl grayscale">🪨</div>
-                <span className="text-[10px] font-bold mt-1 text-slate-400">Tough</span>
-              </div>
-              <div className="floating flex flex-col items-center" style={{ animationDelay: "1s" }}>
-                <div className="text-4xl">🌊</div>
-                <span className="text-[10px] font-bold mt-1 text-slate-400">Flowy</span>
               </div>
             </div>
           </div>

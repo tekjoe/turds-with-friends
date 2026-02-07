@@ -1,0 +1,246 @@
+"use client";
+
+import { useState } from "react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { Icon } from "@/components/ui/Icon";
+
+export interface PendingRequest {
+  id: string;
+  requester: {
+    display_name: string | null;
+    username: string | null;
+    avatar_url: string | null;
+  };
+  created_at: string;
+}
+
+function getInitials(name: string): string {
+  return name
+    .split(" ")
+    .map((w) => w[0])
+    .join("")
+    .toUpperCase()
+    .slice(0, 2);
+}
+
+function timeAgo(dateStr: string): string {
+  const diff = Date.now() - new Date(dateStr).getTime();
+  const mins = Math.floor(diff / 60000);
+  if (mins < 1) return "Just now";
+  if (mins < 60) return `${mins}m ago`;
+  const hours = Math.floor(mins / 60);
+  if (hours < 24) return `${hours}h ago`;
+  const days = Math.floor(hours / 24);
+  if (days === 1) return "Yesterday";
+  return `${days}d ago`;
+}
+
+type Tab = "all" | "social" | "competitive" | "reminders";
+
+const tabs: { id: Tab; label: string }[] = [
+  { id: "all", label: "All Activity" },
+  { id: "social", label: "Social" },
+  { id: "competitive", label: "Competitive" },
+  { id: "reminders", label: "Reminders" },
+];
+
+export function ActivityClient({ pendingRequests }: { pendingRequests: PendingRequest[] }) {
+  const router = useRouter();
+  const [activeTab, setActiveTab] = useState<Tab>("all");
+  const [respondedIds, setRespondedIds] = useState<Set<string>>(new Set());
+
+  const respond = async (friendshipId: string, action: "accept" | "decline") => {
+    const method = action === "accept" ? "PATCH" : "DELETE";
+    const res = await fetch("/api/friends/respond", {
+      method,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ friendship_id: friendshipId }),
+    });
+
+    if (res.ok) {
+      setRespondedIds((prev) => new Set(prev).add(friendshipId));
+      router.refresh();
+    }
+  };
+
+  const visibleRequests = pendingRequests.filter((r) => !respondedIds.has(r.id));
+
+  const showSocial = activeTab === "all" || activeTab === "social";
+  const showCompetitive = activeTab === "all" || activeTab === "competitive";
+  const showReminders = activeTab === "all" || activeTab === "reminders";
+
+  return (
+    <>
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
+        <div>
+          <h1 className="text-4xl font-bold font-display tracking-tight">
+            Activity
+          </h1>
+          <p className="text-slate-500 dark:text-slate-400 mt-1">
+            Keep track of your gut health social circle.
+          </p>
+        </div>
+      </div>
+
+      {/* Tabs */}
+      <div className="flex border-b border-slate-200 dark:border-slate-800 mb-8 overflow-x-auto no-scrollbar">
+        {tabs.map((tab) => (
+          <button
+            key={tab.id}
+            onClick={() => setActiveTab(tab.id)}
+            className={`px-6 py-4 border-b-4 text-sm font-bold whitespace-nowrap transition-colors cursor-pointer ${
+              activeTab === tab.id
+                ? "border-primary text-foreground"
+                : "border-transparent text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"
+            }`}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Feed */}
+      <div className="space-y-8">
+        {/* Today section */}
+        <section>
+          <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-primary" />
+            Today
+          </h3>
+          <div className="space-y-3">
+            {/* Real friend requests */}
+            {showSocial && visibleRequests.map((req) => {
+              const name = req.requester.display_name ?? req.requester.username ?? "Someone";
+              const initials = getInitials(name);
+              return (
+                <div
+                  key={req.id}
+                  className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-2xl shadow-sm hover:shadow-md transition-shadow"
+                >
+                  <div className="flex gap-4">
+                    <div className="relative shrink-0">
+                      {req.requester.avatar_url ? (
+                        <Image
+                          src={req.requester.avatar_url}
+                          alt={name}
+                          width={56}
+                          height={56}
+                          className="w-14 h-14 rounded-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-lg">
+                          {initials}
+                        </div>
+                      )}
+                      <div className="absolute -bottom-1 -right-1 bg-primary w-6 h-6 rounded-full border-2 border-white dark:border-slate-900 flex items-center justify-center">
+                        <Icon
+                          name="person_add"
+                          className="text-[14px] font-bold text-white"
+                        />
+                      </div>
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex justify-between items-start">
+                        <h4 className="font-bold text-base">
+                          Friend Request: {name}
+                        </h4>
+                        <span className="text-xs text-slate-400 shrink-0 ml-2">
+                          {timeAgo(req.created_at)}
+                        </span>
+                      </div>
+                      <p className="text-slate-500 dark:text-slate-400 text-sm mt-1 leading-relaxed">
+                        {name} wants to follow your gut health journey and share
+                        Bristol Stool Chart insights.
+                      </p>
+                      <div className="flex gap-3 mt-4">
+                        <button
+                          onClick={() => respond(req.id, "accept")}
+                          className="bg-primary px-6 py-2 rounded-full text-xs font-bold text-white hover:bg-green-600 transition-all cursor-pointer"
+                        >
+                          Accept
+                        </button>
+                        <button
+                          onClick={() => respond(req.id, "decline")}
+                          className="bg-slate-100 dark:bg-slate-800 px-6 py-2 rounded-full text-xs font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition-all cursor-pointer"
+                        >
+                          Decline
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+
+            {showSocial && visibleRequests.length === 0 && (
+              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-2xl shadow-sm">
+                <p className="text-sm text-slate-400 text-center">No pending friend requests.</p>
+              </div>
+            )}
+
+          </div>
+        </section>
+
+        {/* Yesterday (hardcoded items kept as-is per plan) */}
+        {(showReminders || showCompetitive) && (
+          <section>
+            <h3 className="text-lg font-bold mb-4 text-slate-400">
+              Yesterday
+            </h3>
+            <div className="space-y-3">
+              {showReminders && (
+                <div className="bg-white/60 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 p-5 rounded-2xl opacity-80 hover:opacity-100 transition-all">
+                  <div className="flex gap-4">
+                    <div className="w-14 h-14 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 shrink-0">
+                      <Icon name="bathroom" className="text-3xl" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex justify-between items-start">
+                        <h4 className="font-bold text-base">
+                          Daily Check-in Reminder
+                        </h4>
+                        <span className="text-xs text-slate-400 shrink-0 ml-2">
+                          22h ago
+                        </span>
+                      </div>
+                      <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">
+                        Don&apos;t forget to log your movement today. Consistency
+                        is key to a healthy gut! 🧻
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {showCompetitive && (
+                <div className="bg-white/60 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 p-5 rounded-2xl opacity-80 hover:opacity-100 transition-all">
+                  <div className="flex gap-4">
+                    <div className="w-14 h-14 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 shrink-0">
+                      <Icon name="verified" className="text-3xl" filled />
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex justify-between items-start">
+                        <h4 className="font-bold text-base">
+                          New Personal Best!
+                        </h4>
+                        <span className="text-xs text-slate-400 shrink-0 ml-2">
+                          1d ago
+                        </span>
+                      </div>
+                      <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">
+                        You&apos;ve logged 5 days in a row with Type 3 or 4
+                        stool. You&apos;re on a roll!
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </section>
+        )}
+      </div>
+    </>
+  );
+}

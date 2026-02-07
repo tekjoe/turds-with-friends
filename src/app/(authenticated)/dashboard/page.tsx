@@ -1,46 +1,42 @@
-import { createClient } from "@/lib/supabase/server";
+import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { AuthNavbar } from "@/components/ui/AuthNavbar";
+import { isPremium } from "@/lib/premium";
 import { StatsCard } from "@/components/ui/StatsCard";
 import { WeightChart } from "@/components/charts/WeightChart";
 import { ConsistencyChart } from "@/components/charts/ConsistencyChart";
 import { FriendRanking } from "@/components/dashboard/FriendRanking";
 import { StreakCard } from "@/components/dashboard/StreakCard";
 import { BristolReference } from "@/components/dashboard/BristolReference";
+import { ExportButton } from "@/components/dashboard/ExportButton";
 
-// Sample data for demonstration
-const sampleWeightData = [
-  { day: "Mon", weight: 0.4 },
-  { day: "Tue", weight: 0.6 },
-  { day: "Wed", weight: 0.3 },
-  { day: "Thu", weight: 0.8 },
-  { day: "Fri", weight: 0.5 },
-  { day: "Sat", weight: 0.2 },
-  { day: "Sun", weight: 0.6 },
-];
+const RANK_COLORS = ["#facc15", "#cbd5e1", "#fdba74", "#a78bfa", "#67e8f9", "#f9a8d4"];
+const DAY_NAMES = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-const sampleConsistencyData = [
-  { name: "Type 1 & 2 (Constipated)", value: 15, color: "#78350f" },
-  { name: "Type 3 & 4 (Ideal)", value: 70, color: "#059669" },
-  { name: "Type 5 (Fiber Lacking)", value: 10, color: "#d97706" },
-  { name: "Type 6 & 7 (Liquid/Inflam)", value: 5, color: "#e11d48" },
-];
+function formatPoints(xp: number): string {
+  if (xp >= 1000) return `${(xp / 1000).toFixed(1)}k pts`;
+  return `${xp} pts`;
+}
 
-const sampleFriends = [
-  { id: "1", rank: 1, name: "Johnny Deuce", initials: "JD", points: "2.4k pts", color: "#facc15" },
-  { id: "2", rank: 2, name: "Bowl Patrol", initials: "BP", points: "1.9k pts", color: "#cbd5e1" },
-  { id: "3", rank: 3, name: "Shatner", initials: "SH", points: "1.8k pts", color: "#fdba74" },
-  { id: "4", rank: 4, name: "Flush G.", initials: "FG", points: "1.6k pts", color: "#92400E", isCurrentUser: true },
-];
+function getInitials(name: string): string {
+  return name
+    .split(" ")
+    .map((w) => w[0])
+    .join("")
+    .toUpperCase()
+    .slice(0, 2);
+}
 
 export default async function DashboardPage() {
   const supabase = await createClient();
-  
+  const admin = createAdminClient();
+
   const { data: { user } } = await supabase.auth.getUser();
-  
+
   if (!user) {
     redirect("/login");
   }
+
+  const premium = await isPremium(user.id);
 
   // Fetch user profile
   const { data: profile } = await supabase
@@ -53,17 +49,23 @@ export default async function DashboardPage() {
   const currentStreak = profile?.current_streak ?? 0;
   const longestStreak = profile?.longest_streak ?? 0;
   const xpTotal = profile?.xp_total ?? 0;
-  const displayName = profile?.display_name ?? user.email?.split("@")[0] ?? "User";
-  const initials = displayName.slice(0, 2).toUpperCase();
-  const level = Math.floor(xpTotal / 500) + 1;
+  const displayName = profile?.display_name ?? profile?.username ?? user.email?.split("@")[0] ?? "User";
 
-  // Fetch recent logs for weight data
+  // Fetch recent logs for weight chart (last 7)
   const { data: recentLogs } = await supabase
     .from("movement_logs")
     .select("*")
     .eq("user_id", user.id)
     .order("logged_at", { ascending: false })
     .limit(7);
+
+  // Fetch more logs for consistency chart (last 30)
+  const { data: allLogs } = await supabase
+    .from("movement_logs")
+    .select("bristol_type")
+    .eq("user_id", user.id)
+    .order("logged_at", { ascending: false })
+    .limit(30);
 
   // Calculate average Bristol type
   const avgBristolType = recentLogs && recentLogs.length > 0
@@ -76,15 +78,110 @@ export default async function DashboardPage() {
     .reduce((sum, log) => sum + ((log.pre_weight ?? 0) - (log.post_weight ?? 0)), 0)
     .toFixed(1) ?? "0.0";
 
-  return (
-    <div className="min-h-screen bg-background">
-      <AuthNavbar
-        userName={displayName}
-        userLevel={`Level ${level} Stool Master`}
-        userInitials={initials}
-      />
+  // --- Weight chart data ---
+  const weightData = (recentLogs ?? [])
+    .filter((log) => log.pre_weight && log.post_weight)
+    .map((log) => ({
+      day: DAY_NAMES[new Date(log.logged_at).getDay()],
+      weight: Math.max(0, (log.pre_weight ?? 0) - (log.post_weight ?? 0)),
+    }))
+    .reverse();
 
+  // --- Consistency chart data ---
+  const logsList = allLogs ?? [];
+  const total = logsList.length;
+  let constipated = 0;
+  let ideal = 0;
+  let fiberLacking = 0;
+  let liquid = 0;
+
+  logsList.forEach((log) => {
+    const t = log.bristol_type;
+    if (t <= 2) constipated++;
+    else if (t <= 4) ideal++;
+    else if (t === 5) fiberLacking++;
+    else liquid++;
+  });
+
+  const pct = (n: number) => (total > 0 ? Math.round((n / total) * 100) : 0);
+  const consistencyData = [
+    { name: "Type 1 & 2 (Constipated)", value: pct(constipated), color: "#78350f" },
+    { name: "Type 3 & 4 (Ideal)", value: pct(ideal), color: "#059669" },
+    { name: "Type 5 (Fiber Lacking)", value: pct(fiberLacking), color: "#d97706" },
+    { name: "Type 6 & 7 (Liquid/Inflam)", value: pct(liquid), color: "#e11d48" },
+  ];
+
+  // --- Friend ranking data ---
+  const { data: friendships } = await admin
+    .from("friendships")
+    .select("requester_id, addressee_id")
+    .eq("status", "accepted")
+    .or(`requester_id.eq.${user.id},addressee_id.eq.${user.id}`);
+
+  const friendIds = (friendships ?? []).map((f) =>
+    f.requester_id === user.id ? f.addressee_id : f.requester_id
+  );
+
+  let rankingList: Array<{
+    id: string;
+    name: string;
+    initials: string;
+    avatarUrl: string | null;
+    xp: number;
+    isCurrentUser: boolean;
+  }> = [
+    {
+      id: user.id,
+      name: displayName,
+      initials: getInitials(displayName),
+      avatarUrl: profile?.avatar_url ?? null,
+      xp: xpTotal,
+      isCurrentUser: true,
+    },
+  ];
+
+  if (friendIds.length > 0) {
+    const { data: friendProfiles } = await admin
+      .from("profiles")
+      .select("id, display_name, username, avatar_url, xp_total")
+      .in("id", friendIds);
+
+    (friendProfiles ?? []).forEach((fp) => {
+      const name = fp.display_name ?? fp.username ?? "Anonymous";
+      rankingList.push({
+        id: fp.id,
+        name,
+        initials: getInitials(name),
+        avatarUrl: fp.avatar_url,
+        xp: fp.xp_total,
+        isCurrentUser: false,
+      });
+    });
+  }
+
+  rankingList.sort((a, b) => b.xp - a.xp);
+
+  const friendRankingData = rankingList.map((entry, i) => ({
+    id: entry.id,
+    rank: i + 1,
+    name: entry.name,
+    initials: entry.initials,
+    avatarUrl: entry.avatarUrl,
+    points: formatPoints(entry.xp),
+    color: entry.isCurrentUser ? "#92400E" : RANK_COLORS[i % RANK_COLORS.length],
+    isCurrentUser: entry.isCurrentUser,
+  }));
+
+  const userRank = friendRankingData.find((f) => f.isCurrentUser)?.rank ?? 1;
+  const totalInRanking = friendRankingData.length;
+  const rankLabel = `#${userRank} / ${totalInRanking} ${totalInRanking === 1 ? "User" : "Friends"}`;
+
+  return (
+    <div className="min-h-screen bg-background pt-20">
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+        <div className="flex items-center justify-end mb-6">
+          <ExportButton isPremium={premium} />
+        </div>
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <StatsCard
@@ -109,7 +206,7 @@ export default async function DashboardPage() {
             icon="emoji_events"
             iconColor="bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400"
             label="Rank"
-            value="#4 / 12 Friends"
+            value={rankLabel}
           />
         </div>
 
@@ -117,14 +214,14 @@ export default async function DashboardPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left Column - Charts */}
           <div className="lg:col-span-2 space-y-8">
-            <WeightChart data={sampleWeightData} />
-            <ConsistencyChart data={sampleConsistencyData} />
+            <WeightChart data={weightData} />
+            <ConsistencyChart data={consistencyData} />
           </div>
 
           {/* Right Column - Sidebar */}
           <div className="space-y-8">
             <StreakCard currentStreak={currentStreak} personalBest={longestStreak} />
-            <FriendRanking friends={sampleFriends} />
+            <FriendRanking friends={friendRankingData} />
             <BristolReference />
           </div>
         </div>

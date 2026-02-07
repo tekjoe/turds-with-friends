@@ -15,6 +15,7 @@ export type Database = {
           username: string | null;
           display_name: string | null;
           avatar_url: string | null;
+          stripe_customer_id: string | null;
           xp_total: number;
           current_streak: number;
           longest_streak: number;
@@ -27,6 +28,7 @@ export type Database = {
           username?: string | null;
           display_name?: string | null;
           avatar_url?: string | null;
+          stripe_customer_id?: string | null;
           xp_total?: number;
           current_streak?: number;
           longest_streak?: number;
@@ -39,6 +41,7 @@ export type Database = {
           username?: string | null;
           display_name?: string | null;
           avatar_url?: string | null;
+          stripe_customer_id?: string | null;
           xp_total?: number;
           current_streak?: number;
           longest_streak?: number;
@@ -197,6 +200,181 @@ export type Database = {
           }
         ];
       };
+      subscriptions: {
+        Row: {
+          id: string;
+          user_id: string;
+          stripe_customer_id: string;
+          stripe_subscription_id: string;
+          status: "active" | "canceled" | "past_due" | "incomplete";
+          plan: "monthly" | "annual";
+          current_period_end: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          stripe_customer_id: string;
+          stripe_subscription_id: string;
+          status?: "active" | "canceled" | "past_due" | "incomplete";
+          plan: "monthly" | "annual";
+          current_period_end?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          stripe_customer_id?: string;
+          stripe_subscription_id?: string;
+          status?: "active" | "canceled" | "past_due" | "incomplete";
+          plan?: "monthly" | "annual";
+          current_period_end?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "subscriptions_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
+      location_logs: {
+        Row: {
+          id: string;
+          movement_log_id: string;
+          user_id: string;
+          latitude: number;
+          longitude: number;
+          place_name: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          movement_log_id: string;
+          user_id: string;
+          latitude: number;
+          longitude: number;
+          place_name?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          movement_log_id?: string;
+          user_id?: string;
+          latitude?: number;
+          longitude?: number;
+          place_name?: string | null;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "location_logs_movement_log_id_fkey";
+            columns: ["movement_log_id"];
+            isOneToOne: false;
+            referencedRelation: "movement_logs";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "location_logs_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
+      challenges: {
+        Row: {
+          id: string;
+          creator_id: string;
+          title: string;
+          challenge_type: "most_logs" | "longest_streak" | "most_weight_lost";
+          start_date: string;
+          end_date: string;
+          status: "pending" | "active" | "completed";
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          creator_id: string;
+          title: string;
+          challenge_type: "most_logs" | "longest_streak" | "most_weight_lost";
+          start_date: string;
+          end_date: string;
+          status?: "pending" | "active" | "completed";
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          creator_id?: string;
+          title?: string;
+          challenge_type?: "most_logs" | "longest_streak" | "most_weight_lost";
+          start_date?: string;
+          end_date?: string;
+          status?: "pending" | "active" | "completed";
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "challenges_creator_id_fkey";
+            columns: ["creator_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
+      challenge_participants: {
+        Row: {
+          id: string;
+          challenge_id: string;
+          user_id: string;
+          progress: number;
+          status: "invited" | "accepted" | "declined";
+          joined_at: string;
+        };
+        Insert: {
+          id?: string;
+          challenge_id: string;
+          user_id: string;
+          progress?: number;
+          status?: "invited" | "accepted" | "declined";
+          joined_at?: string;
+        };
+        Update: {
+          id?: string;
+          challenge_id?: string;
+          user_id?: string;
+          progress?: number;
+          status?: "invited" | "accepted" | "declined";
+          joined_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "challenge_participants_challenge_id_fkey";
+            columns: ["challenge_id"];
+            isOneToOne: false;
+            referencedRelation: "challenges";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "challenge_participants_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
       audit_logs: {
         Row: {
           id: string;
@@ -250,7 +428,12 @@ export type Database = {
     };
     Enums: {
       friendship_status: "pending" | "accepted" | "blocked";
+      subscription_status: "active" | "canceled" | "past_due" | "incomplete";
+      subscription_plan: "monthly" | "annual";
       weight_unit: "lbs" | "kg";
+      challenge_type: "most_logs" | "longest_streak" | "most_weight_lost";
+      challenge_status: "pending" | "active" | "completed";
+      participant_status: "invited" | "accepted" | "declined";
     };
     CompositeTypes: {
       [_ in never]: never;
@@ -265,7 +448,17 @@ export type Friendship = Database["public"]["Tables"]["friendships"]["Row"];
 export type Badge = Database["public"]["Tables"]["badges"]["Row"];
 export type UserBadge = Database["public"]["Tables"]["user_badges"]["Row"];
 
+export type Subscription = Database["public"]["Tables"]["subscriptions"]["Row"];
+export type LocationLog = Database["public"]["Tables"]["location_logs"]["Row"];
+
+export type Challenge = Database["public"]["Tables"]["challenges"]["Row"];
+export type ChallengeParticipant = Database["public"]["Tables"]["challenge_participants"]["Row"];
+
 // Insert types
 export type ProfileInsert = Database["public"]["Tables"]["profiles"]["Insert"];
 export type MovementLogInsert = Database["public"]["Tables"]["movement_logs"]["Insert"];
 export type FriendshipInsert = Database["public"]["Tables"]["friendships"]["Insert"];
+export type SubscriptionInsert = Database["public"]["Tables"]["subscriptions"]["Insert"];
+export type LocationLogInsert = Database["public"]["Tables"]["location_logs"]["Insert"];
+export type ChallengeInsert = Database["public"]["Tables"]["challenges"]["Insert"];
+export type ChallengeParticipantInsert = Database["public"]["Tables"]["challenge_participants"]["Insert"];

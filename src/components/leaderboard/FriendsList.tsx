@@ -38,22 +38,13 @@ export function FriendsList({ friends }: FriendsListProps) {
                     friend.initials
                   )}
                 </div>
-                <div
-                  className={`absolute bottom-0 right-0 w-3 h-3 border-2 border-white dark:border-slate-900 rounded-full ${
-                    friend.isOnline ? "bg-primary" : "bg-slate-300"
-                  }`}
-                />
               </div>
               <div>
                 <p className="font-bold text-sm leading-tight">{friend.name}</p>
-                {friend.isOnline && friend.status ? (
+                {friend.isOnline && friend.status && (
                   <p className="text-[10px] text-slate-500 font-semibold flex items-center gap-1 uppercase">
                     <Icon name="local_hospital" className="text-[12px] text-primary" />
                     {friend.status}
-                  </p>
-                ) : (
-                  <p className="text-[10px] text-slate-500 font-semibold uppercase">
-                    Offline · {friend.lastSeen}
                   </p>
                 )}
               </div>

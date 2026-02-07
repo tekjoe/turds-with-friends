@@ -83,7 +83,7 @@ export function LeaderboardTable({ users }: LeaderboardTableProps) {
 
       {/* Show More */}
       <div className="p-4 text-center">
-        <button className="text-primary font-bold hover:underline">Show More</button>
+        <button className="text-primary font-bold hover:underline cursor-pointer">Show More</button>
       </div>
     </div>
   );

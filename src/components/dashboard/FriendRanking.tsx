@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 interface Friend {
@@ -7,6 +8,7 @@ interface Friend {
   initials: string;
   points: string;
   color: string;
+  avatarUrl?: string | null;
   isCurrentUser?: boolean;
 }
 
@@ -40,12 +42,22 @@ export function FriendRanking({ friends }: FriendRankingProps) {
             >
               {friend.rank}
             </div>
-            <div
-              className={`h-10 w-10 rounded-full flex items-center justify-center text-white ring-2 ring-white dark:ring-slate-900`}
-              style={{ backgroundColor: friend.color }}
-            >
-              {friend.initials}
-            </div>
+            {friend.avatarUrl ? (
+              <Image
+                src={friend.avatarUrl}
+                alt={friend.name}
+                width={40}
+                height={40}
+                className="h-10 w-10 rounded-full object-cover ring-2 ring-white dark:ring-slate-900"
+              />
+            ) : (
+              <div
+                className="h-10 w-10 rounded-full flex items-center justify-center text-white ring-2 ring-white dark:ring-slate-900"
+                style={{ backgroundColor: friend.color }}
+              >
+                {friend.initials}
+              </div>
+            )}
             <div className="flex-1">
               <p
                 className={`text-sm font-bold ${
