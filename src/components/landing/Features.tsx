@@ -37,8 +37,8 @@ const benefits = [
 
 export function Features() {
   return (
-    <section className="py-24 px-6 overflow-hidden">
-      <div className="max-w-7xl mx-auto">
+    <section className="py-24 px-6 overflow-hidden w-full">
+      <div className="max-w-7xl mx-auto w-full">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Feature Cards Grid */}
           <div className="order-2 lg:order-1 relative">

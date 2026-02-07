@@ -112,7 +112,7 @@ const stoolTypes = [
 
 export function BristolChart() {
   return (
-    <section className="py-24 bg-[#f8fafc] dark:bg-slate-900/50" id="chart">
+    <section className="py-24 bg-[#f8fafc] dark:bg-slate-900/50 w-full" id="chart">
       <div className="max-w-7xl mx-auto px-6 text-center mb-16">
         <h2 className="text-4xl font-bold font-display mb-4">The Bristol Stool Chart</h2>
         <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
