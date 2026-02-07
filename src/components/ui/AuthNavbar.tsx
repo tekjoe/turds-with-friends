@@ -29,10 +29,11 @@ export function AuthNavbar({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           {/* Logo */}
-          <Link href="/dashboard" className="flex items-center gap-2">
-            <span className="text-3xl">💩</span>
-            <span className="font-display font-extrabold text-xl tracking-tight text-accent">
-              Turds with Friends
+          <Link href="/dashboard" className="flex items-center gap-2 min-w-0">
+            <span className="text-2xl sm:text-3xl flex-shrink-0">💩</span>
+            <span className="font-display font-extrabold text-lg sm:text-xl tracking-tight text-accent truncate">
+              <span className="hidden sm:inline">Turds with Friends</span>
+              <span className="sm:hidden">TWF</span>
             </span>
           </Link>
 
@@ -54,14 +55,14 @@ export function AuthNavbar({
           </div>
 
           {/* User Section */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
             <ThemeToggle />
-            <div className="flex items-center gap-3 pl-4 border-l border-slate-200 dark:border-slate-700">
+            <div className="flex items-center gap-2 sm:gap-3 pl-2 sm:pl-4 border-l border-slate-200 dark:border-slate-700">
               <div className="text-right hidden sm:block">
                 <p className="text-sm font-bold">{userName}</p>
                 <p className="text-xs text-slate-500 dark:text-slate-400">{userLevel}</p>
               </div>
-              <div className="h-10 w-10 rounded-full bg-accent flex items-center justify-center text-white font-bold ring-2 ring-accent/20">
+              <div className="h-9 w-9 sm:h-10 sm:w-10 rounded-full bg-accent flex items-center justify-center text-white font-bold text-sm sm:text-base ring-2 ring-accent/20 flex-shrink-0">
                 {userInitials}
               </div>
             </div>
