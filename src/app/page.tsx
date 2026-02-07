@@ -6,9 +6,9 @@ import { Footer } from "@/components/landing/Footer";
 
 export default function Home() {
   return (
-    <div className="min-h-screen text-slate-800 dark:text-slate-200">
+    <div className="min-h-screen w-full text-slate-800 dark:text-slate-200">
       <Navbar />
-      <main>
+      <main className="w-full">
         <Hero />
         <BristolChart />
         <Features />
