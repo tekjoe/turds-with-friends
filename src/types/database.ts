@@ -375,6 +375,93 @@ export type Database = {
           }
         ];
       };
+      location_comments: {
+        Row: {
+          id: string;
+          location_log_id: string;
+          user_id: string;
+          body: string;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          location_log_id: string;
+          user_id: string;
+          body: string;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          location_log_id?: string;
+          user_id?: string;
+          body?: string;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "location_comments_location_log_id_fkey";
+            columns: ["location_log_id"];
+            isOneToOne: false;
+            referencedRelation: "location_logs";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "location_comments_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
+      notifications: {
+        Row: {
+          id: string;
+          user_id: string;
+          actor_id: string;
+          type: string;
+          reference_id: string | null;
+          message: string;
+          read: boolean;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          actor_id: string;
+          type: string;
+          reference_id?: string | null;
+          message?: string;
+          read?: boolean;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          actor_id?: string;
+          type?: string;
+          reference_id?: string | null;
+          message?: string;
+          read?: boolean;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "notifications_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "notifications_actor_id_fkey";
+            columns: ["actor_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
       audit_logs: {
         Row: {
           id: string;
@@ -454,6 +541,9 @@ export type LocationLog = Database["public"]["Tables"]["location_logs"]["Row"];
 export type Challenge = Database["public"]["Tables"]["challenges"]["Row"];
 export type ChallengeParticipant = Database["public"]["Tables"]["challenge_participants"]["Row"];
 
+export type LocationComment = Database["public"]["Tables"]["location_comments"]["Row"];
+export type Notification = Database["public"]["Tables"]["notifications"]["Row"];
+
 // Insert types
 export type ProfileInsert = Database["public"]["Tables"]["profiles"]["Insert"];
 export type MovementLogInsert = Database["public"]["Tables"]["movement_logs"]["Insert"];
@@ -462,3 +552,5 @@ export type SubscriptionInsert = Database["public"]["Tables"]["subscriptions"]["
 export type LocationLogInsert = Database["public"]["Tables"]["location_logs"]["Insert"];
 export type ChallengeInsert = Database["public"]["Tables"]["challenges"]["Insert"];
 export type ChallengeParticipantInsert = Database["public"]["Tables"]["challenge_participants"]["Insert"];
+export type LocationCommentInsert = Database["public"]["Tables"]["location_comments"]["Insert"];
+export type NotificationInsert = Database["public"]["Tables"]["notifications"]["Insert"];

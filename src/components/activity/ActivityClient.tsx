@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Icon } from "@/components/ui/Icon";
 
@@ -13,6 +14,19 @@ export interface PendingRequest {
     avatar_url: string | null;
   };
   created_at: string;
+}
+
+export interface CommentNotification {
+  id: string;
+  message: string;
+  referenceId: string | null;
+  read: boolean;
+  created_at: string;
+  actor: {
+    display_name: string | null;
+    username: string | null;
+    avatar_url: string | null;
+  };
 }
 
 function getInitials(name: string): string {
@@ -45,7 +59,13 @@ const tabs: { id: Tab; label: string }[] = [
   { id: "reminders", label: "Reminders" },
 ];
 
-export function ActivityClient({ pendingRequests }: { pendingRequests: PendingRequest[] }) {
+export function ActivityClient({
+  pendingRequests,
+  commentNotifications = [],
+}: {
+  pendingRequests: PendingRequest[];
+  commentNotifications?: CommentNotification[];
+}) {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<Tab>("all");
   const [respondedIds, setRespondedIds] = useState<Set<string>>(new Set());
@@ -174,9 +194,71 @@ export function ActivityClient({ pendingRequests }: { pendingRequests: PendingRe
               );
             })}
 
-            {showSocial && visibleRequests.length === 0 && (
+            {/* Comment notifications */}
+            {showSocial && commentNotifications.map((notif) => {
+              const actorName = notif.actor.display_name ?? notif.actor.username ?? "Someone";
+              const initials = getInitials(actorName);
+              return (
+                <div
+                  key={notif.id}
+                  className={`bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-2xl shadow-sm hover:shadow-md transition-shadow ${
+                    !notif.read ? "ring-2 ring-primary/20" : ""
+                  }`}
+                >
+                  <div className="flex gap-4">
+                    <div className="relative shrink-0">
+                      {notif.actor.avatar_url ? (
+                        <Image
+                          src={notif.actor.avatar_url}
+                          alt={actorName}
+                          width={56}
+                          height={56}
+                          className="w-14 h-14 rounded-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-14 h-14 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center text-amber-600 font-bold text-lg">
+                          {initials}
+                        </div>
+                      )}
+                      <div className="absolute -bottom-1 -right-1 bg-amber-500 w-6 h-6 rounded-full border-2 border-white dark:border-slate-900 flex items-center justify-center">
+                        <Icon
+                          name="chat_bubble"
+                          className="text-[14px] font-bold text-white"
+                        />
+                      </div>
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex justify-between items-start">
+                        <h4 className="font-bold text-base">
+                          New Comment
+                        </h4>
+                        <span className="text-xs text-slate-400 shrink-0 ml-2">
+                          {timeAgo(notif.created_at)}
+                        </span>
+                      </div>
+                      <p className="text-slate-500 dark:text-slate-400 text-sm mt-1 leading-relaxed">
+                        {notif.message}
+                      </p>
+                      {notif.referenceId && (
+                        <div className="mt-3">
+                          <Link
+                            href={`/map?pin=${notif.referenceId}`}
+                            className="inline-flex items-center gap-1.5 bg-amber-500 hover:bg-amber-600 px-5 py-2 rounded-full text-xs font-bold text-white transition-all"
+                          >
+                            <Icon name="map" className="text-sm" />
+                            View Comment
+                          </Link>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+
+            {showSocial && visibleRequests.length === 0 && commentNotifications.length === 0 && (
               <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-2xl shadow-sm">
-                <p className="text-sm text-slate-400 text-center">No pending friend requests.</p>
+                <p className="text-sm text-slate-400 text-center">No new activity.</p>
               </div>
             )}
 

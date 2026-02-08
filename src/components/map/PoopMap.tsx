@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { Icon } from "@/components/ui/Icon";
 import dynamic from "next/dynamic";
 
@@ -37,6 +38,8 @@ export function PoopMap({
   friendLocations = [],
   userAvatar,
 }: PoopMapProps) {
+  const searchParams = useSearchParams();
+  const focusPinId = searchParams.get("pin");
   const [mounted, setMounted] = useState(false);
   const [showFriends, setShowFriends] = useState(true);
   const [showHeatmap, setShowHeatmap] = useState(false);
@@ -73,6 +76,7 @@ export function PoopMap({
         friendLocations={showFriends ? friendLocations : []}
         userAvatar={userAvatar}
         showHeatmap={showHeatmap}
+        focusPinId={focusPinId}
       />
       <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5">
         <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100 mb-4">

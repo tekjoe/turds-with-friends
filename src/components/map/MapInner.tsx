@@ -4,7 +4,8 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import "leaflet.heat";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useCallback } from "react";
+import { LocationComments } from "./LocationComments";
 
 interface LocationPin {
   id: string;
@@ -83,11 +84,35 @@ function HeatmapLayer({
   return null;
 }
 
+function FocusPin({
+  pin,
+  markerRefs,
+}: {
+  pin: LocationPin | FriendLocationPin | undefined;
+  markerRefs: React.RefObject<Map<string, L.Marker>>;
+}) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (!pin) return;
+    map.setView([pin.latitude, pin.longitude], 14);
+    // Small delay to let markers render before opening popup
+    const timer = setTimeout(() => {
+      const marker = markerRefs.current?.get(pin.id);
+      if (marker) marker.openPopup();
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [map, pin, markerRefs]);
+
+  return null;
+}
+
 interface MapInnerProps {
   locations: LocationPin[];
   friendLocations?: FriendLocationPin[];
   userAvatar: string | null;
   showHeatmap?: boolean;
+  focusPinId?: string | null;
 }
 
 export default function MapInner({
@@ -95,6 +120,7 @@ export default function MapInner({
   friendLocations = [],
   userAvatar,
   showHeatmap = false,
+  focusPinId,
 }: MapInnerProps) {
   const allPins = [...locations, ...friendLocations];
   const center: [number, number] =
@@ -103,16 +129,32 @@ export default function MapInner({
       : [39.8283, -98.5795];
 
   const myIcon = makeIcon("#22C55E", userAvatar);
+  const markerRefs = useRef<Map<string, L.Marker>>(new Map());
+
+  const setMarkerRef = useCallback(
+    (id: string, marker: L.Marker | null) => {
+      if (marker) {
+        markerRefs.current.set(id, marker);
+      } else {
+        markerRefs.current.delete(id);
+      }
+    },
+    []
+  );
 
   const heatPoints: [number, number, number][] = showHeatmap
     ? allPins.map((p) => [p.latitude, p.longitude, 1])
     : [];
 
+  const focusPin = focusPinId
+    ? allPins.find((p) => p.id === focusPinId)
+    : undefined;
+
   return (
     <div className="rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm relative z-0">
       <MapContainer
-        center={center}
-        zoom={allPins.length === 1 ? 14 : 5}
+        center={focusPin ? [focusPin.latitude, focusPin.longitude] : center}
+        zoom={focusPin ? 14 : allPins.length === 1 ? 14 : 5}
         className="w-full h-[500px] sm:h-[600px]"
         scrollWheelZoom
       >
@@ -121,19 +163,22 @@ export default function MapInner({
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <HeatmapLayer points={heatPoints} />
+        {focusPin && <FocusPin pin={focusPin} markerRefs={markerRefs} />}
         {/* User's own pins (green) */}
         {locations.map((loc) => (
           <Marker
             key={loc.id}
             position={[loc.latitude, loc.longitude]}
             icon={myIcon}
+            ref={(r) => setMarkerRef(loc.id, r as unknown as L.Marker | null)}
           >
-            <Popup>
+            <Popup maxWidth={300} minWidth={240}>
               <div className="text-sm">
                 <p className="font-bold">
                   {loc.place_name ?? "Unknown Throne"}
                 </p>
                 <p className="text-slate-500">{formatDate(loc.created_at)}</p>
+                <LocationComments locationLogId={loc.id} />
               </div>
             </Popup>
           </Marker>
@@ -146,14 +191,16 @@ export default function MapInner({
               key={loc.id}
               position={[loc.latitude, loc.longitude]}
               icon={friendIcon}
+              ref={(r) => setMarkerRef(loc.id, r as unknown as L.Marker | null)}
             >
-              <Popup>
+              <Popup maxWidth={300} minWidth={240}>
                 <div className="text-sm">
                   <p className="font-bold text-blue-600">{loc.friendName}</p>
                   <p>{loc.place_name ?? "Unknown Throne"}</p>
                   <p className="text-slate-500">
                     {formatDate(loc.created_at)}
                   </p>
+                  <LocationComments locationLogId={loc.id} />
                 </div>
               </Popup>
             </Marker>
