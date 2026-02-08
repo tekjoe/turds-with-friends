@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 import { useState, useEffect } from "react";
 
 interface Comment {
@@ -94,12 +96,12 @@ export function LocationComments({ locationLogId }: LocationCommentsProps) {
                 }}
               >
                 {c.avatarUrl ? (
-                  <img
+                  <Image
                     src={c.avatarUrl}
-                    alt=""
+                    alt={c.userName}
+                    width={20}
+                    height={20}
                     style={{
-                      width: "20px",
-                      height: "20px",
                       borderRadius: "50%",
                       objectFit: "cover",
                       flexShrink: 0,

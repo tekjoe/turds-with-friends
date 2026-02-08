@@ -11,10 +11,7 @@ const sidebarItems = [
   { icon: "group", label: "Friends List", href: "/friends" },
 ];
 
-const mobileItems = [
-  { icon: "dashboard", label: "Dashboard", href: "/dashboard" },
-  ...sidebarItems,
-];
+
 
 export function Sidebar() {
   const pathname = usePathname();

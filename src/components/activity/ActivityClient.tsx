@@ -87,8 +87,6 @@ export function ActivityClient({
   const visibleRequests = pendingRequests.filter((r) => !respondedIds.has(r.id));
 
   const showSocial = activeTab === "all" || activeTab === "social";
-  const showCompetitive = activeTab === "all" || activeTab === "competitive";
-  const showReminders = activeTab === "all" || activeTab === "reminders";
 
   return (
     <>

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Icon } from "@/components/ui/Icon";
 
 interface Participant {
@@ -116,9 +117,11 @@ export function ChallengeCard({
                 {i + 1}
               </span>
               {p.avatarUrl ? (
-                <img
+                <Image
                   src={p.avatarUrl}
-                  alt=""
+                  alt={p.userName}
+                  width={28}
+                  height={28}
                   className="w-7 h-7 rounded-full object-cover"
                 />
               ) : (

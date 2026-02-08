@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import { Icon } from "@/components/ui/Icon";
 
 interface Friend {
@@ -236,9 +237,11 @@ export function CreateChallengeForm({
                     className="flex items-center gap-3 w-full px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer"
                   >
                     {f.avatar_url ? (
-                      <img
+                      <Image
                         src={f.avatar_url}
-                        alt=""
+                        alt={f.display_name || f.username || "User"}
+                        width={28}
+                        height={28}
                         className="w-7 h-7 rounded-full object-cover"
                       />
                     ) : (
