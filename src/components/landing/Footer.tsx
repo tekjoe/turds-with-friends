@@ -11,7 +11,7 @@ export function Footer() {
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
               <Icon name="sentiment_satisfied" className="text-sm" />
             </div>
-            <span className="text-lg font-bold font-display">Turds with Friends</span>
+            <span className="text-lg font-bold font-display">Bowel Buddies</span>
           </div>
           <p className="max-w-xs mb-8">
             Making bowel health conversation accessible, fun, and data-driven for
@@ -90,7 +90,7 @@ export function Footer() {
 
       {/* Bottom Bar */}
       <div className="max-w-7xl mx-auto pt-16 mt-16 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-medium uppercase tracking-widest text-slate-500">
-        <p>&copy; {new Date().getFullYear()} Turds with Friends. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} Bowel Buddies. All rights reserved.</p>
         <p>Stay Regular. Stay Happy. 💩</p>
       </div>
     </footer>

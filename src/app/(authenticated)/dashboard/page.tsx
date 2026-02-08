@@ -122,7 +122,7 @@ export default async function DashboardPage() {
     f.requester_id === user.id ? f.addressee_id : f.requester_id
   );
 
-  let rankingList: Array<{
+  const rankingList: Array<{
     id: string;
     name: string;
     initials: string;

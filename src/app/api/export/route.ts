@@ -49,7 +49,7 @@ export async function GET(request: NextRequest) {
   if (format === "pdf") {
     const doc = new jsPDF();
     doc.setFontSize(18);
-    doc.text("Turds with Friends - Movement Log", 14, 20);
+    doc.text("Bowel Buddies - Movement Log", 14, 20);
     doc.setFontSize(10);
     doc.text(`Exported on ${new Date().toLocaleDateString("en-US")}`, 14, 28);
 

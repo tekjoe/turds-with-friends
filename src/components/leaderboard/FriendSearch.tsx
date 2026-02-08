@@ -28,7 +28,7 @@ export function FriendSearch() {
   const [isSearching, setIsSearching] = useState(false);
   const [sentIds, setSentIds] = useState<Set<string>>(new Set());
   const [error, setError] = useState<string | null>(null);
-  const debounceRef = useRef<ReturnType<typeof setTimeout>>();
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   const search = useCallback(async (q: string) => {
     if (q.length < 2) {

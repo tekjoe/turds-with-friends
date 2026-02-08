@@ -48,8 +48,8 @@ export function Navbar({ isAuthenticated = false, userName, avatarUrl, isPremium
             <Icon name="sentiment_satisfied" />
           </div>
           <span className="text-lg sm:text-xl font-bold font-display tracking-tight text-accent dark:text-primary truncate">
-            <span className="hidden sm:inline">Turds with Friends</span>
-            <span className="sm:hidden">TWF</span>
+            <span className="hidden sm:inline">Bowel Buddies</span>
+            <span className="sm:hidden">BB</span>
           </span>
         </Link>
 

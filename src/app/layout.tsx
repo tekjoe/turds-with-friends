@@ -18,7 +18,7 @@ const quicksand = Quicksand({
 });
 
 export const metadata: Metadata = {
-  title: "Turds with Friends | Gamified Bowel Tracking",
+  title: "Bowel Buddies | Gamified Bowel Tracking",
   description:
     "Track your digestive health with the Bristol Stool Chart. Compete with friends, earn badges, and maintain a healthy gut together.",
   keywords: ["bowel tracking", "bristol stool chart", "gut health", "digestive health"],

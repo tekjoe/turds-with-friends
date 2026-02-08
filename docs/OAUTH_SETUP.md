@@ -1,6 +1,6 @@
 # OAuth Provider Setup Guide
 
-This guide explains how to configure Google and Apple OAuth providers for Turds with Friends.
+This guide explains how to configure Google and Apple OAuth providers for Bowel Buddies.
 
 ## Prerequisites
 
@@ -31,7 +31,7 @@ supabase projects list
 1. Go to "APIs & Services" > "OAuth consent screen"
 2. Choose "External" user type
 3. Fill in required fields:
-   - App name: "Turds with Friends"
+   - App name: "Bowel Buddies"
    - User support email: your email
    - Developer contact: your email
 4. Add scopes: `email`, `profile`, `openid`
@@ -72,7 +72,7 @@ supabase projects list
 ### Step 3: Create Services ID
 1. Go to "Identifiers" > "+"
 2. Select "Services IDs" > Continue
-3. Enter description and identifier (e.g., `com.yourcompany.turds-web`)
+3. Enter description and identifier (e.g., `com.yourcompany.bowelbuddies`)
 4. Click Continue > Register
 5. Click on the newly created Services ID
 6. Enable "Sign in with Apple"

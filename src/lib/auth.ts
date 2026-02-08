@@ -4,11 +4,16 @@ export type OAuthProvider = "google" | "apple";
 
 export async function signInWithOAuth(provider: OAuthProvider) {
   const supabase = createClient();
+  
+  // Use production domain in production, window.location in development
+  const redirectTo = process.env.NODE_ENV === 'production' 
+    ? 'https://bowelbuddies.com/auth/callback'
+    : `${window.location.origin}/auth/callback`;
 
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider,
     options: {
-      redirectTo: `${window.location.origin}/auth/callback`,
+      redirectTo,
       queryParams: provider === "google" ? {
         access_type: "offline",
         prompt: "consent",

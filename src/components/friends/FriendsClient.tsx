@@ -72,7 +72,7 @@ export function FriendsClient({ friends, totalFriends, activeStreaks }: FriendsC
   const [showAddModal, setShowAddModal] = useState(false);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText("turdswithfriends.com/invite/8x92kz");
+    navigator.clipboard.writeText("bowelbuddies.com/invite/8x92kz");
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -212,7 +212,7 @@ export function FriendsClient({ friends, totalFriends, activeStreaks }: FriendsC
             </p>
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 mt-4 sm:mt-6">
               <div className="flex-1 bg-slate-100 dark:bg-slate-800 px-4 py-3 rounded-full text-xs sm:text-sm font-mono text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700 truncate text-center sm:text-left">
-                turdswithfriends.com/invite/8x92kz
+                bowelbuddies.com/invite/8x92kz
               </div>
               <Button
                 variant="primary"

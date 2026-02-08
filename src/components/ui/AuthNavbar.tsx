@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Icon } from "./Icon";
 import { ThemeToggle } from "./ThemeToggle";
 
 interface AuthNavbarProps {
@@ -32,8 +31,8 @@ export function AuthNavbar({
           <Link href="/dashboard" className="flex items-center gap-2 min-w-0">
             <span className="text-2xl sm:text-3xl flex-shrink-0">💩</span>
             <span className="font-display font-extrabold text-lg sm:text-xl tracking-tight text-accent truncate">
-              <span className="hidden sm:inline">Turds with Friends</span>
-              <span className="sm:hidden">TWF</span>
+              <span className="hidden sm:inline">Bowel Buddies</span>
+              <span className="sm:hidden">BB</span>
             </span>
           </Link>
 

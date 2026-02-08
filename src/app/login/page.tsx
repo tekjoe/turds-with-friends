@@ -118,7 +118,7 @@ export default function LoginPage() {
 
         {/* Footer */}
         <footer className="py-6 px-10 border-t border-[#22C55E]/10 flex justify-center items-center text-[#4c9a66] dark:text-[#a0c4ae] text-xs">
-          © {new Date().getFullYear()} Turds with Friends. All Rights Reserved. Potty on!
+          © {new Date().getFullYear()} Bowel Buddies. All Rights Reserved. Potty on!
         </footer>
       </div>
     </div>
