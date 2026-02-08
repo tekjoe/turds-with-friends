@@ -44,8 +44,13 @@ export function Navbar({ isAuthenticated = false, userName, avatarUrl, isPremium
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 min-w-0">
-          <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-white shadow-lg shadow-primary/20 flex-shrink-0">
-            <Icon name="sentiment_satisfied" />
+          <div className="w-10 h-10 relative flex-shrink-0">
+            <Image
+              src="/icon.png"
+              alt="Bowel Buddies Logo"
+              fill
+              className="object-contain"
+            />
           </div>
           <span className="text-lg sm:text-xl font-bold font-display tracking-tight text-accent dark:text-primary truncate">
             <span className="hidden sm:inline">Bowel Buddies</span>
@@ -55,12 +60,6 @@ export function Navbar({ isAuthenticated = false, userName, avatarUrl, isPremium
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-8 font-medium">
-          <Link href="/" className="hover:text-primary transition-colors">
-            Home
-          </Link>
-          <Link href="/#chart" className="hover:text-primary transition-colors">
-            The Chart
-          </Link>
           {isAuthenticated && (
             <>
               <Link href="/dashboard" className="hover:text-primary transition-colors">
@@ -101,8 +100,6 @@ export function Navbar({ isAuthenticated = false, userName, avatarUrl, isPremium
             <div
               className="relative"
               ref={menuRef}
-              onMouseEnter={() => setMenuOpen(true)}
-              onMouseLeave={() => setMenuOpen(false)}
             >
               <button
                 type="button"
@@ -122,6 +119,47 @@ export function Navbar({ isAuthenticated = false, userName, avatarUrl, isPremium
               {menuOpen && (
                 <div className="absolute right-0 pt-2 w-56 z-[9999]">
                 <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-xl py-2">
+                  {/* Mobile-only Navigation Links */}
+                  <div className="md:hidden border-b border-slate-200 dark:border-slate-800 pb-2 mb-2">
+                    {[
+                      { label: "Dashboard", href: "/dashboard" },
+                      { label: "Friends", href: "/friends" },
+                      { label: "Activity", href: "/activity" },
+                      { label: "Analytics", href: "/analytics", premium: true },
+                      { label: "Challenges", href: "/challenges", premium: true },
+                      { label: "Poop Map", href: "/map", premium: true },
+                    ].map((item) => {
+                      const isLocked = item.premium && !isPremium;
+                      return (
+                        <Link
+                          key={item.href}
+                          href={isLocked ? "/upgrade" : item.href}
+                          onClick={() => setMenuOpen(false)}
+                          className={`flex items-center justify-between px-4 py-3 text-sm font-medium transition-colors ${
+                            isLocked
+                              ? "text-slate-400 dark:text-slate-600"
+                              : "hover:bg-slate-50 dark:hover:bg-slate-800"
+                          }`}
+                        >
+                          <div className="flex items-center gap-3">
+                            {/* We could map icons here if needed, but for now just text or generic */}
+                             {isLocked && <Icon name="lock" className="text-base" />}
+                             <span>{item.label}</span>
+                          </div>
+                          {/* Optional: Add chevron or indicator? */}
+                        </Link>
+                      );
+                    })}
+                  </div>
+
+                  <Link
+                    href="/notifications"
+                    onClick={() => setMenuOpen(false)}
+                    className="flex items-center gap-3 px-4 py-3 text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                  >
+                    <Icon name="notifications" className="text-slate-400" />
+                    Notifications
+                  </Link>
                   <Link
                     href="/settings"
                     onClick={() => setMenuOpen(false)}
@@ -133,7 +171,7 @@ export function Navbar({ isAuthenticated = false, userName, avatarUrl, isPremium
                   <Link
                     href="/dashboard"
                     onClick={() => setMenuOpen(false)}
-                    className="flex items-center gap-3 px-4 py-3 text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                    className="flex items-center gap-3 px-4 py-3 text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors hidden md:flex"
                   >
                     <Icon name="dashboard" className="text-slate-400" />
                     Dashboard

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { ThemeToggle } from "./ThemeToggle";
 
@@ -29,7 +30,14 @@ export function AuthNavbar({
         <div className="flex justify-between h-16 items-center">
           {/* Logo */}
           <Link href="/dashboard" className="flex items-center gap-2 min-w-0">
-            <span className="text-2xl sm:text-3xl flex-shrink-0">💩</span>
+            <div className="w-8 h-8 sm:w-10 sm:h-10 relative flex-shrink-0">
+              <Image
+                src="/icon.png"
+                alt="Bowel Buddies Logo"
+                fill
+                className="object-contain"
+              />
+            </div>
             <span className="font-display font-extrabold text-lg sm:text-xl tracking-tight text-accent truncate">
               <span className="hidden sm:inline">Bowel Buddies</span>
               <span className="sm:hidden">BB</span>

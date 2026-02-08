@@ -1,7 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
-import { isPremium } from "@/lib/premium";
 import { redirect } from "next/navigation";
-import { SettingsForm } from "@/components/settings/SettingsForm";
+import { PrivacySettingsForm } from "@/components/settings/PrivacySettingsForm";
 
 interface PrivacySettings {
   show_weight?: boolean;
@@ -10,7 +9,7 @@ interface PrivacySettings {
   share_poop_locations?: boolean;
 }
 
-export default async function SettingsPage() {
+export default async function PrivacySettingsPage() {
   const supabase = await createClient();
 
   const {
@@ -23,27 +22,15 @@ export default async function SettingsPage() {
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("username, display_name, avatar_url, xp_total, privacy_settings")
+    .select("privacy_settings")
     .eq("id", user.id)
     .single();
 
   const privacySettings = profile?.privacy_settings as PrivacySettings | null;
 
-  const isPremiumUser = await isPremium(user.id);
-
   return (
     <div className="min-h-screen bg-background pt-20">
-      <SettingsForm
-        profile={{
-          username: profile?.username ?? null,
-          display_name: profile?.display_name ?? null,
-          avatar_url: profile?.avatar_url ?? null,
-          xp_total: profile?.xp_total ?? 0,
-          privacy_settings: privacySettings,
-        }}
-        email={user.email ?? ""}
-        isPremium={isPremiumUser}
-      />
+      <PrivacySettingsForm settings={privacySettings} />
     </div>
   );
 }

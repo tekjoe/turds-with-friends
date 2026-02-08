@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Icon } from "@/components/ui/Icon";
 
 export function Footer() {
@@ -8,8 +9,13 @@ export function Footer() {
         {/* Brand */}
         <div className="col-span-2">
           <div className="flex items-center gap-2 mb-6 text-white">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <Icon name="sentiment_satisfied" className="text-sm" />
+            <div className="w-8 h-8 relative flex-shrink-0">
+              <Image
+                src="/icon.png"
+                alt="Bowel Buddies Logo"
+                fill
+                className="object-contain"
+              />
             </div>
             <span className="text-lg font-bold font-display">Bowel Buddies</span>
           </div>

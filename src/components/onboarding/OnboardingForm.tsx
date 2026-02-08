@@ -145,11 +145,50 @@ export function OnboardingForm() {
           <button
             type="submit"
             disabled={!isValid || isBusy}
-            className="w-full py-4 bg-primary text-white rounded-xl font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+            className="w-full py-4 bg-primary text-white rounded-xl font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 cursor-pointer"
           >
             {isBusy ? "Checking..." : "Continue"}
           </button>
         </form>
+      </div>
+
+      {/* Pro Plan Promo */}
+      <div className="mt-8 bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 border border-amber-200 dark:border-amber-800 rounded-2xl p-6 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
+        
+        <div className="relative z-10">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="p-2 bg-amber-100 dark:bg-amber-900/40 rounded-lg text-amber-600 dark:text-amber-400">
+              <Icon name="workspace_premium" className="text-xl" />
+            </div>
+            <h3 className="font-bold text-lg text-amber-900 dark:text-amber-100">
+              Go Pro & Track Like a Legend
+            </h3>
+          </div>
+          
+          <ul className="space-y-3 mb-6">
+            {[
+              "Unlock advanced analytics & charts",
+              "See the global poop map",
+              "Join exclusive challenges",
+              "Custom themes & app icons"
+            ].map((item, i) => (
+              <li key={i} className="flex items-center gap-2 text-sm text-amber-800 dark:text-amber-200/80">
+                <Icon name="check" className="text-amber-500" />
+                {item}
+              </li>
+            ))}
+          </ul>
+
+          <a 
+            href="/upgrade" 
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block w-full py-3 bg-amber-500 hover:bg-amber-600 text-white text-center rounded-xl font-bold shadow-lg shadow-amber-500/20 transition-all hover:scale-[1.02]"
+          >
+            View Pro Plans
+          </a>
+        </div>
       </div>
     </div>
   );

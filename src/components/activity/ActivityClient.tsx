@@ -265,63 +265,7 @@ export function ActivityClient({
           </div>
         </section>
 
-        {/* Yesterday (hardcoded items kept as-is per plan) */}
-        {(showReminders || showCompetitive) && (
-          <section>
-            <h3 className="text-lg font-bold mb-4 text-slate-400">
-              Yesterday
-            </h3>
-            <div className="space-y-3">
-              {showReminders && (
-                <div className="bg-white/60 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 p-5 rounded-2xl opacity-80 hover:opacity-100 transition-all">
-                  <div className="flex gap-4">
-                    <div className="w-14 h-14 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 shrink-0">
-                      <Icon name="bathroom" className="text-3xl" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex justify-between items-start">
-                        <h4 className="font-bold text-base">
-                          Daily Check-in Reminder
-                        </h4>
-                        <span className="text-xs text-slate-400 shrink-0 ml-2">
-                          22h ago
-                        </span>
-                      </div>
-                      <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">
-                        Don&apos;t forget to log your movement today. Consistency
-                        is key to a healthy gut! 🧻
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              )}
 
-              {showCompetitive && (
-                <div className="bg-white/60 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 p-5 rounded-2xl opacity-80 hover:opacity-100 transition-all">
-                  <div className="flex gap-4">
-                    <div className="w-14 h-14 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 shrink-0">
-                      <Icon name="verified" className="text-3xl" filled />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex justify-between items-start">
-                        <h4 className="font-bold text-base">
-                          New Personal Best!
-                        </h4>
-                        <span className="text-xs text-slate-400 shrink-0 ml-2">
-                          1d ago
-                        </span>
-                      </div>
-                      <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">
-                        You&apos;ve logged 5 days in a row with Type 3 or 4
-                        stool. You&apos;re on a roll!
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          </section>
-        )}
       </div>
     </>
   );

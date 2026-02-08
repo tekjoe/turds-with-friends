@@ -4,11 +4,13 @@ export type OAuthProvider = "google" | "apple";
 
 export async function signInWithOAuth(provider: OAuthProvider) {
   const supabase = createClient();
-  
-  // Use production domain in production, window.location in development
-  const redirectTo = process.env.NODE_ENV === 'production' 
-    ? 'https://bowelbuddies.com/auth/callback'
-    : `${window.location.origin}/auth/callback`;
+
+  // Determine the redirect URL dynamically
+  const origin = (typeof window !== 'undefined' && window.location.origin)
+    ? window.location.origin
+    : (process.env.NEXT_PUBLIC_SITE_URL || 'https://bowelbuddies.com');
+
+  const redirectTo = `${origin}/auth/callback`;
 
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider,

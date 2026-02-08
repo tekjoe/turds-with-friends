@@ -24,6 +24,7 @@ interface SettingsFormProps {
     privacy_settings: PrivacySettings | null;
   };
   email: string;
+  isPremium?: boolean;
 }
 
 
@@ -71,7 +72,7 @@ function getLevelInfo(xp: number) {
   return { level, title };
 }
 
-export function SettingsForm({ profile, email }: SettingsFormProps) {
+export function SettingsForm({ profile, email, isPremium = false }: SettingsFormProps) {
   const router = useRouter();
   const [username, setUsername] = useState(profile.username ?? "");
   const [displayName, setDisplayName] = useState(profile.display_name ?? "");
@@ -83,12 +84,6 @@ export function SettingsForm({ profile, email }: SettingsFormProps) {
     leaderboardUpdates: false,
     weeklySummary: true,
   });
-  const [publicProfile, setPublicProfile] = useState(
-    profile.privacy_settings?.show_on_leaderboard !== false
-  );
-  const [shareLocations, setShareLocations] = useState(
-    profile.privacy_settings?.share_poop_locations === true
-  );
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -114,11 +109,6 @@ export function SettingsForm({ profile, email }: SettingsFormProps) {
         .update({
           username: username || null,
           display_name: displayName || null,
-          privacy_settings: {
-            ...profile.privacy_settings,
-            show_on_leaderboard: publicProfile,
-            share_poop_locations: shareLocations,
-          },
         })
         .eq("id", user.id);
 
@@ -173,6 +163,31 @@ export function SettingsForm({ profile, email }: SettingsFormProps) {
               Customize your digital throne experience and manage your persona.
             </p>
           </div>
+
+          {/* Go Pro Banner - Only for non-premium users */}
+          {!isPremium && (
+            <div className="mb-6 bg-gradient-to-r from-amber-100 to-orange-100 dark:from-amber-900/30 dark:to-orange-900/30 rounded-2xl p-6 border border-amber-200 dark:border-amber-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="flex items-center gap-4 min-w-0">
+                <div className="w-12 h-12 shrink-0 rounded-full bg-amber-500 flex items-center justify-center text-white shadow-lg shadow-amber-500/20">
+                  <Icon name="workspace_premium" className="text-2xl" />
+                </div>
+                <div>
+                  <p className="font-bold text-lg leading-tight text-amber-900 dark:text-amber-100">
+                    Unlock Premium Features
+                  </p>
+                  <p className="text-sm text-amber-700 dark:text-amber-300/80">
+                    Get analytics, challenges, and the global poop map!
+                  </p>
+                </div>
+              </div>
+              <Link
+                href="/upgrade"
+                className="whitespace-nowrap px-6 py-2.5 bg-amber-500 hover:bg-amber-600 text-white rounded-xl font-bold shadow-lg shadow-amber-500/20 transition-all hover:scale-105 active:scale-95"
+              >
+                Go Pro
+              </Link>
+            </div>
+          )}
 
           {/* Card */}
           <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 sm:p-10">
@@ -396,37 +411,6 @@ export function SettingsForm({ profile, email }: SettingsFormProps) {
             </div>
           </div>
 
-          {/* Public Profile Banner */}
-          <div className="mt-8 bg-primary/10 rounded-2xl p-6 border border-primary/20 flex items-center justify-between gap-4">
-            <div className="flex items-center gap-4 min-w-0">
-              <div className="w-12 h-12 shrink-0 rounded-full bg-primary flex items-center justify-center text-white">
-                <Icon name="visibility" />
-              </div>
-              <div>
-                <p className="font-bold text-lg leading-tight">Public Profile</p>
-                <p className="text-sm text-slate-600 dark:text-slate-400">
-                  Your Bristol logs are currently visible to friends.
-                </p>
-              </div>
-            </div>
-            <Toggle checked={publicProfile} onChange={setPublicProfile} />
-          </div>
-
-          {/* Share Poop Locations Banner */}
-          <div className="mt-4 bg-amber-50 dark:bg-amber-900/10 rounded-2xl p-6 border border-amber-200 dark:border-amber-800 flex items-center justify-between gap-4">
-            <div className="flex items-center gap-4 min-w-0">
-              <div className="w-12 h-12 shrink-0 rounded-full bg-amber-500 flex items-center justify-center text-white">
-                <Icon name="location_on" />
-              </div>
-              <div>
-                <p className="font-bold text-lg leading-tight">Share Poop Locations</p>
-                <p className="text-sm text-slate-600 dark:text-slate-400">
-                  Let friends see your pins on their Poop Map.
-                </p>
-              </div>
-            </div>
-            <Toggle checked={shareLocations} onChange={setShareLocations} />
-          </div>
         </div>
       </main>
     </div>

@@ -67,7 +67,7 @@ export default function LoginPage() {
                 <button
                   onClick={handleGoogleSignIn}
                   disabled={isLoading}
-                  className="flex w-full items-center justify-center gap-4 rounded-xl border-2 border-[#cfe7d7] dark:border-[#22C55E]/30 h-16 bg-white dark:bg-[#1a2e21] text-[#0d1b12] dark:text-white text-lg font-bold hover:bg-[#FDFBF7] dark:hover:bg-[#233a2a] hover:border-[#22C55E]/50 transition-all duration-300 shadow-sm active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex w-full items-center justify-center gap-4 rounded-xl border-2 border-[#cfe7d7] dark:border-[#22C55E]/30 h-16 bg-white dark:bg-[#1a2e21] text-[#0d1b12] dark:text-white text-lg font-bold hover:bg-[#FDFBF7] dark:hover:bg-[#233a2a] hover:border-[#22C55E]/50 transition-all duration-300 shadow-sm active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                 >
                   {isLoading ? (
                     <div className="w-6 h-6 border-2 border-slate-300 border-t-[#22C55E] rounded-full animate-spin" />
@@ -98,7 +98,7 @@ export default function LoginPage() {
                   New to the bowl?
                   <button 
                     onClick={handleGoogleSignIn}
-                    className="text-[#22C55E] font-bold hover:underline ml-1"
+                    className="text-[#22C55E] font-bold hover:underline ml-1 cursor-pointer"
                   >
                     Sign Up
                   </button>
