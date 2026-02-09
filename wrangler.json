@@ -12,6 +12,6 @@
     "enabled": true
   },
   "vars": {
-    "NEXT_PUBLIC_APP_URL": "https://bowelbuddies.com"
+    "NEXT_PUBLIC_APP_URL": "https://bowelbuddies.com",
   }
 }
