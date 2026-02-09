@@ -17,6 +17,7 @@
 		"NEXT_PUBLIC_APP_URL": "https://bowelbuddies.com",
 		"STRIPE_ANNUAL_PRICE_ID": "price_1Sy3Ft3gEoLyaHw6KLY2RnNM",
 		"STRIPE_MONTHLY_PRICE_ID": "price_1Sy3Ex3gEoLyaHw6T3ult6nF",
+    "NEXT_PUBLIC_SITE_URL": "https://bowelbuddies.com"
 	},
 	"routes": [
 		{

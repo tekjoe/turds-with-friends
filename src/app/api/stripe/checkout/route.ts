@@ -70,7 +70,15 @@ export async function POST(request: NextRequest) {
       metadata: { supabase_user_id: user.id },
     });
 
-    return NextResponse.json({ url: session.url });
+    return NextResponse.json({
+      url: session.url,
+      debug: {
+        appUrl,
+        env_app_url: process.env.NEXT_PUBLIC_APP_URL,
+        env_site_url: process.env.NEXT_PUBLIC_SITE_URL,
+        request_origin: request.nextUrl.origin,
+      },
+    });
   } catch (error) {
     console.error("Stripe Checkout Error:", error);
     return NextResponse.json(
