@@ -77,10 +77,13 @@ export function OnboardingForm() {
         return;
       }
 
-      const { error: updateError } = await supabase
+      const { error: updateError, data: profileData } = await supabase
         .from("profiles")
-        .update({ username })
-        .eq("id", user.id);
+        .upsert({ id: user.id, username })
+        .select()
+        .single();
+
+      console.log("Onboarding profile update:", { success: !updateError, profileData, error: updateError });
 
       if (updateError) throw updateError;
 

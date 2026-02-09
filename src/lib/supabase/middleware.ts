@@ -72,9 +72,12 @@ export async function updateSession(request: NextRequest) {
         .single();
 
       if (!profile?.username) {
+        console.log("Middleware: No username found for user", user.id, "Profile:", profile);
         const url = request.nextUrl.clone();
         url.pathname = "/onboarding";
         return NextResponse.redirect(url);
+      } else {
+        console.log("Middleware: Username found", profile.username);
       }
     }
 
