@@ -1,17 +1,28 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "bowel-buddies",
-  "main": ".open-next/worker.js",
-  "compatibility_date": "2025-04-01",
-  "compatibility_flags": ["nodejs_compat"],
-  "assets": {
-    "directory": ".open-next/assets",
-    "binding": "ASSETS"
-  },
-  "observability": {
-    "enabled": true
-  },
-  "vars": {
-    "NEXT_PUBLIC_APP_URL": "https://bowelbuddies.com",
-  }
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "bowel-buddies",
+	"main": ".open-next/worker.js",
+	"compatibility_date": "2025-04-01",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"assets": {
+		"directory": ".open-next/assets",
+		"binding": "ASSETS"
+	},
+	"observability": {
+		"enabled": true
+	},
+	"vars": {
+		"NEXT_PUBLIC_APP_URL": "https://bowelbuddies.com",
+		"STRIPE_ANNUAL_PRICE_ID": "price_1Sy3Ft3gEoLyaHw6KLY2RnNM",
+		"STRIPE_MONTHLY_PRICE_ID": "price_1Sy3Ex3gEoLyaHw6T3ult6nF",
+	},
+	"routes": [
+		{
+			"pattern": "bowelbuddies.com",
+			"zone_name": "bowelbuddies.com",
+			"custom_domain": true
+		}
+	]
 }
