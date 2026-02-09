@@ -57,8 +57,8 @@ export async function POST(request: NextRequest) {
     }
 
     const appUrl =
-      process.env.NEXT_PUBLIC_APP_URL ??
       process.env.NEXT_PUBLIC_SITE_URL ??
+      process.env.NEXT_PUBLIC_APP_URL ??
       request.nextUrl.origin;
 
     const session = await stripe.checkout.sessions.create({
