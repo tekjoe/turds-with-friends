@@ -1,17 +1,18 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Icon } from "@/components/ui/Icon";
+import { Footer } from "@/components/landing/Footer";
 
 export const metadata: Metadata = {
   title: "Terms of Service | Bowel Buddies",
   description:
-    "Read Bowel Buddies Terms of Service. Learn about user accounts, acceptable use, content policies, and liability limitations for our health tracking app.",
+    "Explore Bowel Buddies Terms of Service covering user accounts, acceptable use, intellectual property, warranty disclaimers, and liability limitations.",
   openGraph: {
     type: "website",
     siteName: "Bowel Buddies",
     title: "Terms of Service | Bowel Buddies",
     description:
-      "Read Bowel Buddies Terms of Service. Learn about user accounts, acceptable use, content policies, and liability limitations for our health tracking app.",
+      "Explore Bowel Buddies Terms of Service covering user accounts, acceptable use, intellectual property, warranty disclaimers, and liability limitations.",
     images: [{
       url: "/og-image.png",
       width: 1200,
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Terms of Service | Bowel Buddies",
     description:
-      "Read Bowel Buddies Terms of Service. Learn about user accounts, acceptable use, content policies, and liability limitations for our health tracking app.",
+      "Explore Bowel Buddies Terms of Service covering user accounts, acceptable use, intellectual property, warranty disclaimers, and liability limitations.",
     images: ["/og-image.png"],
   },
 };
@@ -36,6 +37,11 @@ const webPageSchema = {
   description: "Terms of Service for Bowel Buddies health tracking application",
   url: "https://bowelbuddies.app/terms",
   lastReviewed: "2026-02-11",
+  isPartOf: {
+    "@type": "WebSite",
+    name: "Bowel Buddies",
+    url: "https://bowelbuddies.app",
+  },
   publisher: {
     "@type": "Organization",
     name: "Bowel Buddies",
@@ -49,11 +55,13 @@ const tocSections = [
   { id: "acceptance", title: "Acceptance of Terms" },
   { id: "accounts", title: "User Accounts" },
   { id: "use", title: "Acceptable Use" },
-  { id: "content", title: "User Content" },
+  { id: "ip", title: "Intellectual Property" },
   { id: "termination", title: "Termination" },
+  { id: "disclaimer", title: "Disclaimer of Warranties" },
   { id: "liability", title: "Limitation of Liability" },
+  { id: "governing", title: "Governing Law" },
   { id: "changes", title: "Changes to Terms" },
-  { id: "contact", title: "Contact Us" },
+  { id: "contact", title: "Contact Information" },
 ];
 
 export default function TermsPage() {
@@ -215,37 +223,37 @@ export default function TermsPage() {
                   </div>
                 </section>
 
-                {/* User Content */}
-                <section id="content" className="mb-12 scroll-mt-24">
+                {/* Intellectual Property */}
+                <section id="ip" className="mb-12 scroll-mt-24">
                   <h2 className="text-2xl font-bold font-display mb-4 flex items-center gap-3">
                     <span className="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center text-sm">
                       4
                     </span>
-                    User Content
+                    Intellectual Property
                   </h2>
                   <div className="space-y-4 text-slate-600 dark:text-slate-400 leading-relaxed">
                     <p>
+                      The Service and its original content (excluding User Content),
+                      features, and functionality are and will remain the exclusive
+                      property of Bowel Buddies and its licensors. The Service is
+                      protected by copyright, trademark, and other laws of both the
+                      United States and foreign countries.
+                    </p>
+                    <p>
+                      Our trademarks and trade dress may not be used in connection
+                      with any product or service without the prior written consent
+                      of Bowel Buddies. You agree not to reproduce, duplicate, copy,
+                      sell, resell, or exploit any portion of the Service without
+                      express written permission from us.
+                    </p>
+                    <p>
                       The Service allows you to store and track personal health
                       information, including but not limited to bowel movement
-                      data, symptoms, and notes (&quot;User Content&quot;).
-                    </p>
-                    <p>
-                      You retain all rights to your User Content. By providing
-                      User Content to the Service, you grant Bowel Buddies a
-                      limited license to use, store, and process your User Content
-                      solely for the purpose of providing and improving the Service.
-                    </p>
-                    <p>
-                      You are solely responsible for the User Content you provide
-                      and the consequences of sharing it. We do not monitor all
-                      User Content, but we reserve the right to remove any User
-                      Content that violates these Terms.
-                    </p>
-                    <p>
-                      User Content that you choose to share with friends or
-                      healthcare providers through the Service is shared at your
-                      own risk. Please be mindful of the sensitivity of health
-                      information when sharing.
+                      data, symptoms, and notes (&quot;User Content&quot;). You retain all
+                      rights to your User Content. By providing User Content to the
+                      Service, you grant Bowel Buddies a limited license to use,
+                      store, and process your User Content solely for the purpose
+                      of providing and improving the Service.
                     </p>
                   </div>
                 </section>
@@ -280,11 +288,44 @@ export default function TermsPage() {
                   </div>
                 </section>
 
+                {/* Disclaimer of Warranties */}
+                <section id="disclaimer" className="mb-12 scroll-mt-24">
+                  <h2 className="text-2xl font-bold font-display mb-4 flex items-center gap-3">
+                    <span className="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center text-sm">
+                      6
+                    </span>
+                    Disclaimer of Warranties
+                  </h2>
+                  <div className="space-y-4 text-slate-600 dark:text-slate-400 leading-relaxed">
+                    <p>
+                      The Service is provided on an &quot;AS IS&quot; and &quot;AS AVAILABLE&quot; basis.
+                      Bowel Buddies expressly disclaims all warranties of any kind,
+                      whether express or implied, including but not limited to the
+                      implied warranties of merchantability, fitness for a particular
+                      purpose, and non-infringement.
+                    </p>
+                    <p>
+                      Bowel Buddies makes no warranty that the Service will meet your
+                      requirements, be available on an uninterrupted, timely, secure,
+                      or error-free basis, or that any errors in the Service will be
+                      corrected. Your use of the Service is at your sole risk.
+                    </p>
+                    <p>
+                      This Service does not provide medical advice. The content is
+                      for informational purposes only and is not a substitute for
+                      professional medical advice, diagnosis, or treatment. Always
+                      seek the advice of your physician or other qualified health
+                      provider with any questions you may have regarding a medical
+                      condition.
+                    </p>
+                  </div>
+                </section>
+
                 {/* Limitation of Liability */}
                 <section id="liability" className="mb-12 scroll-mt-24">
                   <h2 className="text-2xl font-bold font-display mb-4 flex items-center gap-3">
                     <span className="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center text-sm">
-                      6
+                      7
                     </span>
                     Limitation of Liability
                   </h2>
@@ -324,11 +365,42 @@ export default function TermsPage() {
                   </div>
                 </section>
 
+                {/* Governing Law */}
+                <section id="governing" className="mb-12 scroll-mt-24">
+                  <h2 className="text-2xl font-bold font-display mb-4 flex items-center gap-3">
+                    <span className="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center text-sm">
+                      8
+                    </span>
+                    Governing Law
+                  </h2>
+                  <div className="space-y-4 text-slate-600 dark:text-slate-400 leading-relaxed">
+                    <p>
+                      These Terms shall be governed and construed in accordance
+                      with the laws of the United States and the State of Delaware,
+                      without regard to its conflict of law provisions.
+                    </p>
+                    <p>
+                      Our failure to enforce any right or provision of these Terms
+                      will not be considered a waiver of those rights. If any
+                      provision of these Terms is held to be invalid or unenforceable
+                      by a court, the remaining provisions of these Terms will remain
+                      in effect.
+                    </p>
+                    <p>
+                      Any disputes arising out of or relating to these Terms or the
+                      Service shall be resolved through binding arbitration in
+                      accordance with the rules of the American Arbitration Association.
+                      The arbitration shall take place in Delaware, and the decision
+                      of the arbitrator shall be final and binding.
+                    </p>
+                  </div>
+                </section>
+
                 {/* Changes to Terms */}
                 <section id="changes" className="mb-12 scroll-mt-24">
                   <h2 className="text-2xl font-bold font-display mb-4 flex items-center gap-3">
                     <span className="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center text-sm">
-                      7
+                      9
                     </span>
                     Changes to Terms
                   </h2>
@@ -353,13 +425,13 @@ export default function TermsPage() {
                   </div>
                 </section>
 
-                {/* Contact Us */}
+                {/* Contact Information */}
                 <section id="contact" className="mb-12 scroll-mt-24">
                   <h2 className="text-2xl font-bold font-display mb-4 flex items-center gap-3">
                     <span className="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center text-sm">
-                      8
+                      10
                     </span>
-                    Contact Us
+                    Contact Information
                   </h2>
                   <div className="space-y-4 text-slate-600 dark:text-slate-400 leading-relaxed">
                     <p>
@@ -436,6 +508,7 @@ export default function TermsPage() {
           </div>
         </section>
       </main>
+      <Footer />
     </>
   );
 }
