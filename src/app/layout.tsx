@@ -18,10 +18,28 @@ const quicksand = Quicksand({
 });
 
 export const metadata: Metadata = {
-  title: "Bowel Buddies | Gamified Bowel Tracking",
+  title: "Poop Tracker App | Track Your Gut Health | Bowel Buddies",
   description:
-    "Track your digestive health with the Bristol Stool Chart. Compete with friends, earn badges, and maintain a healthy gut together.",
-  keywords: ["bowel tracking", "bristol stool chart", "gut health", "digestive health"],
+    "Track your bowel movements with the best poop tracker app. Monitor gut health using the Bristol Chart, analyze stool types, and compete with friends today!",
+  keywords: ["poop tracker app", "bowel tracking", "bristol stool chart", "gut health", "digestive health"],
+  openGraph: {
+    type: "website",
+    siteName: "Bowel Buddies",
+    title: "Poop Tracker App | Track Your Gut Health | Bowel Buddies",
+    description: "Track your bowel movements with the best poop tracker app. Monitor gut health using the Bristol Chart, analyze stool types, and compete with friends today!",
+    images: [{
+      url: "/og-image.png",
+      width: 1200,
+      height: 630,
+      alt: "Bowel Buddies - Poop Tracker App for Gut Health",
+    }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Poop Tracker App | Track Your Gut Health | Bowel Buddies",
+    description: "Track your bowel movements with the best poop tracker app. Monitor gut health using the Bristol Chart, analyze stool types, and compete with friends today!",
+    images: ["/og-image.png"],
+  },
 };
 
 export const viewport: Viewport = {
