@@ -36,7 +36,7 @@ export default async function DashboardPage() {
     redirect("/login");
   }
 
-  const premium = await isPremium(user.id);
+  void isPremium(user.id); // Kept for future reference when premium features are re-enabled
 
   // Fetch user profile
   const { data: profile } = await supabase
@@ -180,7 +180,7 @@ export default async function DashboardPage() {
     <div className="min-h-screen bg-background pt-20">
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
         <div className="flex items-center justify-end mb-6">
-          <ExportButton isPremium={premium} />
+          <ExportButton />
         </div>
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">

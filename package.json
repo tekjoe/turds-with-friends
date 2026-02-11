@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "jest",
+    "test": "jest && jest --config jest.config.api.js",
+    "test:api": "jest --config jest.config.api.js",
+    "test:watch": "jest --watch",
     "build:worker": "opennextjs-cloudflare build",
     "dev:worker": "wrangler dev --config wrangler.json --port 8787",
     "preview": "npm run build:worker && wrangler dev --config wrangler.json",
@@ -34,6 +36,7 @@
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
     "@types/leaflet": "^1.9.21",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -44,6 +47,8 @@
     "jest-environment-jsdom": "^30.2.0",
     "puppeteer": "^24.37.2",
     "tailwindcss": "^4",
+    "ts-jest": "^29.4.6",
+    "ts-node": "^10.9.2",
     "typescript": "^5",
     "wrangler": "^4.63.0"
   }
