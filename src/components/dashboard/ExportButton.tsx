@@ -2,13 +2,8 @@
 
 import { useState, useRef, useEffect } from "react";
 import { Icon } from "@/components/ui/Icon";
-import { PremiumBadge } from "@/components/ui/PremiumBadge";
 
-interface ExportButtonProps {
-  isPremium: boolean;
-}
-
-export function ExportButton({ isPremium }: ExportButtonProps) {
+export function ExportButton() {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -34,15 +29,6 @@ export function ExportButton({ isPremium }: ExportButtonProps) {
     a.click();
     URL.revokeObjectURL(url);
   };
-
-  if (!isPremium) {
-    return (
-      <span className="inline-flex items-center gap-1.5 text-sm text-slate-400 cursor-default">
-        <Icon name="download" className="text-base" />
-        Export <PremiumBadge />
-      </span>
-    );
-  }
 
   return (
     <div className="relative" ref={ref}>

@@ -13,10 +13,11 @@ interface NavbarProps {
   isAuthenticated?: boolean;
   userName?: string;
   avatarUrl?: string;
+  // isPremium prop kept for backward compatibility but no longer used (premium features are open)
   isPremium?: boolean;
 }
 
-export function Navbar({ isAuthenticated = false, userName, avatarUrl, isPremium = false }: NavbarProps) {
+export function Navbar({ isAuthenticated = false, userName, avatarUrl }: NavbarProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -71,24 +72,15 @@ export function Navbar({ isAuthenticated = false, userName, avatarUrl, isPremium
               <Link href="/activity" className="hover:text-primary transition-colors">
                 Activity
               </Link>
-              {isPremium ? (
-                <>
-                  <Link href="/analytics" className="hover:text-primary transition-colors">
-                    Analytics
-                  </Link>
-                  <Link href="/challenges" className="hover:text-primary transition-colors">
-                    Challenges
-                  </Link>
-                  <Link href="/map" className="hover:text-primary transition-colors">
-                    Poop Map
-                  </Link>
-                </>
-              ) : (
-                <Link href="/upgrade" className="flex items-center gap-1 text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 transition-colors font-semibold">
-                  <Icon name="workspace_premium" className="text-base" />
-                  Go Pro
-                </Link>
-              )}
+              <Link href="/analytics" className="hover:text-primary transition-colors">
+                Analytics
+              </Link>
+              <Link href="/challenges" className="hover:text-primary transition-colors">
+                Challenges
+              </Link>
+              <Link href="/map" className="hover:text-primary transition-colors">
+                Poop Map
+              </Link>
             </>
           )}
         </div>
@@ -125,31 +117,21 @@ export function Navbar({ isAuthenticated = false, userName, avatarUrl, isPremium
                       { label: "Dashboard", href: "/dashboard" },
                       { label: "Friends", href: "/friends" },
                       { label: "Activity", href: "/activity" },
-                      { label: "Analytics", href: "/analytics", premium: true },
-                      { label: "Challenges", href: "/challenges", premium: true },
-                      { label: "Poop Map", href: "/map", premium: true },
-                    ].map((item) => {
-                      const isLocked = item.premium && !isPremium;
-                      return (
+                      { label: "Analytics", href: "/analytics" },
+                      { label: "Challenges", href: "/challenges" },
+                      { label: "Poop Map", href: "/map" },
+                    ].map((item) => (
                         <Link
                           key={item.href}
-                          href={isLocked ? "/upgrade" : item.href}
+                          href={item.href}
                           onClick={() => setMenuOpen(false)}
-                          className={`flex items-center justify-between px-4 py-3 text-sm font-medium transition-colors ${
-                            isLocked
-                              ? "text-slate-400 dark:text-slate-600"
-                              : "hover:bg-slate-50 dark:hover:bg-slate-800"
-                          }`}
+                          className="flex items-center justify-between px-4 py-3 text-sm font-medium transition-colors hover:bg-slate-50 dark:hover:bg-slate-800"
                         >
                           <div className="flex items-center gap-3">
-                            {/* We could map icons here if needed, but for now just text or generic */}
-                             {isLocked && <Icon name="lock" className="text-base" />}
                              <span>{item.label}</span>
                           </div>
-                          {/* Optional: Add chevron or indicator? */}
                         </Link>
-                      );
-                    })}
+                      ))}
                   </div>
 
                   <Link

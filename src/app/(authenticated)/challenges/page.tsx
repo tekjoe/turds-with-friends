@@ -11,8 +11,8 @@ export default async function ChallengesPage() {
 
   if (!user) redirect("/login");
 
-  const premium = await isPremium(user.id);
-  if (!premium) redirect("/upgrade");
+  // Premium check kept for future reference - redirects removed as part of US-001
+  await isPremium(user.id);
 
   return (
     <div className="min-h-screen bg-background pt-20">

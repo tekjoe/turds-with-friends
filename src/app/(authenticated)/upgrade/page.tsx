@@ -13,11 +13,8 @@ export default async function UpgradePage() {
     redirect("/login");
   }
 
-  const userIsPremium = await isPremium(user.id);
-
-  if (userIsPremium) {
-    redirect("/dashboard?already_premium=true");
-  }
+  // Premium check kept for future reference - redirect removed as part of US-001
+  await isPremium(user.id);
 
   return <UpgradeClient />;
 }
