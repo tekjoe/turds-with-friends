@@ -1,0 +1,11 @@
+# Progress Log
+Run: ba4c5495-d1cc-4c6a-93f7-490019ebea73
+Task: turds-with-friends - Complete premium access
+Started: 2026-02-10
+
+## Codebase Patterns
+- Testing: Jest with Next.js integration
+- Mock pattern for Supabase: Use jest.mock('@/lib/supabase/server', ...)
+- Tests in __tests__ folder or alongside source files with .test.ts suffix
+
+---
