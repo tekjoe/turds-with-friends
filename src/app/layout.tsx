@@ -5,6 +5,19 @@ import { isPremium } from "@/lib/premium";
 import { Navbar } from "@/components/ui/Navbar";
 import "./globals.css";
 
+// WebSite structured data (JSON-LD)
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Bowel Buddies",
+  url: "https://bowelbuddies.app",
+  potentialAction: {
+    "@type": "SearchAction",
+    target: "https://bowelbuddies.app/search?q={search_term_string}",
+    "query-input": "required name=search_term_string",
+  },
+};
+
 const outfit = Outfit({
   variable: "--font-outfit",
   subsets: ["latin"],
@@ -75,6 +88,10 @@ export default async function RootLayout({
         <link
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
           rel="stylesheet"
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
         />
       </head>
       <body
