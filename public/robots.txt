@@ -1,0 +1,16 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard
+Disallow: /analytics
+Disallow: /map
+Disallow: /log
+Disallow: /friends
+Disallow: /challenges
+Disallow: /leaderboard
+Disallow: /activity
+Disallow: /settings
+Disallow: /upgrade
+Disallow: /api/
+Disallow: /auth/
+
+Sitemap: https://bowelbuddies.app/sitemap.xml
