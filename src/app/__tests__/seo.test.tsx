@@ -8,7 +8,6 @@
  * - Twitter Card tags present
  * - Structured data (JSON-LD) is valid
  */
-import { render } from "@testing-library/react";
 import { metadata } from "../layout";
 
 // Mock the server modules
