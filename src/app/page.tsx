@@ -4,6 +4,20 @@ import { BristolChart } from "@/components/bristol-scale/BristolChart";
 import { Features } from "@/components/landing/Features";
 import { Footer } from "@/components/landing/Footer";
 
+// WebPage structured data (JSON-LD)
+const webPageSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: "Poop Tracker App | Track Your Gut Health | Bowel Buddies",
+  description: "Track your bowel movements with the best poop tracker app. Monitor gut health using the Bristol Chart, analyze stool types, and compete with friends today!",
+  url: "https://bowelbuddies.app",
+  isPartOf: {
+    "@type": "WebSite",
+    name: "Bowel Buddies",
+    url: "https://bowelbuddies.app",
+  },
+};
+
 function formatStreak(streak: number): string {
   if (streak >= 7) return `${streak} Day Streak 🔥`;
   if (streak >= 3) return `${streak} Day Streak ⚡`;
@@ -40,13 +54,19 @@ export default async function Home() {
   const avatars = users.map((user) => user.avatar_url);
 
   return (
-    <div className="min-h-screen w-full text-slate-800 dark:text-slate-200">
-      <main className="w-full">
-        <Hero userCount={count ?? 0} leaderboard={leaderboard} avatars={avatars} />
-        <BristolChart />
-        <Features />
-      </main>
-      <Footer />
-    </div>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
+      />
+      <div className="min-h-screen w-full text-slate-800 dark:text-slate-200">
+        <main className="w-full">
+          <Hero userCount={count ?? 0} leaderboard={leaderboard} avatars={avatars} />
+          <BristolChart />
+          <Features />
+        </main>
+        <Footer />
+      </div>
+    </>
   );
 }
