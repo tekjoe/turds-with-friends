@@ -121,6 +121,48 @@ describe('US-003: Navbar - Remove premium gating', () => {
     });
   });
 
+  describe('SEO - Alt Tags', () => {
+    it('has descriptive alt text for user avatar image', () => {
+      render(
+        <Navbar
+          isAuthenticated={true}
+          userName="Test User"
+          avatarUrl="https://example.com/avatar.png"
+        />
+      );
+
+      const avatarImage = screen.getByAltText('Test User profile avatar');
+      expect(avatarImage).toBeInTheDocument();
+      expect(avatarImage).toHaveAttribute('src', 'https://example.com/avatar.png');
+    });
+
+    it('has descriptive alt text with different usernames', () => {
+      render(
+        <Navbar
+          isAuthenticated={true}
+          userName="Jane Doe"
+          avatarUrl="https://example.com/jane.png"
+        />
+      );
+
+      const avatarImage = screen.getByAltText('Jane Doe profile avatar');
+      expect(avatarImage).toBeInTheDocument();
+    });
+
+    it('does not render avatar image when avatarUrl is not provided', () => {
+      render(
+        <Navbar
+          isAuthenticated={true}
+          userName="Test User"
+        />
+      );
+
+      // Should show initial instead of image
+      expect(screen.queryByAltText(/profile avatar/)).not.toBeInTheDocument();
+      expect(screen.getByText('T')).toBeInTheDocument();
+    });
+  });
+
   describe('Unauthenticated users', () => {
     it('does not show authenticated navigation links', () => {
       render(

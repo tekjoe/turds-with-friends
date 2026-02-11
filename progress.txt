@@ -71,3 +71,32 @@ Started: 2026-02-10
 - Use `prose` classes for readable legal text typography
 
 ---
+
+## 2026-02-11 - US-003: Create Premium marketing page at /premium
+- Restructured `/premium` marketing page at `src/app/(marketing)/premium/page.tsx`
+- Implemented full page following privacy/terms pattern:
+  - Hero section with amber badge and workspace_premium icon
+  - Sticky sidebar navigation with jump links to all 6 sections
+  - Pricing Plans section with Free and Premium cards
+  - Features Overview section with 6 feature cards
+  - What's Included section with detailed feature list
+  - Compare Plans section with feature comparison table
+  - FAQ section with 5 common questions
+  - Get Started CTA section with trial buttons
+  - Footer component included at bottom
+- Metadata: title (26 chars), description (155 chars), Open Graph, Twitter Card
+- JSON-LD structured data with WebPage schema and isPartOf WebSite reference
+- SEO tests at `src/app/(marketing)/premium/page.test.tsx` covering:
+  - Title format and length (< 60 chars)
+  - Description length (150-160 chars)
+  - Open Graph and Twitter Card metadata
+- All 207 tests pass
+- Build passes without errors
+
+**Learnings:**
+- Marketing pages follow consistent pattern: hero + sticky sidebar + content sections
+- Use amber color scheme for premium-related pages
+- Include both Product schema (for offers) and WebPage schema (for SEO)
+- scroll-mt-24 is essential for proper anchor link positioning with sticky headers
+
+---

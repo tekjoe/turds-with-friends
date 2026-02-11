@@ -100,7 +100,7 @@ export function Navbar({ isAuthenticated = false, userName, avatarUrl }: NavbarP
               >
                 <span className="hidden sm:block text-sm font-medium truncate max-w-[100px]">{userName}</span>
                 {avatarUrl ? (
-                  <Image src={avatarUrl} alt="" width={40} height={40} className="h-9 w-9 sm:h-10 sm:w-10 rounded-full flex-shrink-0 object-cover" />
+                  <Image src={avatarUrl} alt={`${userName} profile avatar`} width={40} height={40} className="h-9 w-9 sm:h-10 sm:w-10 rounded-full flex-shrink-0 object-cover" />
                 ) : (
                   <div className="h-9 w-9 sm:h-10 sm:w-10 rounded-full bg-primary flex items-center justify-center text-white font-bold text-sm sm:text-base flex-shrink-0">
                     {userName?.charAt(0).toUpperCase() || "U"}
