@@ -34,7 +34,6 @@ describe('US-002: Open premium API routes - Challenges', () => {
 
       const { GET } = await import('./route');
       const response = await GET();
-      const json = await response.json();
 
       expect(response.status).not.toBe(401);
       expect(response.status).not.toBe(403);
