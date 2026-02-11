@@ -14,8 +14,8 @@ export default async function MapPage() {
   const userAvatar =
     (user.user_metadata?.avatar_url as string | undefined) ?? null;
 
-  const premium = await isPremium(user.id);
-  if (!premium) redirect("/upgrade");
+  // Premium check kept for future reference - redirects removed as part of US-001
+  await isPremium(user.id);
 
   const admin = createAdminClient();
 

@@ -25,8 +25,8 @@ export default async function AnalyticsPage() {
 
   if (!user) redirect("/login");
 
-  const premium = await isPremium(user.id);
-  if (!premium) redirect("/upgrade");
+  // Premium check kept for future reference - redirects removed as part of US-001
+  await isPremium(user.id);
 
   const { data: logs } = await supabase
     .from("movement_logs")
