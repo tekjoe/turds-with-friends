@@ -46,3 +46,35 @@ Started: 2026-02-10
 - **Learnings:** When removing conditional UI that used a prop, the prop becomes unused. Use eslint-disable comment or remove the prop from the interface (but keeping it maintains API compatibility).
 
 ---
+
+---
+
+## 2026-02-11 - US-006: Create documentation for re-enabling premium features
+- Created comprehensive documentation at `docs/PREMIUM_RESTORATION.md` (712 lines)
+- Documented all files modified to open premium access:
+  - `lib/premium.ts` - core premium check function
+  - `app/(authenticated)/analytics/page.tsx` - analytics page route protection
+  - `app/(authenticated)/challenges/page.tsx` - challenges page route protection
+  - `app/(authenticated)/map/page.tsx` - map page route protection
+  - `app/(authenticated)/upgrade/page.tsx` - upgrade page redirect logic
+  - `app/api/challenges/route.ts` - challenges API premium check
+  - `app/api/export/route.ts` - export API premium check
+  - `app/api/locations/route.ts` - locations API premium check
+  - `src/components/ui/Navbar.tsx` - navbar premium navigation logic
+  - `src/components/dashboard/ExportButton.tsx` - export button conditional UI
+  - `src/components/log/LogForm.tsx` - log form location tracking UI
+- Included before/after code snippets for all modifications
+- Provided step-by-step restoration process organized in 6 phases
+- Included comprehensive testing instructions (automated + manual)
+- Documented 3 rollback strategies (git revert, hotfix branch, feature flag)
+- Added troubleshooting section for common issues
+- Added pre-restoration checklist
+- All 244 tests pass
+- Build completes without errors
+
+**Learnings:**
+- Documentation should be comprehensive enough for future maintainers with no prior context
+- Include both the "why" (background) and "how" (step-by-step)
+- Code snippets should show both current (open) and restored (gated) states
+- Testing and rollback strategies are critical for production changes
+
