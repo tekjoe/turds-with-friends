@@ -41,12 +41,21 @@ describe('sitemap.ts', () => {
     })
   })
 
+  it('should include /privacy route with priority 0.3', () => {
+    const privacyPage = sitemapResult.find(entry =>
+      entry.url.includes('/privacy')
+    )
+    expect(privacyPage).toBeDefined()
+    expect(privacyPage?.priority).toBe(0.3)
+    expect(privacyPage?.changeFrequency).toBe('yearly')
+  })
+
   it('should only include specified public routes', () => {
-    const expectedRoutes = ['/', '/login', '/onboarding']
+    const expectedRoutes = ['/', '/login', '/onboarding', '/privacy']
     expect(sitemapResult.length).toBe(expectedRoutes.length)
-    
+
     expectedRoutes.forEach(route => {
-      const hasRoute = sitemapResult.some(entry => 
+      const hasRoute = sitemapResult.some(entry =>
         entry.url.endsWith(route) || (route === '/' && entry.url === 'https://bowel-buddies.com')
       )
       expect(hasRoute).toBe(true)

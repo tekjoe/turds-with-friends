@@ -46,3 +46,28 @@ Started: 2026-02-10
 - **Learnings:** When removing conditional UI that used a prop, the prop becomes unused. Use eslint-disable comment or remove the prop from the interface (but keeping it maintains API compatibility).
 
 ---
+
+## 2026-02-11 - US-003: Create Privacy Policy page
+- Created `src/app/(marketing)/privacy/page.tsx` with comprehensive Privacy Policy content:
+  - Hero section with legal badge and last updated date (February 11, 2025)
+  - Sticky sidebar navigation with 9 jump links to all policy sections
+  - 9 comprehensive policy sections: Information We Collect, How We Use Information, Data Storage & Security, Your Rights, Cookies, Third Parties, Children's Privacy, Changes to Policy, Contact
+  - Related documents section linking to Terms, Medical Disclaimer, and Contact pages
+  - Full metadata with title (33 chars), description (155 chars), Open Graph, and Twitter Card
+  - JSON-LD structured data (WebPage schema) with isPartOf WebSite reference
+  - Used prose classes for readable legal text typography
+  - Proper JSX escaping with &quot; and &apos; for quotes and apostrophes
+  - All sections use scroll-mt-24 for proper scroll offset
+- Created `src/app/(marketing)/privacy/page.test.tsx` with comprehensive tests:
+  - Page structure tests (rendering, footer inclusion)
+  - Hero section tests (title, legal badge, date, icon)
+  - Sidebar navigation tests (all 9 links present)
+  - Policy sections tests (all 9 sections with subsections)
+  - Related documents section tests
+  - Metadata tests (title length, description 150-160 chars, Open Graph, Twitter Card)
+  - JSON-LD structured data tests
+- Build passes with minor warnings
+- All 21 new privacy page tests pass (187 total tests passing)
+- **Learnings:** Use getAllByText for text that appears in both sidebar links and section headings. Keep descriptions under 160 characters for SEO. Use sticky positioning with top-24 for scrollable sidebars.
+
+---
