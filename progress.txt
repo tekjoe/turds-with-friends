@@ -71,3 +71,31 @@ Started: 2026-02-10
 - **Learnings:** Use getAllByText for text that appears in both sidebar links and section headings. Keep descriptions under 160 characters for SEO. Use sticky positioning with top-24 for scrollable sidebars.
 
 ---
+
+## 2026-02-11 - US-004: Create Medical Disclaimer page
+- Created `src/app/(marketing)/medical-disclaimer/page.tsx` with comprehensive medical disclaimer content:
+  - Hero section with health/safety badge and last updated date (February 11, 2025)
+  - Prominent warning banner at top stating app is not medical advice
+  - Sticky sidebar navigation with jump links to all 7 disclaimer sections
+  - 7 comprehensive sections: Not Medical Advice, No Doctor-Patient Relationship, Emergency Situations, Information Accuracy, User Responsibility, Consult Your Physician, Liability Limitation
+  - Emergency section with clear 911 instructions and red warning styling
+  - Related documents section linking to Terms, Privacy Policy, and Contact pages
+  - Full metadata with title (38 chars), description (158 chars), Open Graph, Twitter Card
+  - JSON-LD structured data (WebPage schema) with isPartOf WebSite reference
+  - Used amber/warning color theme throughout (bg-amber-100, text-amber-600)
+  - All sections use scroll-mt-24 for proper scroll offset
+- Created `src/app/(marketing)/medical-disclaimer/page.test.tsx` with comprehensive tests:
+  - Page structure tests (rendering, footer inclusion, JSON-LD)
+  - Hero section tests (title, medical badge, date)
+  - Warning banner tests (icon, warning text, medical advice notice)
+  - Sidebar navigation tests (all 7 links present with correct hrefs)
+  - All disclaimer sections tests
+  - Emergency section tests (911 instructions, symptoms list, red styling)
+  - Related documents section tests (Terms, Privacy, Contact links)
+  - Metadata tests (title length, description 150-160 chars, Open Graph, Twitter Card, canonical URL)
+  - JSON-LD structured data tests (WebPage schema, isPartOf, dateModified)
+- Build passes with minor warnings
+- All 30 new medical disclaimer tests pass (174 total tests passing)
+- **Learnings:** Medical/legal pages benefit from amber/warning color schemes. Emergency sections should use red styling for maximum visibility. Keep descriptions under 160 chars (was 161, shortened to 158).
+
+---
