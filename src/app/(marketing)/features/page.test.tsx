@@ -1,63 +1,103 @@
-import { metadata } from "./page";
+import { render, screen } from "@testing-library/react";
+import FeaturesPage from "./page";
 
-describe("Features Page SEO", () => {
-  it("has correct title", () => {
-    expect(metadata.title).toBe("Features | Bowel Buddies");
+// Mock the Icon component
+jest.mock("@/components/ui/Icon", () => ({
+  Icon: ({ name, className }: { name: string; className?: string }) => (
+    <span data-testid={`icon-${name}`} className={className}>
+      {name}
+    </span>
+  ),
+}));
+
+describe("FeaturesPage", () => {
+  it("renders the page with main heading", () => {
+    render(<FeaturesPage />);
+    
+    expect(
+      screen.getByRole("heading", { level: 1, name: /Everything You Need/i })
+    ).toBeInTheDocument();
   });
 
-  it("has description between 150-160 characters", () => {
-    const desc = metadata.description as string;
-    expect(desc.length).toBeGreaterThanOrEqual(150);
-    expect(desc.length).toBeLessThanOrEqual(160);
+  it("renders all four main feature sections", () => {
+    render(<FeaturesPage />);
+    
+    expect(
+      screen.getByRole("heading", { name: "Smart Bowel Tracking" })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: "Gamification & Rewards" })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: "Social Features" })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: "Privacy First" })
+    ).toBeInTheDocument();
   });
 
-  it("has Open Graph metadata configured", () => {
-    expect(metadata.openGraph).toBeDefined();
-    expect(metadata.openGraph?.type).toBe("website");
-    expect(metadata.openGraph?.siteName).toBe("Bowel Buddies");
-    expect(metadata.openGraph?.title).toBe("Features | Bowel Buddies");
+  it("renders the main feature icons", () => {
+    render(<FeaturesPage />);
+    
+    expect(screen.getByTestId("icon-track_changes")).toBeInTheDocument();
+    expect(screen.getByTestId("icon-emoji_events")).toBeInTheDocument();
+    expect(screen.getByTestId("icon-groups")).toBeInTheDocument();
+    expect(screen.getByTestId("icon-lock")).toBeInTheDocument();
   });
 
-  it("has Open Graph description", () => {
-    const ogDesc = metadata.openGraph?.description as string;
-    expect(ogDesc).toBeDefined();
-    expect(ogDesc.length).toBeGreaterThanOrEqual(150);
-    expect(ogDesc.length).toBeLessThanOrEqual(160);
+  it("renders additional features section", () => {
+    render(<FeaturesPage />);
+    
+    expect(
+      screen.getByRole("heading", { level: 2, name: "More Great Features" })
+    ).toBeInTheDocument();
+    
+    expect(screen.getByText("Daily Reminders")).toBeInTheDocument();
+    expect(screen.getByText("Health Insights")).toBeInTheDocument();
+    expect(screen.getByText("Doctor Reports")).toBeInTheDocument();
+    expect(screen.getByText("Fiber Tracking")).toBeInTheDocument();
+    expect(screen.getByText("Hydration Monitor")).toBeInTheDocument();
+    expect(screen.getByText("Streak Tracking")).toBeInTheDocument();
   });
 
-  it("has Open Graph image", () => {
-    expect(metadata.openGraph?.images).toBeDefined();
-    const images = metadata.openGraph?.images as Array<{
-      url: string;
-      width: number;
-      height: number;
-      alt: string;
-    }>;
-    expect(images?.length).toBeGreaterThan(0);
-    expect(images?.[0].url).toBe("/og-image.png");
-    expect(images?.[0].width).toBe(1200);
-    expect(images?.[0].height).toBe(630);
+  it("renders the CTA section", () => {
+    render(<FeaturesPage />);
+    
+    expect(
+      screen.getByRole("heading", { name: "Ready to Get Started?" })
+    ).toBeInTheDocument();
+    
+    expect(
+      screen.getByRole("link", { name: "Start Tracking Free" })
+    ).toBeInTheDocument();
   });
 
-  it("has Twitter Card metadata", () => {
-    expect(metadata.twitter).toBeDefined();
-    expect(metadata.twitter?.card).toBe("summary_large_image");
+  it("includes JSON-LD structured data script", () => {
+    render(<FeaturesPage />);
+    
+    const script = document.querySelector('script[type="application/ld+json"]');
+    expect(script).toBeInTheDocument();
+    
+    const jsonData = JSON.parse(script?.textContent || "{}");
+    expect(jsonData["@context"]).toBe("https://schema.org");
+    expect(jsonData["@type"]).toBe("WebPage");
+    expect(jsonData.name).toBe("Features | Bowel Buddies");
   });
 
-  it("has Twitter title", () => {
-    expect(metadata.twitter?.title).toBe("Features | Bowel Buddies");
+  it("renders the subtitle paragraph", () => {
+    render(<FeaturesPage />);
+    
+    expect(
+      screen.getByText(/Bowel Buddies combines powerful tracking tools/i)
+    ).toBeInTheDocument();
   });
 
-  it("has Twitter description", () => {
-    const twitterDesc = metadata.twitter?.description as string;
-    expect(twitterDesc).toBeDefined();
-    expect(twitterDesc.length).toBeGreaterThanOrEqual(150);
-    expect(twitterDesc.length).toBeLessThanOrEqual(160);
-  });
-
-  it("has Twitter image", () => {
-    const images = metadata.twitter?.images as string[];
-    expect(images).toBeDefined();
-    expect(images?.[0]).toBe("/og-image.png");
+  it("renders descriptions for main features", () => {
+    render(<FeaturesPage />);
+    
+    expect(screen.getByText(/Log your bowel movements with the Bristol Stool Chart/i)).toBeInTheDocument();
+    expect(screen.getByText(/Earn XP, unlock badges like 'Fiber King'/i)).toBeInTheDocument();
+    expect(screen.getByText(/Create private groups with friends/i)).toBeInTheDocument();
+    expect(screen.getByText(/Your data is encrypted and secure/i)).toBeInTheDocument();
   });
 });

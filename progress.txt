@@ -125,3 +125,33 @@ Started: 2026-02-10
 - Description character count must be carefully tuned to pass SEO tests (150-160 range)
 
 ---
+
+## 2026-02-11 - US-002: Create Features marketing page
+- Created `/features` marketing page at `src/app/(marketing)/features/page.tsx`
+- Implemented full page with:
+  - Hero section with page title and description
+  - Four main feature cards: Smart Bowel Tracking, Gamification & Rewards, Social Features, Privacy First
+  - Additional features grid with 6 smaller cards
+  - CTA section with link to start tracking
+- Metadata: title (26 chars), description (155 chars), Open Graph, Twitter Card
+- JSON-LD structured data with WebPage schema and isPartOf WebSite reference
+- Uses Material Symbols icons: track_changes, emoji_events, groups, lock
+- Follows existing design system with #22C55E primary, slate text, card components
+- SEO tests at `src/app/(marketing)/features/page.test.tsx` covering:
+  - Main heading renders correctly
+  - All four main feature sections render with correct titles
+  - Icons render for each main feature
+  - Additional features section renders with all 6 features
+  - CTA section with link renders
+  - JSON-LD structured data is present and valid
+  - Feature descriptions render correctly
+- All 250 tests pass
+- Build passes without errors
+
+**Learnings:**
+- Marketing pages should use Next.js Link component instead of <a> tags to avoid lint errors
+- Use Icon component with Material Symbols names for consistent iconography
+- Escape apostrophes with &apos; in JSX content
+- Hero section should have clear value proposition with highlighted keywords
+
+---
