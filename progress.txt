@@ -46,3 +46,28 @@ Started: 2026-02-10
 - **Learnings:** When removing conditional UI that used a prop, the prop becomes unused. Use eslint-disable comment or remove the prop from the interface (but keeping it maintains API compatibility).
 
 ---
+
+## 2026-02-11 - US-002: Create Terms of Service page
+- Created `/terms` marketing page at `src/app/(marketing)/terms/page.tsx`
+- Implemented full page with:
+  - Hero section with legal badge and last updated date
+  - Sticky sidebar navigation with jump links to all 8 sections
+  - 8 comprehensive TOS sections: Acceptance, Accounts, Use, Content, Termination, Liability, Changes, Contact
+  - Related documents section with links to Privacy Policy, Medical Disclaimer, and Contact
+- Metadata: title (26 chars), description (158 chars), Open Graph, Twitter Card
+- JSON-LD structured data with WebPage schema
+- SEO tests at `src/app/(marketing)/terms/page.test.tsx` covering:
+  - Title format and length
+  - Description length (150-160 chars)
+  - Open Graph and Twitter Card metadata
+- All 191 tests pass
+- Build passes without errors
+
+**Learnings:**
+- Description must be 150-160 characters for SEO tests
+- Use `scroll-mt-24` for proper scroll offset with sticky headers
+- Escape quotes with `&quot;` and apostrophes with `&apos;` for JSX
+- Legal pages benefit from sticky table of contents for navigation
+- Use `prose` classes for readable legal text typography
+
+---
