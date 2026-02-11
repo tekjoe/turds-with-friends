@@ -1,5 +1,4 @@
 import { createClient } from "@/lib/supabase/server";
-import { isPremium } from "@/lib/premium";
 import { NextRequest, NextResponse } from "next/server";
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
@@ -14,10 +13,8 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const premium = await isPremium(user.id);
-  if (!premium) {
-    return NextResponse.json({ error: "Premium required" }, { status: 403 });
-  }
+  // Premium check disabled - all users have access
+  // const premium = await isPremium(user.id);
 
   const format = request.nextUrl.searchParams.get("format") ?? "csv";
 

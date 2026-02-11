@@ -1,5 +1,4 @@
 import { createClient } from "@/lib/supabase/server";
-import { isPremium } from "@/lib/premium";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET() {
@@ -12,10 +11,8 @@ export async function GET() {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const premium = await isPremium(user.id);
-  if (!premium) {
-    return NextResponse.json({ error: "Premium required" }, { status: 403 });
-  }
+  // Premium check disabled - all users have access
+  // const premium = await isPremium(user.id);
 
   const { data, error } = await supabase
     .from("location_logs")
@@ -40,10 +37,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const premium = await isPremium(user.id);
-  if (!premium) {
-    return NextResponse.json({ error: "Premium required" }, { status: 403 });
-  }
+  // Premium check disabled - all users have access
+  // const premium = await isPremium(user.id);
 
   const body = await request.json();
   const { movement_log_id, latitude, longitude, place_name } = body as {
