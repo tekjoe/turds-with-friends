@@ -100,3 +100,28 @@ Started: 2026-02-10
 - scroll-mt-24 is essential for proper anchor link positioning with sticky headers
 
 ---
+
+## 2026-02-11 - US-004: Create Terms of Service page at /terms
+- Updated existing `/terms` marketing page at `src/app/(marketing)/terms/page.tsx`
+- Implemented full page with all 10 required sections:
+  - Hero section with legal badge (gavel icon) and last updated date
+  - Sticky sidebar navigation with jump links to all 10 sections
+  - 10 comprehensive TOS sections: Acceptance of Terms, User Accounts, Acceptable Use, Intellectual Property, Termination, Disclaimer of Warranties, Limitation of Liability, Governing Law, Changes to Terms, Contact Information
+  - Related Documents section with links to Privacy Policy, Medical Disclaimer, and Contact
+  - Footer component at bottom of page
+- Metadata: title (26 chars), description (150 chars), Open Graph, Twitter Card
+- JSON-LD structured data with WebPage schema and isPartOf WebSite reference
+- SEO tests at `src/app/(marketing)/terms/page.test.tsx` covering:
+  - Title format and length (< 60 chars)
+  - Description length (150-160 chars)
+  - Open Graph and Twitter Card metadata
+- All 244 tests pass
+- Build passes without errors
+
+**Learnings:**
+- Legal pages should have comprehensive sections covering all standard TOS topics
+- isPartOf WebSite reference in JSON-LD helps establish site structure for SEO
+- Footer component should be included on all marketing pages for consistency
+- Description character count must be carefully tuned to pass SEO tests (150-160 range)
+
+---
