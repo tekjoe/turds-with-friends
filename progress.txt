@@ -7,5 +7,42 @@ Started: 2026-02-10
 - Testing: Jest with Next.js integration
 - Mock pattern for Supabase: Use jest.mock('@/lib/supabase/server', ...)
 - Tests in __tests__ folder or alongside source files with .test.ts suffix
+- Use `// eslint-disable-next-line @typescript-eslint/no-unused-vars` for intentionally unused destructured props
+
+---
+
+## 2026-02-10 - US-004: Update lib/premium.ts to return true for all users
+- Modified `src/lib/premium.ts` to return `Promise<true>` for all users
+- Preserved original Supabase subscription check in comment block for future reference
+- Added clear documentation explaining universal premium access
+- Created `src/lib/premium.test.ts` with 6 tests covering:
+  - Various userId formats (normal, empty, UUID, random string)
+  - Async function signature verification
+  - Parameter acceptance
+- Build passes with minor warnings
+- All 6 new tests pass
+- **Learnings:** Project uses standard Jest with Next.js. Underscore prefix for unused vars triggers unused eslint-disable directive warning.
+
+---
+
+## 2026-02-10 - US-005: Enable location tracking in LogForm for all users
+- Modified `src/components/log/LogForm.tsx`:
+  - Removed conditional `{isPremium ? (...) : (...)}` block for location section
+  - Kept only the premium-styled UI (amber colors, PremiumBadge) for all users
+  - Changed `if (isPremium && trackLocation && logData)` to `if (trackLocation && logData)`
+  - Added eslint-disable comment for intentionally unused isPremium prop
+- Created `src/components/log/LogForm.test.tsx` with 10 tests covering:
+  - Location section UI shows premium styling for all users
+  - PremiumBadge is displayed
+  - No upgrade button shown
+  - No disabled gray state
+  - Toggle functionality works
+  - Location captured when toggle enabled
+  - Location NOT captured when toggle disabled
+  - Works for all users regardless of premium status
+  - Visual consistency between premium and non-premium users
+- Build passes
+- All 10 new tests pass (42 total tests passing)
+- **Learnings:** When removing conditional UI that used a prop, the prop becomes unused. Use eslint-disable comment or remove the prop from the interface (but keeping it maintains API compatibility).
 
 ---

@@ -15,7 +15,8 @@ interface LogFormProps {
   isPremium: boolean;
 }
 
-export function LogForm({ isPremium }: LogFormProps) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function LogForm({ isPremium: _isPremium }: LogFormProps) {
   const router = useRouter();
   const [bristolType, setBristolType] = useState<number | null>(4);
   const [preWeight, setPreWeight] = useState<string>("");
@@ -63,8 +64,8 @@ export function LogForm({ isPremium }: LogFormProps) {
 
       if (insertError) throw insertError;
 
-      // Save location if premium + tracking enabled
-      if (isPremium && trackLocation && logData) {
+      // Save location if tracking enabled
+      if (trackLocation && logData) {
         try {
           const position = await new Promise<GeolocationPosition>(
             (resolve, reject) =>
@@ -194,71 +195,42 @@ export function LogForm({ isPremium }: LogFormProps) {
               </div>
             </section>
 
-            {/* Location Toggle (Premium Only) */}
-            {isPremium ? (
-              <section className="bg-amber-50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-800 rounded-2xl p-6">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center">
-                      <Icon
-                        name="location_on"
-                        className="text-xl text-amber-600 dark:text-amber-400"
-                      />
-                    </div>
-                    <div>
-                      <p className="font-bold flex items-center gap-2">
-                        Track Location <PremiumBadge />
-                      </p>
-                      <p className="text-sm text-slate-500 dark:text-slate-400">
-                        Pin this throne on your Poop Map
-                      </p>
-                    </div>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => setTrackLocation(!trackLocation)}
-                    className={`relative w-12 h-7 rounded-full transition-colors cursor-pointer ${
-                      trackLocation
-                        ? "bg-amber-500"
-                        : "bg-slate-300 dark:bg-slate-700"
-                    }`}
-                  >
-                    <span
-                      className={`absolute top-0.5 left-0.5 w-6 h-6 bg-white rounded-full shadow transition-transform ${
-                        trackLocation ? "translate-x-5" : ""
-                      }`}
+            {/* Location Toggle */}
+            <section className="bg-amber-50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-800 rounded-2xl p-6">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center">
+                    <Icon
+                      name="location_on"
+                      className="text-xl text-amber-600 dark:text-amber-400"
                     />
-                  </button>
-                </div>
-              </section>
-            ) : (
-              <section className="bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl p-6">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-slate-200 dark:bg-slate-700 flex items-center justify-center">
-                      <Icon
-                        name="location_on"
-                        className="text-xl text-slate-400"
-                      />
-                    </div>
-                    <div>
-                      <p className="font-bold flex items-center gap-2 text-slate-400">
-                        Track Location <PremiumBadge />
-                      </p>
-                      <p className="text-sm text-slate-400">
-                        Upgrade to pin thrones on your Poop Map
-                      </p>
-                    </div>
                   </div>
-                  <Link
-                    href="/upgrade"
-                    className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold rounded-lg transition-colors cursor-pointer"
-                  >
-                    Upgrade
-                  </Link>
+                  <div>
+                    <p className="font-bold flex items-center gap-2">
+                      Track Location <PremiumBadge />
+                    </p>
+                    <p className="text-sm text-slate-500 dark:text-slate-400">
+                      Pin this throne on your Poop Map
+                    </p>
+                  </div>
                 </div>
-              </section>
-            )}
+                <button
+                  type="button"
+                  onClick={() => setTrackLocation(!trackLocation)}
+                  className={`relative w-12 h-7 rounded-full transition-colors cursor-pointer ${
+                    trackLocation
+                      ? "bg-amber-500"
+                      : "bg-slate-300 dark:bg-slate-700"
+                  }`}
+                >
+                  <span
+                    className={`absolute top-0.5 left-0.5 w-6 h-6 bg-white rounded-full shadow transition-transform ${
+                      trackLocation ? "translate-x-5" : ""
+                    }`}
+                  />
+                </button>
+              </div>
+            </section>
 
             {/* Weight Difference Preview */}
             {weightDifference && parseFloat(weightDifference) > 0 && (
