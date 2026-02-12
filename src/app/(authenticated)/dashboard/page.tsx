@@ -6,10 +6,10 @@ import { WeightChart } from "@/components/charts/WeightChart";
 import { ConsistencyChart } from "@/components/charts/ConsistencyChart";
 import { FriendRanking } from "@/components/dashboard/FriendRanking";
 import { StreakCard } from "@/components/dashboard/StreakCard";
-import { BristolReference } from "@/components/dashboard/BristolReference";
+import { QuickStats } from "@/components/dashboard/BristolReference";
 import { ExportButton } from "@/components/dashboard/ExportButton";
 
-const RANK_COLORS = ["#facc15", "#cbd5e1", "#fdba74", "#a78bfa", "#67e8f9", "#f9a8d4"];
+const RANK_COLORS = ["#FFF5EB", "#E8F5E9", "#FEF3C7", "#EDE9FE", "#E0F2FE", "#FCE7F3"];
 const DAY_NAMES = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 function formatPoints(xp: number): string {
@@ -91,6 +91,7 @@ export default async function DashboardPage() {
   const logsList = allLogs ?? [];
   const total = logsList.length;
   let constipated = 0;
+  let type3 = 0;
   let ideal = 0;
   let fiberLacking = 0;
   let liquid = 0;
@@ -98,18 +99,22 @@ export default async function DashboardPage() {
   logsList.forEach((log) => {
     const t = log.bristol_type;
     if (t <= 2) constipated++;
-    else if (t <= 4) ideal++;
+    else if (t === 3) type3++;
+    else if (t === 4) ideal++;
     else if (t === 5) fiberLacking++;
     else liquid++;
   });
 
   const pct = (n: number) => (total > 0 ? Math.round((n / total) * 100) : 0);
   const consistencyData = [
-    { name: "Type 1 & 2 (Constipated)", value: pct(constipated), color: "var(--chart-dark-brown)" },
-    { name: "Type 3 & 4 (Ideal)", value: pct(ideal), color: "var(--chart-green)" },
+    { name: "Type 3 & 4 (Ideal)", value: pct(type3 + ideal), color: "var(--chart-green)" },
+    { name: "Type 1 & 2 (Constipated)", value: pct(constipated), color: "var(--chart-brown)" },
     { name: "Type 5 (Fiber Lacking)", value: pct(fiberLacking), color: "var(--chart-amber)" },
     { name: "Type 6 & 7 (Liquid/Inflam)", value: pct(liquid), color: "var(--chart-red)" },
   ];
+
+  // Quick Stats bristol counts
+  const bristolCounts = { constipated, type3, ideal, fiberLacking, liquid };
 
   // --- Friend ranking data ---
   const { data: friendships } = await admin
@@ -168,7 +173,7 @@ export default async function DashboardPage() {
     initials: entry.initials,
     avatarUrl: entry.avatarUrl,
     points: formatPoints(entry.xp),
-    color: entry.isCurrentUser ? "var(--chart-brown)" : RANK_COLORS[i % RANK_COLORS.length],
+    color: entry.isCurrentUser ? "var(--primary)" : RANK_COLORS[i % RANK_COLORS.length],
     isCurrentUser: entry.isCurrentUser,
   }));
 
@@ -178,51 +183,51 @@ export default async function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-background pt-20">
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-7 w-full">
         <div className="flex items-center justify-end mb-6">
           <ExportButton />
         </div>
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           <StatsCard
             icon="local_fire_department"
-            iconColor="bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400"
+            iconColor="bg-primary-bg text-primary"
             label="Current Streak"
             value={`${currentStreak} Days`}
           />
           <StatsCard
-            icon="monitor_weight"
-            iconColor="bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400"
+            icon="trending_down"
+            iconColor="bg-success-light text-success"
             label="Weight Lost (7d)"
             value={`${weeklyWeightLost} lbs`}
           />
           <StatsCard
-            icon="check_circle"
-            iconColor="bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400"
-            label="Avg Consistency"
+            icon="show_chart"
+            iconColor="bg-warning-light text-warning"
+            label="Avg Bristol Score"
             value={`Type ${avgBristolType}`}
           />
           <StatsCard
-            icon="emoji_events"
-            iconColor="bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400"
-            label="Rank"
+            icon="group"
+            iconColor="bg-[#EDE9FE] text-[#7C3AED]"
+            label="Friend Ranking"
             value={rankLabel}
           />
         </div>
 
         {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-6">
           {/* Left Column - Charts */}
-          <div className="lg:col-span-2 space-y-8">
+          <div className="space-y-6">
             <WeightChart data={weightData} />
             <ConsistencyChart data={consistencyData} />
           </div>
 
           {/* Right Column - Sidebar */}
-          <div className="space-y-8">
+          <div className="space-y-6">
             <StreakCard currentStreak={currentStreak} personalBest={longestStreak} />
             <FriendRanking friends={friendRankingData} />
-            <BristolReference />
+            <QuickStats bristolCounts={bristolCounts} />
           </div>
         </div>
       </main>
