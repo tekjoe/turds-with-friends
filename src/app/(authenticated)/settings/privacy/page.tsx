@@ -29,7 +29,7 @@ export default async function PrivacySettingsPage() {
   const privacySettings = profile?.privacy_settings as PrivacySettings | null;
 
   return (
-    <div className="min-h-screen bg-background pt-20">
+    <div className="min-h-screen bg-background pt-16">
       <PrivacySettingsForm settings={privacySettings} />
     </div>
   );

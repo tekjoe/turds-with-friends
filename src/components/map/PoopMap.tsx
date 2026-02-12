@@ -43,6 +43,7 @@ export function PoopMap({
   const [mounted, setMounted] = useState(false);
   const [showFriends, setShowFriends] = useState(true);
   const [showHeatmap, setShowHeatmap] = useState(false);
+  const [showBathrooms, setShowBathrooms] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -76,6 +77,7 @@ export function PoopMap({
         friendLocations={showFriends ? friendLocations : []}
         userAvatar={userAvatar}
         showHeatmap={showHeatmap}
+        showBathrooms={showBathrooms}
         focusPinId={focusPinId}
       />
       <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5">
@@ -127,6 +129,30 @@ export function PoopMap({
               <span
                 className={`pointer-events-none inline-block h-6 w-6 transform rounded-full bg-white border border-slate-300 shadow-sm transition-transform mt-0.5 ${
                   showHeatmap
+                    ? "translate-x-7 ml-0.5"
+                    : "translate-x-0 ml-1"
+                }`}
+              />
+            </button>
+          </div>
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-slate-600 dark:text-slate-400">
+              Nearby Bathrooms
+            </span>
+            <button
+              type="button"
+              role="switch"
+              aria-checked={showBathrooms}
+              onClick={() => setShowBathrooms(!showBathrooms)}
+              className={`relative inline-flex h-7 w-14 shrink-0 cursor-pointer rounded-full transition-colors ${
+                showBathrooms
+                  ? "bg-primary"
+                  : "bg-slate-200 dark:bg-slate-700"
+              }`}
+            >
+              <span
+                className={`pointer-events-none inline-block h-6 w-6 transform rounded-full bg-white border border-slate-300 shadow-sm transition-transform mt-0.5 ${
+                  showBathrooms
                     ? "translate-x-7 ml-0.5"
                     : "translate-x-0 ml-1"
                 }`}

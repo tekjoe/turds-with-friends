@@ -14,7 +14,7 @@ export default function AuthCodeError() {
           </p>
           <Link
             href="/"
-            className="inline-block bg-primary text-white font-semibold px-6 py-3 rounded-xl hover:bg-green-600 transition-colors"
+            className="inline-block bg-primary text-white font-semibold px-6 py-3 rounded-xl hover:bg-primary-dark transition-colors"
           >
             Back to Home
           </Link>

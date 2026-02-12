@@ -91,7 +91,7 @@ export default async function OnboardingPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
       />
-      <div className="min-h-screen bg-background flex items-center justify-center px-6 pt-20">
+      <div className="min-h-screen bg-background flex items-center justify-center px-6 pt-16">
         <OnboardingForm />
       </div>
     </>

@@ -136,7 +136,7 @@ export function FriendSearch() {
                   className={`shrink-0 ml-2 px-3 py-1 rounded-full text-[10px] font-bold transition-colors cursor-pointer ${
                     sent
                       ? "bg-slate-100 dark:bg-slate-800 text-slate-400"
-                      : "bg-primary text-white hover:bg-green-600"
+                      : "bg-primary text-white hover:bg-primary-dark"
                   }`}
                 >
                   {sent ? (

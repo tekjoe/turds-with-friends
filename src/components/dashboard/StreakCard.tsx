@@ -21,7 +21,7 @@ export function StreakCard({ currentStreak, personalBest }: StreakCardProps) {
       </div>
       <Link
         href="/log"
-        className="flex items-center justify-center gap-2 w-full py-3.5 bg-white text-primary font-semibold rounded-xl text-center hover:bg-amber-50 transition-colors"
+        className="flex items-center justify-center gap-2 w-full py-3.5 bg-white text-primary font-semibold rounded-xl text-center hover:bg-primary-bg transition-colors"
       >
         <Icon name="add" className="text-base" />
         Log Today&apos;s Entry

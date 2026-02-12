@@ -158,3 +158,19 @@ h3,
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* Bathroom map pin */
+.bathroom-pin {
+  width: 32px;
+  height: 32px;
+  background: #9C4A1A;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bathroom-pin span {
+  transform: rotate(45deg);
+}

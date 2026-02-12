@@ -182,7 +182,7 @@ export default async function DashboardPage() {
   const rankLabel = `#${userRank} / ${totalInRanking} ${totalInRanking === 1 ? "User" : "Friends"}`;
 
   return (
-    <div className="min-h-screen bg-background pt-20">
+    <div className="min-h-screen bg-background pt-16">
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-7 w-full">
         <div className="flex items-center justify-end mb-6">
           <ExportButton />
