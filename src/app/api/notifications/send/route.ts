@@ -15,10 +15,17 @@ export async function POST(request: Request) {
 
     const supabase = await createClient();
 
-    // Verify the requesting user is authenticated
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    // Check for CRON_SECRET for testing/automation, or require authentication
+    const authHeader = request.headers.get('authorization');
+    const cronSecret = process.env.CRON_SECRET;
+    const isAuthorized = cronSecret && authHeader === `Bearer ${cronSecret}`;
+
+    if (!isAuthorized) {
+      // Verify the requesting user is authenticated
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      }
     }
 
     // Get user's FCM token
