@@ -8,7 +8,7 @@ interface StreakCardProps {
 
 export function StreakCard({ currentStreak, personalBest }: StreakCardProps) {
   return (
-    <div className="bg-gradient-to-br from-accent to-amber-700 p-6 rounded-2xl shadow-lg text-white relative overflow-hidden">
+    <div className="bg-gradient-to-br from-streak-from to-streak-to p-6 rounded-2xl shadow-lg text-white relative overflow-hidden">
       <div className="relative z-10">
         <div className="flex items-center justify-between mb-4">
           <h3 className="font-display font-bold text-lg">Current Streak</h3>
