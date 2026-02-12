@@ -6,6 +6,19 @@ const pageDescription = "Sign in to your poop tracker app. Track bowel movements
 export const metadata: Metadata = {
   title: "Poop Tracker App | Sign In - Bowel Buddies",
   description: pageDescription,
+  keywords: [
+    "poop tracker app",
+    "bowel tracking",
+    "sign in",
+    "login",
+    "gut health",
+    "bristol stool chart",
+    "digestive health",
+    "health app",
+  ],
+  alternates: {
+    canonical: "https://bowelbuddies.app/login",
+  },
   openGraph: {
     title: "Poop Tracker App | Sign In - Bowel Buddies",
     description: pageDescription,
@@ -28,6 +41,33 @@ export const metadata: Metadata = {
   },
 };
 
+// WebPage structured data (JSON-LD)
+const webPageSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: "Poop Tracker App | Sign In - Bowel Buddies",
+  description: pageDescription,
+  url: "https://bowelbuddies.app/login",
+  isPartOf: {
+    "@type": "WebSite",
+    name: "Bowel Buddies",
+    url: "https://bowelbuddies.app",
+  },
+  mainEntity: {
+    "@type": "WebPageElement",
+    name: "Login Form",
+    description: "User authentication form for Bowel Buddies",
+  },
+};
+
 export default function LoginPage() {
-  return <LoginForm />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
+      />
+      <LoginForm />
+    </>
+  );
 }

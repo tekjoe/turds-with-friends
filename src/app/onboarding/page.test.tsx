@@ -1,4 +1,6 @@
 import { Metadata } from "next";
+import * as fs from "fs";
+import * as path from "path";
 
 // We need to test the metadata export
 // Since page.tsx has async components and server-side code, we'll test metadata separately
@@ -54,6 +56,20 @@ describe("SEO-ONBOARD-001: Onboarding Page Metadata", () => {
       const keywords = metadata.keywords as string[];
       expect(Array.isArray(keywords)).toBe(true);
       expect(keywords.length).toBeGreaterThan(0);
+    });
+  });
+
+  describe("Canonical URL", () => {
+    it("should have alternates defined", () => {
+      expect(metadata.alternates).toBeDefined();
+    });
+
+    it("should have canonical URL", () => {
+      expect(metadata.alternates?.canonical).toBeDefined();
+    });
+
+    it("should have correct canonical URL", () => {
+      expect(metadata.alternates?.canonical).toBe("https://bowelbuddies.app/onboarding");
     });
   });
 
@@ -156,5 +172,35 @@ describe("SEO-ONBOARD-001: Onboarding Page Metadata", () => {
         expect(hasKeyword).toBe(true);
       });
     });
+  });
+});
+
+describe("SEO-ONBOARD-002: Onboarding Page JSON-LD Structured Data", () => {
+  const pagePath = path.join(__dirname, "page.tsx");
+  const pageContent = fs.readFileSync(pagePath, "utf-8");
+
+  it("should include WebPage schema with correct context", () => {
+    expect(pageContent).toContain('"@context": "https://schema.org"');
+    expect(pageContent).toContain('"@type": "WebPage"');
+  });
+
+  it("should have WebPage name matching page title", () => {
+    expect(pageContent).toContain('"@type": "WebPage"');
+    expect(pageContent).toContain('"Welcome | Complete Your Profile | Bowel Buddies"');
+  });
+
+  it("should have WebPage URL matching canonical", () => {
+    expect(pageContent).toContain('"https://bowelbuddies.app/onboarding"');
+  });
+
+  it("should include isPartOf reference to WebSite", () => {
+    expect(pageContent).toContain('isPartOf');
+    expect(pageContent).toContain('"@type": "WebSite"');
+    expect(pageContent).toContain('"Bowel Buddies"');
+  });
+
+  it("should render JSON-LD script tag", () => {
+    expect(pageContent).toContain('type="application/ld+json"');
+    expect(pageContent).toContain("dangerouslySetInnerHTML");
   });
 });
