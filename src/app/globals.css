@@ -3,9 +3,12 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #FDFBF7;
-  --foreground: #1e293b;
-  --primary: #22C55E;
+  --background: #FAF8F5;
+  --foreground: #1A1A1A;
+  --primary: #C05621;
+  --primary-bg: #FFF5EB;
+  --primary-dark: #9C4A1A;
+  --primary-light: #ED8936;
   --accent: #8B4513;
   --poop-brown: #7B3F00;
   --poop-light: #A0522D;
@@ -13,23 +16,37 @@
 
   /* Card tokens */
   --card: #ffffff;
-  --card-border: #e2e8f0;
-  --card-foreground: #1e293b;
+  --card-border: #E5E7EB;
+  --card-foreground: #1A1A1A;
+
+  /* Border tokens */
+  --border-light: #F3F4F6;
 
   /* Muted tokens */
-  --muted: #f1f5f9;
-  --muted-foreground: #64748b;
+  --muted: #F3F4F6;
+  --muted-foreground: #9CA3AF;
+
+  /* Text tokens */
+  --text-secondary: #6B7280;
+
+  /* Status tokens */
+  --success: #2D6A4F;
+  --success-light: #D1FAE5;
+  --warning: #D97706;
+  --warning-light: #FEF3C7;
+  --danger: #E53E3E;
+  --danger-light: #FEE2E2;
 
   /* Chart tokens */
-  --chart-brown: #92400E;
-  --chart-green: #059669;
-  --chart-amber: #d97706;
-  --chart-red: #e11d48;
-  --chart-dark-brown: #78350f;
+  --chart-brown: #C05621;
+  --chart-green: #2D6A4F;
+  --chart-amber: #D97706;
+  --chart-red: #E53E3E;
+  --chart-dark-brown: #9C4A1A;
 
-  /* Streak card gradient */
-  --streak-from: #8B4513;
-  --streak-to: #b45309;
+  /* Streak card */
+  --streak-from: #C05621;
+  --streak-to: #C05621;
 }
 
 .dark {
@@ -40,14 +57,21 @@
   --card-border: #1e293b;
   --card-foreground: #e2e8f0;
 
+  --border-light: #1e293b;
+
   --muted: #1e293b;
   --muted-foreground: #94a3b8;
+
+  --text-secondary: #94a3b8;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
+  --color-primary-bg: var(--primary-bg);
+  --color-primary-dark: var(--primary-dark);
+  --color-primary-light: var(--primary-light);
   --color-accent: var(--accent);
   --color-poop-brown: var(--poop-brown);
   --color-poop-light: var(--poop-light);
@@ -56,8 +80,17 @@
   --color-card: var(--card);
   --color-card-border: var(--card-border);
   --color-card-foreground: var(--card-foreground);
+  --color-border-light: var(--border-light);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
+  --color-text-secondary: var(--text-secondary);
+
+  --color-success: var(--success);
+  --color-success-light: var(--success-light);
+  --color-warning: var(--warning);
+  --color-warning-light: var(--warning-light);
+  --color-danger: var(--danger);
+  --color-danger-light: var(--danger-light);
 
   --color-chart-brown: var(--chart-brown);
   --color-chart-green: var(--chart-green);
