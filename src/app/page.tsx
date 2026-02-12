@@ -1,4 +1,4 @@
-import { createAdminClient } from "@/lib/supabase/server";
+import { createAdminClient, createClient } from "@/lib/supabase/server";
 import { Hero } from "@/components/landing/Hero";
 import { BristolChart } from "@/components/bristol-scale/BristolChart";
 import { Features } from "@/components/landing/Features";
@@ -26,6 +26,8 @@ function formatStreak(streak: number): string {
 
 export default async function Home() {
   const supabase = createAdminClient();
+  const userClient = await createClient();
+  const { data: { user } } = await userClient.auth.getUser();
 
   const [{ count }, { data: topUsers }] = await Promise.all([
     supabase.from("profiles").select("*", { count: "exact", head: true }),
@@ -61,7 +63,7 @@ export default async function Home() {
       />
       <div className="min-h-screen w-full text-slate-800 dark:text-slate-200">
         <main className="w-full">
-          <Hero userCount={count ?? 0} leaderboard={leaderboard} avatars={avatars} />
+          <Hero userCount={count ?? 0} leaderboard={leaderboard} avatars={avatars} isAuthenticated={!!user} />
           <BristolChart />
           <Features />
         </main>

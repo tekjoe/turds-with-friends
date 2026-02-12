@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Icon } from "@/components/ui/Icon";
-import { Footer } from "@/components/landing/Footer";
 
 export const metadata: Metadata = {
   title: "Premium Plan | Bowel Buddies",
@@ -46,7 +45,7 @@ const webPageSchema = {
 const tocSections = [
   { id: "features", title: "Features Overview" },
   { id: "pricing", title: "Pricing Plans" },
-  { id: "included", title: "What&apos;s Included" },
+  { id: "included", title: "What's Included" },
   { id: "compare", title: "Compare Plans" },
   { id: "faq", title: "FAQ" },
   { id: "upgrade", title: "Get Started" },
@@ -110,17 +109,17 @@ const faqs = [
   {
     question: "Can I cancel my subscription anytime?",
     answer:
-      "Yes! You can cancel your Premium subscription at any time. You&apos;ll continue to have access until the end of your billing period.",
+      "Yes! You can cancel your Premium subscription at any time. You'll continue to have access until the end of your billing period.",
   },
   {
     question: "What happens to my data if I cancel?",
     answer:
-      "Your data remains yours. If you cancel, you&apos;ll still have access to your full history, but premium features will be limited. We never delete your data without your permission.",
+      "Your data remains yours. If you cancel, you'll still have access to your full history, but premium features will be limited. We never delete your data without your permission.",
   },
   {
     question: "Is there a free trial?",
     answer:
-      "Yes! New Premium subscribers get a 7-day free trial. You won&apos;t be charged until the trial ends, and you can cancel anytime during the trial.",
+      "Yes! New Premium subscribers get a 7-day free trial. You won't be charged until the trial ends, and you can cancel anytime during the trial.",
   },
   {
     question: "Can I switch between monthly and annual plans?",
@@ -130,7 +129,7 @@ const faqs = [
   {
     question: "Do you offer refunds?",
     answer:
-      "We offer a 14-day money-back guarantee for annual subscriptions. If you&apos;re not satisfied, contact us within 14 days for a full refund.",
+      "We offer a 14-day money-back guarantee for annual subscriptions. If you're not satisfied, contact us within 14 days for a full refund.",
   },
 ];
 
@@ -143,7 +142,7 @@ export default function PremiumPage() {
       />
       <main className="min-h-screen w-full text-slate-800 dark:text-slate-200">
         {/* Hero Section */}
-        <section className="py-16 px-6 bg-gradient-to-b from-amber-50/50 to-transparent dark:from-amber-900/10">
+        <section className="pt-32 pb-16 px-6 bg-gradient-to-b from-amber-50/50 to-transparent dark:from-amber-900/10">
           <div className="max-w-4xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 px-4 py-2 rounded-full text-sm font-medium mb-6">
               <Icon name="workspace_premium" className="text-lg" />
@@ -331,7 +330,7 @@ export default function PremiumPage() {
                     <span className="w-8 h-8 rounded-lg bg-amber-100 dark:bg-amber-900/30 text-amber-600 flex items-center justify-center text-sm">
                       3
                     </span>
-                    What&apos;s Included
+                    What's Included
                   </h2>
                   <div className="bg-slate-50 dark:bg-slate-900/50 rounded-2xl p-8 not-prose">
                     <div className="grid sm:grid-cols-2 gap-6">
@@ -512,7 +511,6 @@ export default function PremiumPage() {
           </div>
         </section>
       </main>
-      <Footer />
     </>
   );
 }

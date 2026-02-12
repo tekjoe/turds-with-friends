@@ -65,7 +65,7 @@ const privacyFeatures = [
     icon: "lock",
     title: "End-to-End Encryption",
     description:
-      "When data does sync to the cloud, it&apos;s encrypted before it leaves your device. Only you hold the keys to decrypt your health information.",
+      "When data does sync to the cloud, it's encrypted before it leaves your device. Only you hold the keys to decrypt your health information.",
     details: [
       "AES-256 encryption standard",
       "Client-side encryption keys",
@@ -87,9 +87,9 @@ const privacyFeatures = [
   },
   {
     icon: "block",
-    title: "What We Don&apos;t Collect",
+    title: "What We Don't Collect",
     description:
-      "We believe in data minimization. We don&apos;t collect information we don&apos;t need to provide our service.",
+      "We believe in data minimization. We don't collect information we don't need to provide our service.",
     details: [
       "No personal identifiers sold",
       "No third-party ad tracking",
@@ -108,7 +108,7 @@ export default function PrivacyFirstPage() {
       />
       <main className="min-h-screen w-full text-slate-800 dark:text-slate-200">
         {/* Hero Section */}
-        <section className="py-20 px-6 bg-gradient-to-b from-purple-50/50 to-transparent dark:from-purple-900/10">
+        <section className="pt-32 pb-20 px-6 bg-gradient-to-b from-purple-50/50 to-transparent dark:from-purple-900/10">
           <div className="max-w-4xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 px-4 py-2 rounded-full text-sm font-medium mb-6">
               <Icon name="verified" className="text-lg" />
@@ -235,7 +235,7 @@ export default function PrivacyFirstPage() {
                 <div>
                   <h3 className="font-bold text-lg mb-2">How We Sync</h3>
                   <p className="text-slate-600 dark:text-slate-400">
-                    Data syncs only when you&apos;re logged in and explicitly enable
+                    Data syncs only when you're logged in and explicitly enable
                     cloud backup. Local data remains primary.
                   </p>
                 </div>

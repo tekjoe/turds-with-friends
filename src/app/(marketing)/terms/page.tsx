@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Icon } from "@/components/ui/Icon";
-import { Footer } from "@/components/landing/Footer";
 
 export const metadata: Metadata = {
   title: "Terms of Service | Bowel Buddies",
@@ -73,7 +72,7 @@ export default function TermsPage() {
       />
       <main className="min-h-screen w-full text-slate-800 dark:text-slate-200">
         {/* Hero Section */}
-        <section className="py-16 px-6 bg-gradient-to-b from-primary/5 to-transparent">
+        <section className="pt-32 pb-16 px-6 bg-gradient-to-b from-primary/5 to-transparent">
           <div className="max-w-4xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
               <Icon name="gavel" className="text-lg" />
@@ -130,9 +129,9 @@ export default function TermsPage() {
                   </h2>
                   <div className="space-y-4 text-slate-600 dark:text-slate-400 leading-relaxed">
                     <p>
-                      Welcome to Bowel Buddies. These Terms of Service (&quot;Terms&quot;)
+                      Welcome to Bowel Buddies. These Terms of Service ("Terms")
                       govern your access to and use of the Bowel Buddies website,
-                      mobile application, and services (collectively, the &quot;Service&quot;).
+                      mobile application, and services (collectively, the "Service").
                     </p>
                     <p>
                       By accessing or using the Service, you agree to be bound by
@@ -202,8 +201,8 @@ export default function TermsPage() {
                       </li>
                       <li>
                         To transmit, or procure the sending of, any advertising
-                        or promotional material, including any &quot;junk mail,&quot;
-                        &quot;chain letter,&quot; &quot;spam,&quot; or any other similar solicitation.
+                        or promotional material, including any "junk mail,"
+                        "chain letter," "spam," or any other similar solicitation.
                       </li>
                       <li>
                         To impersonate or attempt to impersonate Bowel Buddies,
@@ -212,7 +211,7 @@ export default function TermsPage() {
                       </li>
                       <li>
                         To engage in any other conduct that restricts or inhibits
-                        anyone&apos;s use or enjoyment of the Service, or which may
+                        anyone's use or enjoyment of the Service, or which may
                         harm Bowel Buddies or users of the Service.
                       </li>
                       <li>
@@ -249,7 +248,7 @@ export default function TermsPage() {
                     <p>
                       The Service allows you to store and track personal health
                       information, including but not limited to bowel movement
-                      data, symptoms, and notes (&quot;User Content&quot;). You retain all
+                      data, symptoms, and notes ("User Content"). You retain all
                       rights to your User Content. By providing User Content to the
                       Service, you grant Bowel Buddies a limited license to use,
                       store, and process your User Content solely for the purpose
@@ -298,7 +297,7 @@ export default function TermsPage() {
                   </h2>
                   <div className="space-y-4 text-slate-600 dark:text-slate-400 leading-relaxed">
                     <p>
-                      The Service is provided on an &quot;AS IS&quot; and &quot;AS AVAILABLE&quot; basis.
+                      The Service is provided on an "AS IS" and "AS AVAILABLE" basis.
                       Bowel Buddies expressly disclaims all warranties of any kind,
                       whether express or implied, including but not limited to the
                       implied warranties of merchantability, fitness for a particular
@@ -408,7 +407,7 @@ export default function TermsPage() {
                     <p>
                       We reserve the right, at our sole discretion, to modify
                       or replace these Terms at any time. If a revision is
-                      material, we will try to provide at least 30 days&apos; notice
+                      material, we will try to provide at least 30 days' notice
                       prior to any new terms taking effect.
                     </p>
                     <p>
@@ -508,7 +507,6 @@ export default function TermsPage() {
           </div>
         </section>
       </main>
-      <Footer />
     </>
   );
 }

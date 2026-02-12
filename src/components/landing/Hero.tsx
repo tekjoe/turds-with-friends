@@ -15,9 +15,10 @@ interface HeroProps {
   userCount: number;
   leaderboard: LeaderboardUser[];
   avatars: (string | null)[];
+  isAuthenticated?: boolean;
 }
 
-export function Hero({ userCount, leaderboard, avatars }: HeroProps) {
+export function Hero({ userCount, leaderboard, avatars, isAuthenticated = false }: HeroProps) {
   return (
     <section className="pt-32 pb-20 px-6 w-full overflow-x-clip">
       <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center w-full">
@@ -39,7 +40,7 @@ export function Hero({ userCount, leaderboard, avatars }: HeroProps) {
           </p>
 
           <div className="flex flex-wrap gap-4">
-            <Link href="/login">
+            <Link href={isAuthenticated ? "/log" : "/login"}>
               <Button variant="primary" size="lg">
                 <Icon name="add_circle" />
                 Start Tracking

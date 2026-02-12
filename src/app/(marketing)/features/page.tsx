@@ -94,7 +94,7 @@ export default function FeaturesPage() {
       />
       <div className="w-full">
         {/* Hero Section */}
-        <section className="py-16 md:py-24 px-6 bg-[#FDFBF7] dark:bg-[#1A1614]">
+        <section className="pt-32 pb-16 md:pt-36 md:pb-24 px-6 bg-[#FDFBF7] dark:bg-[#1A1614]">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold font-display mb-6 text-slate-800 dark:text-slate-100">
               Everything You Need for{" "}

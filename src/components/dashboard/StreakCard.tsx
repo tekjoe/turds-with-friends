@@ -28,7 +28,7 @@ export function StreakCard({ currentStreak, personalBest }: StreakCardProps) {
             href="/log"
             className="block w-full py-2 bg-white text-primary font-bold rounded-xl text-center hover:bg-amber-50 transition-colors"
           >
-            Log Today&apos;s Entry
+            Log Today's Entry
           </Link>
         </div>
       </div>

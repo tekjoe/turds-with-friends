@@ -104,7 +104,7 @@ export default async function MapPage() {
             Poop Map
           </h1>
           <p className="text-slate-500 dark:text-slate-400 mt-2">
-            Every throne you&apos;ve conquered, pinned on the map.
+            Every throne you've conquered, pinned on the map.
           </p>
         </header>
         <PoopMap

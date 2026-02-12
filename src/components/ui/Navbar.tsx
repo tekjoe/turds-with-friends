@@ -135,7 +135,7 @@ export function Navbar({ isAuthenticated = false, userName, avatarUrl }: NavbarP
                   </div>
 
                   <Link
-                    href="/notifications"
+                    href="/activity"
                     onClick={() => setMenuOpen(false)}
                     className="flex items-center gap-3 px-4 py-3 text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
                   >

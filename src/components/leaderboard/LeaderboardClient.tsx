@@ -182,7 +182,7 @@ export function LeaderboardClient({
               </div>
               <h4 className="font-bold mb-1">Spread the health!</h4>
               <p className="text-xs text-slate-600 dark:text-slate-400 mb-4">
-                Invite friends and earn a &apos;Golden Fiber&apos; badge.
+                Invite friends and earn a 'Golden Fiber' badge.
               </p>
               <Link href="/friends">
                 <Button variant="primary" className="w-full">

@@ -44,22 +44,22 @@ export function Footer() {
           <h4 className="font-bold text-white mb-6">Product</h4>
           <ul className="space-y-4 text-sm">
             <li>
-              <Link href="#" className="hover:text-primary transition-colors">
+              <Link href="/features" className="hover:text-primary transition-colors">
                 Features
               </Link>
             </li>
             <li>
-              <Link href="#chart" className="hover:text-primary transition-colors">
+              <Link href="/#chart" className="hover:text-primary transition-colors">
                 Stool Chart
               </Link>
             </li>
             <li>
-              <Link href="#" className="hover:text-primary transition-colors">
+              <Link href="/privacy-first" className="hover:text-primary transition-colors">
                 Privacy First
               </Link>
             </li>
             <li>
-              <Link href="#" className="hover:text-primary transition-colors">
+              <Link href="/premium" className="hover:text-primary transition-colors">
                 Premium Plan
               </Link>
             </li>
@@ -71,23 +71,18 @@ export function Footer() {
           <h4 className="font-bold text-white mb-6">Legal</h4>
           <ul className="space-y-4 text-sm">
             <li>
-              <Link href="#" className="hover:text-primary transition-colors">
+              <Link href="/terms" className="hover:text-primary transition-colors">
                 Terms of Service
               </Link>
             </li>
             <li>
-              <Link href="#" className="hover:text-primary transition-colors">
+              <Link href="/privacy-first" className="hover:text-primary transition-colors">
                 Privacy Policy
               </Link>
             </li>
             <li>
-              <Link href="#" className="hover:text-primary transition-colors">
+              <Link href="/medical-disclaimer" className="hover:text-primary transition-colors">
                 Medical Disclaimer
-              </Link>
-            </li>
-            <li>
-              <Link href="#" className="hover:text-primary transition-colors">
-                Contact Us
               </Link>
             </li>
           </ul>

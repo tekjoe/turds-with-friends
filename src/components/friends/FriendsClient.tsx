@@ -86,7 +86,7 @@ export function FriendsClient({ friends, totalFriends, activeStreaks }: FriendsC
             Inner Circle
           </h1>
           <p className="text-slate-500 dark:text-slate-400 mt-2 max-w-xl">
-            Keep an eye on your friends&apos; digestive consistency and
+            Keep an eye on your friends' digestive consistency and
             competitive streaks.
           </p>
         </div>
