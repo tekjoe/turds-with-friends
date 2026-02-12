@@ -65,13 +65,13 @@ export function Features() {
           {/* Content */}
           <div className="order-1 lg:order-2 space-y-6">
             <h2 className="text-4xl font-bold font-display leading-tight">
-              It&apos;s More Than Just Tracking.{" "}
+              It's More Than Just Tracking.{" "}
               <br />
-              <span className="text-primary">It&apos;s a Healthy Lifestyle.</span>
+              <span className="text-primary">It's a Healthy Lifestyle.</span>
             </h2>
             <p className="text-slate-600 dark:text-slate-400 text-lg">
-              Health doesn&apos;t have to be boring. By making gut health social and fun,
-              we help you stay consistent and aware of your body&apos;s signals.
+              Health doesn't have to be boring. By making gut health social and fun,
+              we help you stay consistent and aware of your body's signals.
             </p>
             <ul className="space-y-4">
               {benefits.map((benefit) => (

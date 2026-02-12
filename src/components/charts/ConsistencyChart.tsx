@@ -59,8 +59,8 @@ export function ConsistencyChart({ data }: ConsistencyChartProps) {
           ))}
           <div className="mt-4 p-4 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-100 dark:border-emerald-800 rounded-xl">
             <p className="text-xs text-emerald-800 dark:text-emerald-400 leading-relaxed italic">
-              &quot;Looking great! Your consistency is primarily within the
-              &apos;Ideal&apos; range. Keep up the high-fiber diet.&quot;
+              "Looking great! Your consistency is primarily within the
+              'Ideal' range. Keep up the high-fiber diet."
             </p>
           </div>
         </div>

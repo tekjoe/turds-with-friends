@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Icon } from "@/components/ui/Icon";
-import { Footer } from "@/components/landing/Footer";
 
 export const metadata: Metadata = {
   title: "Medical Disclaimer | Bowel Buddies",
@@ -61,12 +60,12 @@ export default function MedicalDisclaimerPage() {
       <div className="min-h-screen w-full text-slate-800 dark:text-slate-200">
         <main className="w-full">
           {/* Hero Section */}
-          <section className="relative bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100 dark:from-slate-900 dark:via-amber-950/20 dark:to-slate-900 py-20 px-6">
+          <section className="relative bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100 dark:from-slate-900 dark:via-amber-950/20 dark:to-slate-900 pt-32 pb-20 px-6">
             <div className="max-w-4xl mx-auto text-center">
               {/* Badge */}
               <div className="inline-flex items-center gap-2 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 px-4 py-2 rounded-full text-sm font-semibold mb-6">
                 <Icon name="medical_services" className="text-base" />
-                <span>Health &amp; Safety Notice</span>
+                <span>Health & Safety Notice</span>
               </div>
 
               <h1 className="text-4xl md:text-5xl font-bold font-display text-slate-900 dark:text-white mb-6">
@@ -385,7 +384,6 @@ export default function MedicalDisclaimerPage() {
             </div>
           </section>
         </main>
-        <Footer />
       </div>
     </>
   );

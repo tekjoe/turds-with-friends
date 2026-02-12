@@ -36,6 +36,12 @@ export const metadata: Metadata = {
   description:
     "Track your bowel movements with the best poop tracker app. Monitor gut health using the Bristol Chart, analyze stool types, and compete with friends today!",
   keywords: ["poop tracker app", "bowel tracking", "bristol stool chart", "gut health", "digestive health"],
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Bowel Buddies",
+  },
   openGraph: {
     type: "website",
     siteName: "Bowel Buddies",
@@ -90,6 +96,9 @@ export default async function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
           rel="stylesheet"
         />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}

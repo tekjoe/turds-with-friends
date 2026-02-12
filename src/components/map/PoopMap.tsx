@@ -86,7 +86,7 @@ export function PoopMap({
           {friendLocations.length > 0 && (
             <div className="flex items-center justify-between">
               <span className="text-sm text-slate-600 dark:text-slate-400">
-                Show friends&apos; poop locations
+                Show friends' poop locations
               </span>
               <button
                 type="button"

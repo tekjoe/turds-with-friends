@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { isPremium } from "@/lib/premium";
 import { redirect } from "next/navigation";
 import { SettingsForm } from "@/components/settings/SettingsForm";
+import { NotificationSettings } from "@/components/settings/NotificationSettings";
 
 interface PrivacySettings {
   show_weight?: boolean;
@@ -33,17 +34,20 @@ export default async function SettingsPage() {
 
   return (
     <div className="min-h-screen bg-background pt-20">
-      <SettingsForm
-        profile={{
-          username: profile?.username ?? null,
-          display_name: profile?.display_name ?? null,
-          avatar_url: profile?.avatar_url ?? null,
-          xp_total: profile?.xp_total ?? 0,
-          privacy_settings: privacySettings,
-        }}
-        email={user.email ?? ""}
-        isPremium={isPremiumUser}
-      />
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+        <NotificationSettings />
+        <SettingsForm
+          profile={{
+            username: profile?.username ?? null,
+            display_name: profile?.display_name ?? null,
+            avatar_url: profile?.avatar_url ?? null,
+            xp_total: profile?.xp_total ?? 0,
+            privacy_settings: privacySettings,
+          }}
+          email={user.email ?? ""}
+          isPremium={isPremiumUser}
+        />
+      </div>
     </div>
   );
 }
