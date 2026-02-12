@@ -14,6 +14,11 @@ const eslintConfig = [
   {
     ignores: [".next/**", "out/**", "build/**", ".open-next/**", ".wrangler/**"],
   },
+  {
+    rules: {
+      "react/no-unescaped-entities": "off",
+    },
+  },
 ];
 
 export default eslintConfig;
