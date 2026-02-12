@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "generate:firebase-sw": "node scripts/generate-firebase-sw.js",
+    "dev": "npm run generate:firebase-sw && next dev",
+    "build": "npm run generate:firebase-sw && next build",
     "start": "next start",
     "lint": "eslint",
     "test": "jest && jest --config jest.config.api.js",
