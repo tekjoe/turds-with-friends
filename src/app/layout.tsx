@@ -5,6 +5,19 @@ import { isPremium } from "@/lib/premium";
 import { Navbar } from "@/components/ui/Navbar";
 import "./globals.css";
 
+// WebSite structured data (JSON-LD)
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Bowel Buddies",
+  url: "https://bowelbuddies.app",
+  potentialAction: {
+    "@type": "SearchAction",
+    target: "https://bowelbuddies.app/search?q={search_term_string}",
+    "query-input": "required name=search_term_string",
+  },
+};
+
 const outfit = Outfit({
   variable: "--font-outfit",
   subsets: ["latin"],
@@ -18,10 +31,29 @@ const quicksand = Quicksand({
 });
 
 export const metadata: Metadata = {
-  title: "Bowel Buddies | Gamified Bowel Tracking",
+  metadataBase: new URL("https://bowelbuddies.app"),
+  title: "Poop Tracker App | Track Your Gut Health | Bowel Buddies",
   description:
-    "Track your digestive health with the Bristol Stool Chart. Compete with friends, earn badges, and maintain a healthy gut together.",
-  keywords: ["bowel tracking", "bristol stool chart", "gut health", "digestive health"],
+    "Track your bowel movements with the best poop tracker app. Monitor gut health using the Bristol Chart, analyze stool types, and compete with friends today!",
+  keywords: ["poop tracker app", "bowel tracking", "bristol stool chart", "gut health", "digestive health"],
+  openGraph: {
+    type: "website",
+    siteName: "Bowel Buddies",
+    title: "Poop Tracker App | Track Your Gut Health | Bowel Buddies",
+    description: "Track your bowel movements with the best poop tracker app. Monitor gut health using the Bristol Chart, analyze stool types, and compete with friends today!",
+    images: [{
+      url: "/og-image.png",
+      width: 1200,
+      height: 630,
+      alt: "Bowel Buddies - Poop Tracker App for Gut Health",
+    }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Poop Tracker App | Track Your Gut Health | Bowel Buddies",
+    description: "Track your bowel movements with the best poop tracker app. Monitor gut health using the Bristol Chart, analyze stool types, and compete with friends today!",
+    images: ["/og-image.png"],
+  },
 };
 
 export const viewport: Viewport = {
@@ -55,8 +87,12 @@ export default async function RootLayout({
     <html lang="en" className="scroll-smooth overflow-x-hidden">
       <head>
         <link
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=optional"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
           rel="stylesheet"
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
         />
       </head>
       <body

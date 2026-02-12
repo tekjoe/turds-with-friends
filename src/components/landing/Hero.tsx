@@ -59,7 +59,7 @@ export function Hero({ userCount, leaderboard, avatars }: HeroProps) {
                   <Image
                     key={i}
                     src={url}
-                    alt=""
+                    alt={`Active Poop Tracker App user ${i + 1}`}
                     width={40}
                     height={40}
                     className="w-10 h-10 rounded-full border-2 border-white dark:border-slate-900 object-cover"
@@ -68,6 +68,7 @@ export function Hero({ userCount, leaderboard, avatars }: HeroProps) {
                   <div
                     key={i}
                     className="w-10 h-10 rounded-full border-2 border-white dark:border-slate-900 bg-slate-200 dark:bg-slate-700"
+                    aria-label={`Active Poop Tracker App user ${i + 1}`}
                   />
                 )
               )}
