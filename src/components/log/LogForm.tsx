@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { createClient } from "@/lib/supabase/client";
 import { BristolSelector } from "@/components/bristol-scale/BristolSelector";
 import { Icon } from "@/components/ui/Icon";
 import { Button } from "@/components/ui/Button";
@@ -38,31 +37,24 @@ export function LogForm({ isPremium: _isPremium }: LogFormProps) {
     setError(null);
 
     try {
-      const supabase = createClient();
+      // Create movement log via API
+      const response = await fetch("/api/movements", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          bristol_type: bristolType,
+          pre_weight: preWeight,
+          post_weight: postWeight,
+          weight_unit: weightUnit,
+        }),
+      });
 
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-
-      if (!user) {
-        router.push("/login");
-        return;
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || "Failed to create log");
       }
 
-      const { data: logData, error: insertError } = await supabase
-        .from("movement_logs")
-        .insert({
-          user_id: user.id,
-          bristol_type: bristolType,
-          pre_weight: preWeight ? parseFloat(preWeight) : null,
-          post_weight: postWeight ? parseFloat(postWeight) : null,
-          weight_unit: weightUnit,
-          xp_earned: 50,
-        })
-        .select("id")
-        .single();
-
-      if (insertError) throw insertError;
+      const { data: logData } = await response.json();
 
       // Save location if tracking enabled
       if (trackLocation && logData) {
@@ -160,9 +152,10 @@ export function LogForm({ isPremium: _isPremium }: LogFormProps) {
                   <input
                     type="number"
                     step="0.1"
+                    min="0"
                     value={preWeight}
                     onChange={(e) => setPreWeight(e.target.value)}
-                    className="w-full text-4xl font-bold py-6 px-8 rounded-3xl bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all text-center outline-none"
+                    className="w-full text-4xl font-bold py-6 px-8 rounded-3xl bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all text-center outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [-moz-appearance:textfield]"
                     placeholder="000.0"
                   />
                   <span className="absolute right-8 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-xl">
@@ -183,9 +176,10 @@ export function LogForm({ isPremium: _isPremium }: LogFormProps) {
                   <input
                     type="number"
                     step="0.1"
+                    min="0"
                     value={postWeight}
                     onChange={(e) => setPostWeight(e.target.value)}
-                    className="w-full text-4xl font-bold py-6 px-8 rounded-3xl bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all text-center outline-none"
+                    className="w-full text-4xl font-bold py-6 px-8 rounded-3xl bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all text-center outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [-moz-appearance:textfield]"
                     placeholder="000.0"
                   />
                   <span className="absolute right-8 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-xl">
