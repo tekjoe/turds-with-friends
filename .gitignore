@@ -54,3 +54,6 @@ next-env.d.ts
 **/public/sw.js.map
 **/public/workbox-*.js.map
 **/public/worker-*.js.map
+
+# Generated Firebase service worker (contains env vars injected at build time)
+public/firebase-messaging-sw.js
