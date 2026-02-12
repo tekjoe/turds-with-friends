@@ -31,6 +31,7 @@ const quicksand = Quicksand({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://bowelbuddies.app"),
   title: "Poop Tracker App | Track Your Gut Health | Bowel Buddies",
   description:
     "Track your bowel movements with the best poop tracker app. Monitor gut health using the Bristol Chart, analyze stool types, and compete with friends today!",
