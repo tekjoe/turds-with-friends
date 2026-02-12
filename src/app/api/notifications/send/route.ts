@@ -38,12 +38,12 @@ export async function POST(request: Request) {
 
     // Send notification
     const message = {
+      token: tokenData.token,
       notification: {
         title,
         body,
       },
       data: data || {},
-      token: tokenData.token,
       webpush: {
         notification: {
           icon: '/icon-192x192.png',

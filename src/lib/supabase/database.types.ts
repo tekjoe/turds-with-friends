@@ -715,29 +715,3 @@ export const Constants = {
     },
   },
 } as const
-
-// Helper types
-export type Profile = Database["public"]["Tables"]["profiles"]["Row"];
-export type MovementLog = Database["public"]["Tables"]["movement_logs"]["Row"];
-export type Friendship = Database["public"]["Tables"]["friendships"]["Row"];
-export type Badge = Database["public"]["Tables"]["badges"]["Row"];
-export type UserBadge = Database["public"]["Tables"]["user_badges"]["Row"];
-export type Subscription = Database["public"]["Tables"]["subscriptions"]["Row"];
-export type LocationLog = Database["public"]["Tables"]["location_logs"]["Row"];
-export type Challenge = Database["public"]["Tables"]["challenges"]["Row"];
-export type ChallengeParticipant = Database["public"]["Tables"]["challenge_participants"]["Row"];
-export type LocationComment = Database["public"]["Tables"]["location_comments"]["Row"];
-export type Notification = Database["public"]["Tables"]["notifications"]["Row"];
-export type FCMToken = Database["public"]["Tables"]["fcm_tokens"]["Row"];
-
-// Insert types
-export type ProfileInsert = Database["public"]["Tables"]["profiles"]["Insert"];
-export type MovementLogInsert = Database["public"]["Tables"]["movement_logs"]["Insert"];
-export type FriendshipInsert = Database["public"]["Tables"]["friendships"]["Insert"];
-export type SubscriptionInsert = Database["public"]["Tables"]["subscriptions"]["Insert"];
-export type LocationLogInsert = Database["public"]["Tables"]["location_logs"]["Insert"];
-export type ChallengeInsert = Database["public"]["Tables"]["challenges"]["Insert"];
-export type ChallengeParticipantInsert = Database["public"]["Tables"]["challenge_participants"]["Insert"];
-export type LocationCommentInsert = Database["public"]["Tables"]["location_comments"]["Insert"];
-export type NotificationInsert = Database["public"]["Tables"]["notifications"]["Insert"];
-export type FCMTokenInsert = Database["public"]["Tables"]["fcm_tokens"]["Insert"];

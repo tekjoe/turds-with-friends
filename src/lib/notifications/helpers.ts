@@ -39,15 +39,15 @@ export async function getUserFriends(userId: string) {
 
   const { data: friendships } = await supabase
     .from('friendships')
-    .select('user_id, friend_id')
-    .or(`user_id.eq.${userId},friend_id.eq.${userId}`)
+    .select('requester_id, addressee_id')
+    .or(`requester_id.eq.${userId},addressee_id.eq.${userId}`)
     .eq('status', 'accepted');
 
   if (!friendships) return [];
 
   // Extract friend IDs (excluding the user themselves)
   const friendIds = friendships.map(f =>
-    f.user_id === userId ? f.friend_id : f.user_id
+    f.requester_id === userId ? f.addressee_id : f.requester_id
   );
 
   return friendIds;

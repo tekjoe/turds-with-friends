@@ -12,6 +12,9 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  serverExternalPackages: [
+    'jose',
+  ],
 };
 
 export default withPWA({
@@ -122,4 +125,5 @@ export default withPWA({
       },
     },
   ],
+// @ts-expect-error - Type mismatch between next-pwa types and Next.js 15
 })(nextConfig);
