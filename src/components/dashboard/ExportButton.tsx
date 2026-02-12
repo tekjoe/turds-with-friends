@@ -35,27 +35,27 @@ export function ExportButton() {
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-primary transition-colors cursor-pointer"
+        className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-primary transition-colors cursor-pointer"
       >
         <Icon name="download" className="text-base" />
         Export
       </button>
       {open && (
-        <div className="absolute right-0 mt-2 w-44 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-lg py-1 z-50">
+        <div className="absolute right-0 mt-2 w-44 bg-card border border-card-border rounded-xl shadow-lg py-1 z-50">
           <button
             type="button"
             onClick={() => download("csv")}
-            className="flex items-center gap-2 w-full px-4 py-2.5 text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+            className="flex items-center gap-2 w-full px-4 py-2.5 text-sm hover:bg-muted transition-colors cursor-pointer"
           >
-            <Icon name="description" className="text-base text-slate-400" />
+            <Icon name="description" className="text-base text-muted-foreground" />
             Download CSV
           </button>
           <button
             type="button"
             onClick={() => download("pdf")}
-            className="flex items-center gap-2 w-full px-4 py-2.5 text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+            className="flex items-center gap-2 w-full px-4 py-2.5 text-sm hover:bg-muted transition-colors cursor-pointer"
           >
-            <Icon name="picture_as_pdf" className="text-base text-slate-400" />
+            <Icon name="picture_as_pdf" className="text-base text-muted-foreground" />
             Download PDF
           </button>
         </div>

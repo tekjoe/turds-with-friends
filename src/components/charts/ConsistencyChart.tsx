@@ -12,7 +12,7 @@ interface ConsistencyChartProps {
 
 export function ConsistencyChart({ data }: ConsistencyChartProps) {
   return (
-    <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800">
+    <div className="bg-card p-6 rounded-2xl shadow-sm border border-card-border">
       <h2 className="text-xl font-display font-bold mb-6">
         Consistency Breakdown (Bristol Stool Scale)
       </h2>
@@ -36,8 +36,8 @@ export function ConsistencyChart({ data }: ConsistencyChartProps) {
               <Tooltip
                 formatter={(value) => [`${value}%`, ""]}
                 contentStyle={{
-                  backgroundColor: "var(--background)",
-                  border: "1px solid var(--foreground)",
+                  backgroundColor: "var(--card)",
+                  border: "1px solid var(--card-border)",
                   borderRadius: "0.5rem",
                 }}
               />

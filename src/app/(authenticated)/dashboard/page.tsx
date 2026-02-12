@@ -105,10 +105,10 @@ export default async function DashboardPage() {
 
   const pct = (n: number) => (total > 0 ? Math.round((n / total) * 100) : 0);
   const consistencyData = [
-    { name: "Type 1 & 2 (Constipated)", value: pct(constipated), color: "#78350f" },
-    { name: "Type 3 & 4 (Ideal)", value: pct(ideal), color: "#059669" },
-    { name: "Type 5 (Fiber Lacking)", value: pct(fiberLacking), color: "#d97706" },
-    { name: "Type 6 & 7 (Liquid/Inflam)", value: pct(liquid), color: "#e11d48" },
+    { name: "Type 1 & 2 (Constipated)", value: pct(constipated), color: "var(--chart-dark-brown)" },
+    { name: "Type 3 & 4 (Ideal)", value: pct(ideal), color: "var(--chart-green)" },
+    { name: "Type 5 (Fiber Lacking)", value: pct(fiberLacking), color: "var(--chart-amber)" },
+    { name: "Type 6 & 7 (Liquid/Inflam)", value: pct(liquid), color: "var(--chart-red)" },
   ];
 
   // --- Friend ranking data ---
@@ -168,7 +168,7 @@ export default async function DashboardPage() {
     initials: entry.initials,
     avatarUrl: entry.avatarUrl,
     points: formatPoints(entry.xp),
-    color: entry.isCurrentUser ? "#92400E" : RANK_COLORS[i % RANK_COLORS.length],
+    color: entry.isCurrentUser ? "var(--chart-brown)" : RANK_COLORS[i % RANK_COLORS.length],
     isCurrentUser: entry.isCurrentUser,
   }));
 

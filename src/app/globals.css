@@ -10,11 +10,38 @@
   --poop-brown: #7B3F00;
   --poop-light: #A0522D;
   --stool-brown: #8B5E3C;
+
+  /* Card tokens */
+  --card: #ffffff;
+  --card-border: #e2e8f0;
+  --card-foreground: #1e293b;
+
+  /* Muted tokens */
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+
+  /* Chart tokens */
+  --chart-brown: #92400E;
+  --chart-green: #059669;
+  --chart-amber: #d97706;
+  --chart-red: #e11d48;
+  --chart-dark-brown: #78350f;
+
+  /* Streak card gradient */
+  --streak-from: #8B4513;
+  --streak-to: #b45309;
 }
 
 .dark {
   --background: #1A1614;
   --foreground: #e2e8f0;
+
+  --card: #0f172a;
+  --card-border: #1e293b;
+  --card-foreground: #e2e8f0;
+
+  --muted: #1e293b;
+  --muted-foreground: #94a3b8;
 }
 
 @theme inline {
@@ -25,6 +52,22 @@
   --color-poop-brown: var(--poop-brown);
   --color-poop-light: var(--poop-light);
   --color-stool-brown: var(--stool-brown);
+
+  --color-card: var(--card);
+  --color-card-border: var(--card-border);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-chart-brown: var(--chart-brown);
+  --color-chart-green: var(--chart-green);
+  --color-chart-amber: var(--chart-amber);
+  --color-chart-red: var(--chart-red);
+  --color-chart-dark-brown: var(--chart-dark-brown);
+
+  --color-streak-from: var(--streak-from);
+  --color-streak-to: var(--streak-to);
+
   --font-sans: var(--font-quicksand);
   --font-display: var(--font-outfit);
 }
