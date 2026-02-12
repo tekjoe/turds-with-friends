@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+import { createClient, createAdminClient } from '@/lib/supabase/server';
 import { messaging } from '@/lib/firebase/admin';
 
 export async function POST(request: Request) {
@@ -13,12 +13,13 @@ export async function POST(request: Request) {
       );
     }
 
-    const supabase = await createClient();
-
     // Check for CRON_SECRET for testing/automation, or require authentication
     const authHeader = request.headers.get('authorization');
     const cronSecret = process.env.CRON_SECRET;
     const isAuthorized = cronSecret && authHeader === `Bearer ${cronSecret}`;
+
+    // Use admin client for CRON_SECRET, regular client for authenticated users
+    const supabase = isAuthorized ? createAdminClient() : await createClient();
 
     if (!isAuthorized) {
       // Verify the requesting user is authenticated
