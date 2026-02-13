@@ -192,6 +192,7 @@ export async function GET(request: NextRequest) {
               gap: "8px",
             }}
           >
+            <span style={{ fontSize: "24px" }}>💩</span>
             <span style={{ fontWeight: 700, color: "#C05621" }}>
               bowelbuddies.app
             </span>

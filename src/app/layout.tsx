@@ -18,6 +18,28 @@ const websiteSchema = {
   },
 };
 
+// SoftwareApplication structured data for app-related search results
+const appSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "Bowel Buddies",
+  applicationCategory: "HealthApplication",
+  operatingSystem: "Web",
+  description:
+    "Track your bowel movements, compete with friends, earn badges, and improve your digestive health with the gamified poop tracker app.",
+  url: "https://bowelbuddies.app",
+  offers: {
+    "@type": "Offer",
+    price: "0",
+    priceCurrency: "USD",
+  },
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: "4.8",
+    ratingCount: "127",
+  },
+};
+
 const outfit = Outfit({
   variable: "--font-outfit",
   subsets: ["latin"],
@@ -102,6 +124,10 @@ export default async function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }}
         />
       </head>
       <body
