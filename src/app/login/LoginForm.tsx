@@ -24,22 +24,22 @@ export default function LoginForm() {
       <div 
         className="absolute inset-0 z-0 opacity-10 dark:opacity-5"
         style={{
-          backgroundImage: "radial-gradient(#22C55E 0.5px, transparent 0.5px), radial-gradient(#22C55E 0.5px, #FDFBF7 0.5px)",
+          backgroundImage: "radial-gradient(#C05621 0.5px, transparent 0.5px), radial-gradient(#C05621 0.5px, #FDFBF7 0.5px)",
           backgroundSize: "20px 20px",
           backgroundPosition: "0 0, 10px 10px",
         }}
       />
 
-      <div className="relative z-10 flex h-full grow flex-col pt-20">
+      <div className="relative z-10 flex h-full grow flex-col pt-16">
         {/* Main Content */}
         <main className="flex-1 flex items-center justify-center px-4 py-16">
           <div className="w-full max-w-[420px] flex flex-col items-center">
             {/* Login Card */}
-            <div className="w-full bg-white dark:bg-[#1A1614] border border-[#cfe7d7] dark:border-[#22C55E]/20 rounded-2xl shadow-xl p-10 flex flex-col gap-10">
+            <div className="w-full bg-white dark:bg-[#1A1614] border border-card-border dark:border-primary/20 rounded-2xl shadow-xl p-10 flex flex-col gap-10">
               <div className="flex flex-col items-center">
                 {/* Toilet Icon */}
-                <div className="size-28 bg-[#22C55E]/20 rounded-full flex items-center justify-center mb-6 overflow-hidden border-2 border-[#22C55E] shadow-sm">
-                  <svg className="size-16 text-[#22C55E]" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <div className="size-28 bg-primary/20 rounded-full flex items-center justify-center mb-6 overflow-hidden border-2 border-primary shadow-sm">
+                  <svg className="size-16 text-primary" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M7 3C7 2.44772 7.44772 2 8 2H16C16.5523 2 17 2.44772 17 3V8C17 8.55228 16.5523 9 16 9H8C7.44772 9 7 8.55228 7 8V3Z" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
                     <path d="M17 13C17 15.7614 14.7614 18 12 18C9.23858 18 7 15.7614 7 13V9H17V13Z" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
                     <path d="M8 18V20C8 21.1046 8.89543 22 10 22H14C15.1046 22 16 21.1046 16 20V18" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
@@ -67,10 +67,10 @@ export default function LoginForm() {
                 <button
                   onClick={handleGoogleSignIn}
                   disabled={isLoading}
-                  className="flex w-full items-center justify-center gap-4 rounded-xl border-2 border-[#cfe7d7] dark:border-[#22C55E]/30 h-16 bg-white dark:bg-[#1a2e21] text-[#0d1b12] dark:text-white text-lg font-bold hover:bg-[#FDFBF7] dark:hover:bg-[#233a2a] hover:border-[#22C55E]/50 transition-all duration-300 shadow-sm active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                  className="flex w-full items-center justify-center gap-4 rounded-xl border-2 border-card-border dark:border-primary/30 h-16 bg-white dark:bg-card text-foreground dark:text-white text-lg font-bold hover:bg-primary-bg dark:hover:bg-primary/10 hover:border-primary/50 transition-all duration-300 shadow-sm active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                 >
                   {isLoading ? (
-                    <div className="w-6 h-6 border-2 border-slate-300 border-t-[#22C55E] rounded-full animate-spin" />
+                    <div className="w-6 h-6 border-2 border-slate-300 border-t-primary rounded-full animate-spin" />
                   ) : (
                     <svg className="w-6 h-6" viewBox="0 0 24 24">
                       <path
@@ -98,7 +98,7 @@ export default function LoginForm() {
                   New to the bowl?
                   <button 
                     onClick={handleGoogleSignIn}
-                    className="text-[#22C55E] font-bold hover:underline ml-1 cursor-pointer"
+                    className="text-primary font-bold hover:underline ml-1 cursor-pointer"
                   >
                     Sign Up
                   </button>
@@ -117,7 +117,7 @@ export default function LoginForm() {
         </main>
 
         {/* Footer */}
-        <footer className="py-6 px-10 border-t border-[#22C55E]/10 flex justify-center items-center text-[#4c9a66] dark:text-[#a0c4ae] text-xs">
+        <footer className="py-6 px-10 border-t border-primary/10 flex justify-center items-center text-[#4c9a66] dark:text-[#a0c4ae] text-xs">
           © {new Date().getFullYear()} Bowel Buddies. All Rights Reserved. Potty on!
         </footer>
       </div>

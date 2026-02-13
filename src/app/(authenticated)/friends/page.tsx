@@ -66,7 +66,7 @@ export default async function FriendsPage() {
   const activeStreaks = friends.filter((f) => f.streak > 0).length;
 
   return (
-    <div className="min-h-screen bg-background pt-20">
+    <div className="min-h-screen bg-background pt-16">
       <div className="flex gap-0 min-h-[calc(100vh-5rem)]">
         <Sidebar />
         <main className="flex-1 overflow-y-auto px-4 sm:px-6 lg:px-8 py-8 pb-24 lg:pb-8 w-full">

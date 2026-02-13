@@ -480,6 +480,41 @@ export type Database = {
         }
         Relationships: []
       }
+      territory_claims: {
+        Row: {
+          id: string
+          h3_index: string
+          user_id: string
+          log_count: number
+          last_claimed_at: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          h3_index: string
+          user_id: string
+          log_count?: number
+          last_claimed_at?: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          h3_index?: string
+          user_id?: string
+          log_count?: number
+          last_claimed_at?: string
+          created_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "territory_claims_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       subscriptions: {
         Row: {
           created_at: string
@@ -565,7 +600,13 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      upsert_territory_claim: {
+        Args: {
+          p_h3_index: string
+          p_user_id: string
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       challenge_status: "pending" | "active" | "completed"
@@ -741,3 +782,5 @@ export type ChallengeParticipantInsert = Database["public"]["Tables"]["challenge
 export type LocationCommentInsert = Database["public"]["Tables"]["location_comments"]["Insert"];
 export type NotificationInsert = Database["public"]["Tables"]["notifications"]["Insert"];
 export type FCMTokenInsert = Database["public"]["Tables"]["fcm_tokens"]["Insert"];
+export type TerritoryClaim = Database["public"]["Tables"]["territory_claims"]["Row"];
+export type TerritoryClaimInsert = Database["public"]["Tables"]["territory_claims"]["Insert"];

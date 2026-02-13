@@ -160,7 +160,7 @@ export function AddFriendModal({ onClose }: { onClose: () => void }) {
                   className={`px-4 py-1.5 rounded-full text-xs font-bold transition-colors cursor-pointer ${
                     sent
                       ? "bg-slate-100 dark:bg-slate-800 text-slate-400"
-                      : "bg-primary text-white hover:bg-green-600"
+                      : "bg-primary text-white hover:bg-primary-dark"
                   }`}
                 >
                   {sent ? "Sent" : "Add"}

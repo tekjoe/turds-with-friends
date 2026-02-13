@@ -50,7 +50,7 @@ export function UpgradeClient() {
   };
 
   return (
-    <div className="min-h-screen bg-background pt-20">
+    <div className="min-h-screen bg-background pt-16">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12 pb-24 lg:pb-12">
         {/* Header */}
         <div className="text-center mb-12">

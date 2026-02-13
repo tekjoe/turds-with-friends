@@ -175,7 +175,7 @@ export function ActivityClient({
                       <div className="flex gap-3 mt-4">
                         <button
                           onClick={() => respond(req.id, "accept")}
-                          className="bg-primary px-6 py-2 rounded-full text-xs font-bold text-white hover:bg-green-600 transition-all cursor-pointer"
+                          className="bg-primary px-6 py-2 rounded-full text-xs font-bold text-white hover:bg-primary-dark transition-all cursor-pointer"
                         >
                           Accept
                         </button>

@@ -172,7 +172,7 @@ export function FriendsClient({ friends, totalFriends, activeStreaks }: FriendsC
               </div>
 
               <div className="mt-6 flex items-center gap-2">
-                <button className="flex-1 bg-primary/10 hover:bg-primary/20 text-green-800 dark:text-primary py-2.5 rounded-full text-sm font-bold transition-colors cursor-pointer">
+                <button className="flex-1 bg-primary/10 hover:bg-primary/20 text-primary-dark dark:text-primary py-2.5 rounded-full text-sm font-bold transition-colors cursor-pointer">
                   View Stats
                 </button>
               </div>

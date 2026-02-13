@@ -101,7 +101,7 @@ export default async function ActivityPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background pt-20">
+    <div className="min-h-screen bg-background pt-16">
       <div className="flex gap-0 min-h-[calc(100vh-5rem)]">
         <Sidebar />
         <div className="flex-1 overflow-y-auto max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-24 lg:pb-8">
