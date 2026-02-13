@@ -8,6 +8,7 @@ interface ShareButtonProps {
   title: string;
   text: string;
   url?: string;
+  imageUrl?: string;
   variant?: "icon" | "button";
   className?: string;
 }
@@ -16,13 +17,14 @@ export function ShareButton({
   title,
   text,
   url,
+  imageUrl,
   variant = "button",
   className = "",
 }: ShareButtonProps) {
   const [copied, setCopied] = useState(false);
 
   const handleShare = async () => {
-    const shared = await shareAchievement({ title, text, url });
+    const shared = await shareAchievement({ title, text, url, imageUrl });
     if (shared && !(typeof navigator !== "undefined" && navigator.share)) {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
