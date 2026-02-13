@@ -2,26 +2,15 @@
 
 import { useState, useRef } from "react";
 import { Icon } from "@/components/ui/Icon";
-
-interface LocationPin {
-  id: string;
-  latitude: number;
-  longitude: number;
-  place_name: string | null;
-  created_at: string;
-}
-
-interface FriendLocationPin extends LocationPin {
-  friendName: string;
-  friendAvatar: string | null;
-}
+import type { EnrichedLocationPin, EnrichedFriendPin } from "./types";
+import { BRISTOL_COLORS } from "./types";
 
 type SortField = "date" | "place";
 type SortDirection = "asc" | "desc";
 
 interface LocationListProps {
-  locations: LocationPin[];
-  friendLocations?: FriendLocationPin[];
+  locations: EnrichedLocationPin[];
+  friendLocations?: EnrichedFriendPin[];
   onPinClick?: (id: string) => void;
   onPlaceNameUpdate?: (id: string, placeName: string) => void;
 }
@@ -42,8 +31,8 @@ function timeAgo(dateStr: string): string {
 }
 
 function isFriendPin(
-  pin: LocationPin | FriendLocationPin
-): pin is FriendLocationPin {
+  pin: EnrichedLocationPin | EnrichedFriendPin
+): pin is EnrichedFriendPin {
   return "friendName" in pin;
 }
 
@@ -51,7 +40,7 @@ function EditableName({
   pin,
   onSave,
 }: {
-  pin: LocationPin;
+  pin: EnrichedLocationPin;
   onSave: (id: string, name: string) => void;
 }) {
   const [editing, setEditing] = useState(false);
@@ -136,6 +125,24 @@ function EditableName({
   );
 }
 
+function BristolBadge({ type }: { type: number }) {
+  return (
+    <span
+      className="inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-0.5 rounded-full"
+      style={{
+        backgroundColor: `${BRISTOL_COLORS[type]}20`,
+        color: BRISTOL_COLORS[type],
+      }}
+    >
+      <span
+        className="w-2 h-2 rounded-full"
+        style={{ backgroundColor: BRISTOL_COLORS[type] }}
+      />
+      Type {type}
+    </span>
+  );
+}
+
 export function LocationList({
   locations,
   friendLocations = [],
@@ -151,7 +158,7 @@ export function LocationList({
     onPlaceNameUpdate?.(id, name);
   };
 
-  const allPins: (LocationPin | FriendLocationPin)[] = [
+  const allPins: (EnrichedLocationPin | EnrichedFriendPin)[] = [
     ...locations,
     ...friendLocations,
   ].map((pin) => {
@@ -176,8 +183,7 @@ export function LocationList({
     return (
       <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-12 text-center">
         <p className="text-slate-500 dark:text-slate-400">
-          No locations found. Start logging with location enabled to see your
-          poop map!
+          No locations match your filters. Try adjusting or clearing filters.
         </p>
       </div>
     );
@@ -240,9 +246,19 @@ export function LocationList({
                       {pin.place_name ?? "Unknown Throne"}
                     </p>
                   )}
-                  <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">
-                    {timeAgo(pin.created_at)}
-                  </p>
+                  <div className="flex items-center gap-2 mt-1">
+                    <p className="text-sm text-slate-500 dark:text-slate-400">
+                      {timeAgo(pin.created_at)}
+                    </p>
+                    {pin.bristol_type && (
+                      <BristolBadge type={pin.bristol_type} />
+                    )}
+                    {pin.xp_earned > 0 && (
+                      <span className="text-[11px] font-semibold text-amber-700 dark:text-amber-400">
+                        +{pin.xp_earned} XP
+                      </span>
+                    )}
+                  </div>
                 </div>
                 {onPinClick && (
                   <button
