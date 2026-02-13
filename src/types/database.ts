@@ -480,6 +480,45 @@ export type Database = {
         }
         Relationships: []
       }
+      location_ratings: {
+        Row: {
+          id: string
+          location_log_id: string
+          user_id: string
+          rating: number
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          location_log_id: string
+          user_id: string
+          rating: number
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          location_log_id?: string
+          user_id?: string
+          rating?: number
+          created_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "location_ratings_location_log_id_fkey"
+            columns: ["location_log_id"]
+            isOneToOne: false
+            referencedRelation: "location_logs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "location_ratings_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       territory_claims: {
         Row: {
           id: string
@@ -784,3 +823,5 @@ export type NotificationInsert = Database["public"]["Tables"]["notifications"]["
 export type FCMTokenInsert = Database["public"]["Tables"]["fcm_tokens"]["Insert"];
 export type TerritoryClaim = Database["public"]["Tables"]["territory_claims"]["Row"];
 export type TerritoryClaimInsert = Database["public"]["Tables"]["territory_claims"]["Insert"];
+export type LocationRating = Database["public"]["Tables"]["location_ratings"]["Row"];
+export type LocationRatingInsert = Database["public"]["Tables"]["location_ratings"]["Insert"];

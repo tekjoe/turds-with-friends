@@ -174,3 +174,25 @@ h3,
 .bathroom-pin span {
   transform: rotate(45deg);
 }
+
+/* Leaflet cluster icon */
+.custom-cluster-icon {
+  background: var(--color-primary);
+  color: white;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 14px;
+  box-shadow: 0 2px 8px rgba(192, 86, 33, 0.3);
+  text-align: center;
+  line-height: 36px;
+}
+
+/* Hide spider leg lines */
+.leaflet-marker-icon .spider-leg-line,
+svg.leaflet-zoom-animated path.spider-leg {
+  display: none;
+}
+
+.leaflet-pane svg path[stroke="#222"] {
+  stroke: transparent;
+}

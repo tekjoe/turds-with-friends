@@ -4,10 +4,21 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import "leaflet.heat";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import MarkerClusterGroup from "react-leaflet-cluster";
 import { useEffect, useRef, useCallback, useState } from "react";
 import { LocationComments } from "./LocationComments";
+import { StarRating } from "./StarRating";
 import { TerritoryLayer } from "./TerritoryLayer";
 import type { PublicBathroom } from "@/lib/overpass";
+
+function createClusterCustomIcon(cluster: L.MarkerCluster) {
+  const count = cluster.getChildCount();
+  return new L.DivIcon({
+    html: `<span>${count}</span>`,
+    className: "custom-cluster-icon",
+    iconSize: [36, 36],
+  });
+}
 
 interface LocationPin {
   id: string;
@@ -355,49 +366,61 @@ export default function MapInner({
         <MyLocationButton />
         {focusPin && <FocusPin pin={focusPin} markerRefs={markerRefs} />}
 
-        {/* User's own pins */}
-        {locations.map((loc) => (
-          <Marker
-            key={loc.id}
-            position={[loc.latitude, loc.longitude]}
-            icon={myIcon}
-            ref={(r) => setMarkerRef(loc.id, r as unknown as L.Marker | null)}
-          >
-            <Popup maxWidth={300} minWidth={240}>
-              <div className="text-sm">
-                <p className="font-bold">
-                  {loc.place_name ?? "Unknown Throne"}
-                </p>
-                <p className="text-slate-500">{formatDate(loc.created_at)}</p>
-                <LocationComments locationLogId={loc.id} />
-              </div>
-            </Popup>
-          </Marker>
-        ))}
-
-        {/* Friend pins */}
-        {friendLocations.map((loc) => {
-          const friendIcon = makeIcon("#3B82F6", loc.friendAvatar);
-          return (
+        <MarkerClusterGroup
+          chunkedLoading
+          maxClusterRadius={50}
+          spiderfyOnMaxZoom
+          showCoverageOnHover={false}
+          iconCreateFunction={createClusterCustomIcon}
+          spiderLegPolylineOptions={{ weight: 0, opacity: 0 }}
+          spiderfyDistanceMultiplier={1.5}
+        >
+          {/* User's own pins */}
+          {locations.map((loc) => (
             <Marker
               key={loc.id}
               position={[loc.latitude, loc.longitude]}
-              icon={friendIcon}
+              icon={myIcon}
               ref={(r) => setMarkerRef(loc.id, r as unknown as L.Marker | null)}
             >
               <Popup maxWidth={300} minWidth={240}>
                 <div className="text-sm">
-                  <p className="font-bold text-blue-600">{loc.friendName}</p>
-                  <p>{loc.place_name ?? "Unknown Throne"}</p>
-                  <p className="text-slate-500">
-                    {formatDate(loc.created_at)}
+                  <p className="font-bold">
+                    {loc.place_name ?? "Unknown Throne"}
                   </p>
+                  <p className="text-slate-500">{formatDate(loc.created_at)}</p>
+                  <StarRating locationLogId={loc.id} />
                   <LocationComments locationLogId={loc.id} />
                 </div>
               </Popup>
             </Marker>
-          );
-        })}
+          ))}
+
+          {/* Friend pins */}
+          {friendLocations.map((loc) => {
+            const friendIcon = makeIcon("#3B82F6", loc.friendAvatar);
+            return (
+              <Marker
+                key={loc.id}
+                position={[loc.latitude, loc.longitude]}
+                icon={friendIcon}
+                ref={(r) => setMarkerRef(loc.id, r as unknown as L.Marker | null)}
+              >
+                <Popup maxWidth={300} minWidth={240}>
+                  <div className="text-sm">
+                    <p className="font-bold text-blue-600">{loc.friendName}</p>
+                    <p>{loc.place_name ?? "Unknown Throne"}</p>
+                    <p className="text-slate-500">
+                      {formatDate(loc.created_at)}
+                    </p>
+                    <StarRating locationLogId={loc.id} />
+                    <LocationComments locationLogId={loc.id} />
+                  </div>
+                </Popup>
+              </Marker>
+            );
+          })}
+        </MarkerClusterGroup>
 
         {/* Nearby bathroom pins */}
         {bathrooms.map((b) => (
