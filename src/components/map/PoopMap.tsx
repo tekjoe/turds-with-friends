@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Icon } from "@/components/ui/Icon";
+import { LocationList } from "./LocationList";
 import dynamic from "next/dynamic";
 
 interface LocationPin {
@@ -39,8 +40,10 @@ export function PoopMap({
   userAvatar,
 }: PoopMapProps) {
   const searchParams = useSearchParams();
-  const focusPinId = searchParams.get("pin");
+  const urlPinId = searchParams.get("pin");
   const [mounted, setMounted] = useState(false);
+  const [view, setView] = useState<"map" | "list">("map");
+  const [focusedPinId, setFocusedPinId] = useState<string | null>(null);
   const [showFriends, setShowFriends] = useState(true);
   const [showHeatmap, setShowHeatmap] = useState(false);
   const [showBathrooms, setShowBathrooms] = useState(false);
@@ -71,17 +74,59 @@ export function PoopMap({
     );
   }
 
+  const focusPinId = focusedPinId ?? urlPinId;
+
+  const handleViewOnMap = (id: string) => {
+    setFocusedPinId(id);
+    setView("map");
+  };
+
   return (
     <div className="space-y-6">
-      <MapInner
-        locations={locations}
-        friendLocations={showFriends ? friendLocations : []}
-        userAvatar={userAvatar}
-        showHeatmap={showHeatmap}
-        showBathrooms={showBathrooms}
-        showTerritories={showTerritories}
-        focusPinId={focusPinId}
-      />
+      <div className="flex bg-slate-100 dark:bg-slate-800 rounded-lg p-1 w-fit">
+        <button
+          type="button"
+          onClick={() => setView("map")}
+          className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+            view === "map"
+              ? "bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 shadow-sm"
+              : "text-slate-500 dark:text-slate-400"
+          }`}
+        >
+          <Icon name="map" className="text-base" />
+          Map
+        </button>
+        <button
+          type="button"
+          onClick={() => setView("list")}
+          className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+            view === "list"
+              ? "bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 shadow-sm"
+              : "text-slate-500 dark:text-slate-400"
+          }`}
+        >
+          <Icon name="format_list_bulleted" className="text-base" />
+          List
+        </button>
+      </div>
+
+      {view === "map" ? (
+        <MapInner
+          locations={locations}
+          friendLocations={showFriends ? friendLocations : []}
+          userAvatar={userAvatar}
+          showHeatmap={showHeatmap}
+          showBathrooms={showBathrooms}
+          showTerritories={showTerritories}
+          focusPinId={focusPinId}
+        />
+      ) : (
+        <LocationList
+          locations={locations}
+          friendLocations={showFriends ? friendLocations : []}
+          onPinClick={handleViewOnMap}
+        />
+      )}
       <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5">
         <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100 mb-4">
           Map Options

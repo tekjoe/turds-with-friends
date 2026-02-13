@@ -81,3 +81,38 @@ export async function POST(request: NextRequest) {
 
   return NextResponse.json({ location: data });
 }
+
+export async function PATCH(request: NextRequest) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const body = await request.json();
+  const { id, place_name } = body as { id: string; place_name: string };
+
+  if (!id || typeof place_name !== "string") {
+    return NextResponse.json(
+      { error: "id and place_name are required" },
+      { status: 400 }
+    );
+  }
+
+  const { data, error } = await supabase
+    .from("location_logs")
+    .update({ place_name: place_name.trim() || null })
+    .eq("id", id)
+    .eq("user_id", user.id)
+    .select()
+    .single();
+
+  if (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  return NextResponse.json({ location: data });
+}
