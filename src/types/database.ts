@@ -445,6 +445,7 @@ export type Database = {
           current_streak: number
           display_name: string | null
           id: string
+          invite_code: string | null
           longest_streak: number
           privacy_settings: Json | null
           stripe_customer_id: string | null
@@ -458,6 +459,7 @@ export type Database = {
           current_streak?: number
           display_name?: string | null
           id: string
+          invite_code?: string | null
           longest_streak?: number
           privacy_settings?: Json | null
           stripe_customer_id?: string | null
@@ -471,6 +473,7 @@ export type Database = {
           current_streak?: number
           display_name?: string | null
           id?: string
+          invite_code?: string | null
           longest_streak?: number
           privacy_settings?: Json | null
           stripe_customer_id?: string | null
@@ -479,6 +482,48 @@ export type Database = {
           xp_total?: number
         }
         Relationships: []
+      }
+      referrals: {
+        Row: {
+          id: string
+          referrer_id: string
+          referred_id: string
+          invite_code: string
+          xp_awarded: boolean
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          referrer_id: string
+          referred_id: string
+          invite_code: string
+          xp_awarded?: boolean
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          referrer_id?: string
+          referred_id?: string
+          invite_code?: string
+          xp_awarded?: boolean
+          created_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "referrals_referrer_id_fkey"
+            columns: ["referrer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "referrals_referred_id_fkey"
+            columns: ["referred_id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       location_ratings: {
         Row: {
@@ -825,3 +870,5 @@ export type TerritoryClaim = Database["public"]["Tables"]["territory_claims"]["R
 export type TerritoryClaimInsert = Database["public"]["Tables"]["territory_claims"]["Insert"];
 export type LocationRating = Database["public"]["Tables"]["location_ratings"]["Row"];
 export type LocationRatingInsert = Database["public"]["Tables"]["location_ratings"]["Insert"];
+export type Referral = Database["public"]["Tables"]["referrals"]["Row"];
+export type ReferralInsert = Database["public"]["Tables"]["referrals"]["Insert"];

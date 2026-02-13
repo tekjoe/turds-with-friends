@@ -9,8 +9,8 @@ describe('sitemap.ts', () => {
   })
 
   it('should include homepage with priority 1.0', () => {
-    const homepage = sitemapResult.find(entry => 
-      entry.url === 'https://bowel-buddies.com' || entry.url.endsWith('/')
+    const homepage = sitemapResult.find(entry =>
+      entry.url === 'https://bowelbuddies.app' || entry.url.endsWith('/')
     )
     expect(homepage).toBeDefined()
     expect(homepage?.priority).toBe(1.0)
@@ -18,7 +18,7 @@ describe('sitemap.ts', () => {
   })
 
   it('should include /login route with priority 0.5', () => {
-    const loginPage = sitemapResult.find(entry => 
+    const loginPage = sitemapResult.find(entry =>
       entry.url.includes('/login')
     )
     expect(loginPage).toBeDefined()
@@ -26,13 +26,32 @@ describe('sitemap.ts', () => {
     expect(loginPage?.changeFrequency).toBe('monthly')
   })
 
-  it('should include /onboarding route with priority 0.5', () => {
-    const onboardingPage = sitemapResult.find(entry => 
-      entry.url.includes('/onboarding')
+  it('should include marketing pages', () => {
+    const features = sitemapResult.find(entry => entry.url.includes('/features'))
+    expect(features).toBeDefined()
+    expect(features?.priority).toBe(0.8)
+
+    const premium = sitemapResult.find(entry => entry.url.includes('/premium'))
+    expect(premium).toBeDefined()
+    expect(premium?.priority).toBe(0.7)
+  })
+
+  it('should include blog pages', () => {
+    const blogIndex = sitemapResult.find(entry => entry.url.endsWith('/blog'))
+    expect(blogIndex).toBeDefined()
+    expect(blogIndex?.changeFrequency).toBe('weekly')
+
+    const bristolGuide = sitemapResult.find(entry =>
+      entry.url.includes('/blog/bristol-stool-chart-guide')
     )
-    expect(onboardingPage).toBeDefined()
-    expect(onboardingPage?.priority).toBe(0.5)
-    expect(onboardingPage?.changeFrequency).toBe('monthly')
+    expect(bristolGuide).toBeDefined()
+    expect(bristolGuide?.priority).toBe(0.9)
+  })
+
+  it('should include quiz page', () => {
+    const quiz = sitemapResult.find(entry => entry.url.includes('/quiz'))
+    expect(quiz).toBeDefined()
+    expect(quiz?.priority).toBe(0.9)
   })
 
   it('should have lastModified dates for all entries', () => {
@@ -41,24 +60,26 @@ describe('sitemap.ts', () => {
     })
   })
 
-  it('should include /privacy route with priority 0.3', () => {
+  it('should include privacy and legal pages', () => {
     const privacyPage = sitemapResult.find(entry =>
-      entry.url.includes('/privacy')
+      entry.url.includes('/privacy-first')
     )
     expect(privacyPage).toBeDefined()
     expect(privacyPage?.priority).toBe(0.3)
     expect(privacyPage?.changeFrequency).toBe('yearly')
+
+    const terms = sitemapResult.find(entry => entry.url.includes('/terms'))
+    expect(terms).toBeDefined()
+
+    const disclaimer = sitemapResult.find(entry => entry.url.includes('/medical-disclaimer'))
+    expect(disclaimer).toBeDefined()
   })
 
-  it('should only include specified public routes', () => {
-    const expectedRoutes = ['/', '/login', '/onboarding', '/privacy']
-    expect(sitemapResult.length).toBe(expectedRoutes.length)
-
-    expectedRoutes.forEach(route => {
-      const hasRoute = sitemapResult.some(entry =>
-        entry.url.endsWith(route) || (route === '/' && entry.url === 'https://bowel-buddies.com')
-      )
-      expect(hasRoute).toBe(true)
+  it('should not include authenticated routes', () => {
+    const authenticatedPaths = ['/dashboard', '/analytics', '/settings', '/leaderboard']
+    authenticatedPaths.forEach(path => {
+      const hasRoute = sitemapResult.some(entry => entry.url.includes(path))
+      expect(hasRoute).toBe(false)
     })
   })
 })

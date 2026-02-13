@@ -49,13 +49,13 @@ export function Footer() {
               </Link>
             </li>
             <li>
-              <Link href="/#chart" className="hover:text-primary transition-colors">
-                Stool Chart
+              <Link href="/quiz" className="hover:text-primary transition-colors">
+                Poop Quiz
               </Link>
             </li>
             <li>
-              <Link href="/privacy-first" className="hover:text-primary transition-colors">
-                Privacy First
+              <Link href="/blog" className="hover:text-primary transition-colors">
+                Blog
               </Link>
             </li>
             <li>
