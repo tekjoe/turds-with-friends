@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Icon } from "@/components/ui/Icon";
+import { ShareButton } from "@/components/ui/ShareButton";
 
 interface StreakCardProps {
   currentStreak: number;
@@ -9,7 +10,17 @@ interface StreakCardProps {
 export function StreakCard({ currentStreak, personalBest }: StreakCardProps) {
   return (
     <div className="bg-primary p-7 rounded-[20px] shadow-[0_4px_16px_rgba(192,86,33,0.25)] text-white">
-      <p className="text-sm font-medium text-white/80 mb-4">Current Streak</p>
+      <div className="flex items-center justify-between mb-4">
+        <p className="text-sm font-medium text-white/80">Current Streak</p>
+        {currentStreak >= 3 && (
+          <ShareButton
+            title={`${currentStreak}-Day Streak on Bowel Buddies`}
+            text={`I'm on a ${currentStreak}-day streak on Bowel Buddies! Longer than your Duolingo streak? 💩`}
+            variant="icon"
+            className="hover:bg-white/20 [&_span]:!text-white/70 hover:[&_span]:!text-white"
+          />
+        )}
+      </div>
       <p className="text-7xl font-extrabold font-display leading-none text-center">
         {currentStreak}
       </p>

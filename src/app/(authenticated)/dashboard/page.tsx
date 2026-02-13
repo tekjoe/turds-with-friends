@@ -8,6 +8,7 @@ import { FriendRanking } from "@/components/dashboard/FriendRanking";
 import { StreakCard } from "@/components/dashboard/StreakCard";
 import { QuickStats } from "@/components/dashboard/BristolReference";
 import { ExportButton } from "@/components/dashboard/ExportButton";
+import { Achievements } from "@/components/dashboard/Achievements";
 
 const RANK_COLORS = ["#FFF5EB", "#E8F5E9", "#FEF3C7", "#EDE9FE", "#E0F2FE", "#FCE7F3"];
 const DAY_NAMES = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -115,6 +116,29 @@ export default async function DashboardPage() {
 
   // Quick Stats bristol counts
   const bristolCounts = { constipated, type3, ideal, fiberLacking, liquid };
+
+  // --- Fetch user badges for achievements ---
+  const { data: userBadgesData } = await supabase
+    .from("user_badges")
+    .select(`
+      id,
+      earned_at,
+      badges (
+        id,
+        name,
+        description
+      )
+    `)
+    .eq("user_id", user.id)
+    .order("earned_at", { ascending: false })
+    .limit(10);
+
+  const badges = (userBadgesData ?? []).map((ub) => ({
+    id: (ub.badges as unknown as { id: string; name: string; description: string | null }).id,
+    name: (ub.badges as unknown as { id: string; name: string; description: string | null }).name,
+    description: (ub.badges as unknown as { id: string; name: string; description: string | null }).description,
+    earned_at: ub.earned_at,
+  }));
 
   // --- Friend ranking data ---
   const { data: friendships } = await admin
@@ -226,6 +250,13 @@ export default async function DashboardPage() {
           {/* Right Column - Sidebar */}
           <div className="space-y-6">
             <StreakCard currentStreak={currentStreak} personalBest={longestStreak} />
+            <Achievements
+              badges={badges}
+              currentStreak={currentStreak}
+              longestStreak={longestStreak}
+              xpTotal={xpTotal}
+              leaderboardRank={userRank}
+            />
             <FriendRanking friends={friendRankingData} />
             <QuickStats bristolCounts={bristolCounts} />
           </div>
