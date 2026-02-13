@@ -4,22 +4,19 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import "leaflet.heat";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import MarkerClusterGroup from "react-leaflet-cluster";
 import { useEffect, useRef, useCallback, useState } from "react";
-import { LocationComments } from "./LocationComments";
 import { TerritoryLayer } from "./TerritoryLayer";
 import type { PublicBathroom } from "@/lib/overpass";
+import type { EnrichedLocationPin, EnrichedFriendPin } from "./types";
 
-interface LocationPin {
-  id: string;
-  latitude: number;
-  longitude: number;
-  place_name: string | null;
-  created_at: string;
-}
-
-interface FriendLocationPin extends LocationPin {
-  friendName: string;
-  friendAvatar: string | null;
+function createClusterCustomIcon(cluster: L.MarkerCluster) {
+  const count = cluster.getChildCount();
+  return new L.DivIcon({
+    html: `<span>${count}</span>`,
+    className: "custom-cluster-icon",
+    iconSize: [36, 36],
+  });
 }
 
 function makeIcon(color: string, avatarUrl: string | null) {
@@ -50,16 +47,6 @@ const bathroomIcon = new L.DivIcon({
   iconAnchor: [16, 32],
   popupAnchor: [0, -32],
 });
-
-function formatDate(dateStr: string) {
-  return new Date(dateStr).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-  });
-}
 
 function HeatmapLayer({
   points,
@@ -99,7 +86,7 @@ function FocusPin({
   pin,
   markerRefs,
 }: {
-  pin: LocationPin | FriendLocationPin | undefined;
+  pin: EnrichedLocationPin | EnrichedFriendPin | undefined;
   markerRefs: React.RefObject<Map<string, L.Marker>>;
 }) {
   const map = useMap();
@@ -285,13 +272,15 @@ function BathroomPopupContent({ bathroom }: { bathroom: PublicBathroom }) {
 }
 
 interface MapInnerProps {
-  locations: LocationPin[];
-  friendLocations?: FriendLocationPin[];
+  locations: EnrichedLocationPin[];
+  friendLocations?: EnrichedFriendPin[];
   userAvatar: string | null;
   showHeatmap?: boolean;
   showBathrooms?: boolean;
   showTerritories?: boolean;
   focusPinId?: string | null;
+  selectedPinId?: string | null;
+  onPinSelect?: (id: string) => void;
 }
 
 export default function MapInner({
@@ -302,6 +291,8 @@ export default function MapInner({
   showBathrooms = false,
   showTerritories = false,
   focusPinId,
+  selectedPinId,
+  onPinSelect,
 }: MapInnerProps) {
   const [bathrooms, setBathrooms] = useState<PublicBathroom[]>([]);
 
@@ -312,6 +303,7 @@ export default function MapInner({
       : [39.8283, -98.5795];
 
   const myIcon = makeIcon("#C05621", userAvatar);
+  const myIconSelected = makeIcon("#9C4A1A", userAvatar);
   const markerRefs = useRef<Map<string, L.Marker>>(new Map());
 
   const setMarkerRef = useCallback(
@@ -355,49 +347,48 @@ export default function MapInner({
         <MyLocationButton />
         {focusPin && <FocusPin pin={focusPin} markerRefs={markerRefs} />}
 
-        {/* User's own pins */}
-        {locations.map((loc) => (
-          <Marker
-            key={loc.id}
-            position={[loc.latitude, loc.longitude]}
-            icon={myIcon}
-            ref={(r) => setMarkerRef(loc.id, r as unknown as L.Marker | null)}
-          >
-            <Popup maxWidth={300} minWidth={240}>
-              <div className="text-sm">
-                <p className="font-bold">
-                  {loc.place_name ?? "Unknown Throne"}
-                </p>
-                <p className="text-slate-500">{formatDate(loc.created_at)}</p>
-                <LocationComments locationLogId={loc.id} />
-              </div>
-            </Popup>
-          </Marker>
-        ))}
-
-        {/* Friend pins */}
-        {friendLocations.map((loc) => {
-          const friendIcon = makeIcon("#3B82F6", loc.friendAvatar);
-          return (
+        <MarkerClusterGroup
+          chunkedLoading
+          maxClusterRadius={50}
+          spiderfyOnMaxZoom
+          showCoverageOnHover={false}
+          iconCreateFunction={createClusterCustomIcon}
+          spiderLegPolylineOptions={{ weight: 0, opacity: 0 }}
+          spiderfyDistanceMultiplier={1.5}
+        >
+          {/* User's own pins */}
+          {locations.map((loc) => (
             <Marker
               key={loc.id}
               position={[loc.latitude, loc.longitude]}
-              icon={friendIcon}
+              icon={selectedPinId === loc.id ? myIconSelected : myIcon}
               ref={(r) => setMarkerRef(loc.id, r as unknown as L.Marker | null)}
-            >
-              <Popup maxWidth={300} minWidth={240}>
-                <div className="text-sm">
-                  <p className="font-bold text-blue-600">{loc.friendName}</p>
-                  <p>{loc.place_name ?? "Unknown Throne"}</p>
-                  <p className="text-slate-500">
-                    {formatDate(loc.created_at)}
-                  </p>
-                  <LocationComments locationLogId={loc.id} />
-                </div>
-              </Popup>
-            </Marker>
-          );
-        })}
+              eventHandlers={{
+                click: () => onPinSelect?.(loc.id),
+              }}
+            />
+          ))}
+
+          {/* Friend pins */}
+          {friendLocations.map((loc) => {
+            const isSelected = selectedPinId === loc.id;
+            const friendIcon = makeIcon(
+              isSelected ? "#2563EB" : "#3B82F6",
+              loc.friendAvatar
+            );
+            return (
+              <Marker
+                key={loc.id}
+                position={[loc.latitude, loc.longitude]}
+                icon={friendIcon}
+                ref={(r) => setMarkerRef(loc.id, r as unknown as L.Marker | null)}
+                eventHandlers={{
+                  click: () => onPinSelect?.(loc.id),
+                }}
+              />
+            );
+          })}
+        </MarkerClusterGroup>
 
         {/* Nearby bathroom pins */}
         {bathrooms.map((b) => (

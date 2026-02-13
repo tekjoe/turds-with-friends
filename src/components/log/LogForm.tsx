@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { BristolSelector } from "@/components/bristol-scale/BristolSelector";
@@ -22,8 +22,24 @@ export function LogForm({ isPremium: _isPremium }: LogFormProps) {
   const [postWeight, setPostWeight] = useState<string>("");
   const [weightUnit, setWeightUnit] = useState<WeightUnit>("lbs");
   const [trackLocation, setTrackLocation] = useState(false);
+  const [placeName, setPlaceName] = useState("");
+  const [placeHistory, setPlaceHistory] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // Fetch previous place names for autocomplete when location tracking is toggled on
+  useEffect(() => {
+    if (!trackLocation) return;
+    fetch("/api/locations")
+      .then((res) => res.json())
+      .then((data) => {
+        const names = (data.locations ?? [])
+          .map((l: { place_name: string | null }) => l.place_name)
+          .filter((n: string | null): n is string => !!n);
+        setPlaceHistory([...new Set<string>(names)]);
+      })
+      .catch(() => {});
+  }, [trackLocation]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -74,6 +90,7 @@ export function LogForm({ isPremium: _isPremium }: LogFormProps) {
               movement_log_id: logData.id,
               latitude: position.coords.latitude,
               longitude: position.coords.longitude,
+              place_name: placeName.trim() || undefined,
             }),
           });
         } catch {
@@ -224,6 +241,28 @@ export function LogForm({ isPremium: _isPremium }: LogFormProps) {
                   />
                 </button>
               </div>
+              {trackLocation && (
+                <div className="mt-4 pt-4 border-t border-amber-200 dark:border-amber-800">
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                    Name this throne (optional)
+                  </label>
+                  <input
+                    type="text"
+                    list="place-suggestions"
+                    value={placeName}
+                    onChange={(e) => setPlaceName(e.target.value)}
+                    placeholder="e.g. Home, Office, Starbucks on 5th..."
+                    className="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-800 border border-amber-200 dark:border-amber-700 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 transition-all outline-none text-sm"
+                  />
+                  {placeHistory.length > 0 && (
+                    <datalist id="place-suggestions">
+                      {placeHistory.map((name) => (
+                        <option key={name} value={name} />
+                      ))}
+                    </datalist>
+                  )}
+                </div>
+              )}
             </section>
 
             {/* Weight Difference Preview */}
