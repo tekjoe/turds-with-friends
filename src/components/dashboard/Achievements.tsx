@@ -17,6 +17,7 @@ interface AchievementsProps {
   longestStreak: number;
   xpTotal: number;
   leaderboardRank: number;
+  username: string;
 }
 
 const STREAK_MILESTONES = [3, 7, 14, 30, 60, 100, 365];
@@ -27,6 +28,7 @@ export function Achievements({
   longestStreak,
   xpTotal,
   leaderboardRank,
+  username,
 }: AchievementsProps) {
   // Determine what milestones to celebrate
   const milestones: Array<{
@@ -53,7 +55,7 @@ export function Achievements({
       value: "🏆",
       shareTitle: `${badge.name} on Bowel Buddies`,
       shareText: `I just earned the "${badge.name}" badge on Bowel Buddies! ${badge.description || ""}`,
-      imageUrl: buildBadgeShareUrl(badge.name, ""),
+      imageUrl: buildBadgeShareUrl(badge.name, username),
     });
   }
 
@@ -67,7 +69,7 @@ export function Achievements({
       value: `${currentStreak}`,
       shareTitle: `${currentStreak}-Day Streak on Bowel Buddies`,
       shareText: `I'm on a ${currentStreak}-day streak on Bowel Buddies! Longer than your Duolingo streak? 💩`,
-      imageUrl: buildStreakShareUrl(currentStreak, ""),
+      imageUrl: buildStreakShareUrl(currentStreak, username),
     });
   }
 
@@ -80,7 +82,7 @@ export function Achievements({
       value: `#${leaderboardRank}`,
       shareTitle: `#${leaderboardRank} on Bowel Buddies Leaderboard`,
       shareText: `I'm ranked #${leaderboardRank} among my friends on Bowel Buddies with ${xpTotal.toLocaleString()} XP! 💩`,
-      imageUrl: buildLeaderboardShareUrl(leaderboardRank, xpTotal, ""),
+      imageUrl: buildLeaderboardShareUrl(leaderboardRank, xpTotal, username),
     });
   }
 

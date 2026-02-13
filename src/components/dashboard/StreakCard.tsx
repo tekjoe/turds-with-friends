@@ -6,9 +6,10 @@ import { buildStreakShareUrl } from "@/lib/share";
 interface StreakCardProps {
   currentStreak: number;
   personalBest: number;
+  username: string;
 }
 
-export function StreakCard({ currentStreak, personalBest }: StreakCardProps) {
+export function StreakCard({ currentStreak, personalBest, username }: StreakCardProps) {
   return (
     <div className="bg-primary p-7 rounded-[20px] shadow-[0_4px_16px_rgba(192,86,33,0.25)] text-white">
       <div className="flex items-center justify-between mb-4">
@@ -17,7 +18,7 @@ export function StreakCard({ currentStreak, personalBest }: StreakCardProps) {
           <ShareButton
             title={`${currentStreak}-Day Streak on Bowel Buddies`}
             text={`I'm on a ${currentStreak}-day streak on Bowel Buddies! Longer than your Duolingo streak? 💩`}
-            imageUrl={buildStreakShareUrl(currentStreak, "")}
+            imageUrl={buildStreakShareUrl(currentStreak, username)}
             variant="icon"
             className="hover:bg-white/20 [&_span]:!text-white/70 hover:[&_span]:!text-white"
           />
