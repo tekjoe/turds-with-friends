@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Icon } from "@/components/ui/Icon";
 import { ShareButton } from "@/components/ui/ShareButton";
+import { buildStreakShareUrl } from "@/lib/share";
 
 interface StreakCardProps {
   currentStreak: number;
@@ -16,6 +17,7 @@ export function StreakCard({ currentStreak, personalBest }: StreakCardProps) {
           <ShareButton
             title={`${currentStreak}-Day Streak on Bowel Buddies`}
             text={`I'm on a ${currentStreak}-day streak on Bowel Buddies! Longer than your Duolingo streak? 💩`}
+            imageUrl={buildStreakShareUrl(currentStreak, "")}
             variant="icon"
             className="hover:bg-white/20 [&_span]:!text-white/70 hover:[&_span]:!text-white"
           />

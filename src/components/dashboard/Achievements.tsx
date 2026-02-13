@@ -2,6 +2,7 @@
 
 import { Icon } from "@/components/ui/Icon";
 import { ShareButton } from "@/components/ui/ShareButton";
+import { buildBadgeShareUrl, buildStreakShareUrl, buildLeaderboardShareUrl } from "@/lib/share";
 
 interface Badge {
   id: string;
@@ -35,6 +36,7 @@ export function Achievements({
     value: string;
     shareTitle: string;
     shareText: string;
+    imageUrl: string;
   }> = [];
 
   // Recent badges (earned in last 7 days)
@@ -51,6 +53,7 @@ export function Achievements({
       value: "🏆",
       shareTitle: `${badge.name} on Bowel Buddies`,
       shareText: `I just earned the "${badge.name}" badge on Bowel Buddies! ${badge.description || ""}`,
+      imageUrl: buildBadgeShareUrl(badge.name, ""),
     });
   }
 
@@ -64,6 +67,7 @@ export function Achievements({
       value: `${currentStreak}`,
       shareTitle: `${currentStreak}-Day Streak on Bowel Buddies`,
       shareText: `I'm on a ${currentStreak}-day streak on Bowel Buddies! Longer than your Duolingo streak? 💩`,
+      imageUrl: buildStreakShareUrl(currentStreak, ""),
     });
   }
 
@@ -76,6 +80,7 @@ export function Achievements({
       value: `#${leaderboardRank}`,
       shareTitle: `#${leaderboardRank} on Bowel Buddies Leaderboard`,
       shareText: `I'm ranked #${leaderboardRank} among my friends on Bowel Buddies with ${xpTotal.toLocaleString()} XP! 💩`,
+      imageUrl: buildLeaderboardShareUrl(leaderboardRank, xpTotal, ""),
     });
   }
 
@@ -129,6 +134,7 @@ export function Achievements({
             <ShareButton
               title={milestone.shareTitle}
               text={milestone.shareText}
+              imageUrl={milestone.imageUrl}
               variant="icon"
               className="flex-shrink-0"
             />

@@ -1,4 +1,4 @@
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://bowelbuddies.app";
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://bowelbuddies.com";
 
 export type ShareCardType = "badge" | "streak" | "leaderboard";
 
@@ -12,7 +12,8 @@ interface ShareCardParams {
 }
 
 export function buildShareImageUrl(params: ShareCardParams): string {
-  const url = new URL(`${APP_URL}/api/og/achievement`);
+  const baseUrl = "https://bowelbuddies.com";
+  const url = new URL(`${baseUrl}/api/og/achievement`);
   url.searchParams.set("type", params.type);
   url.searchParams.set("title", params.title);
   if (params.subtitle) url.searchParams.set("subtitle", params.subtitle);
@@ -56,25 +57,30 @@ export async function shareAchievement(params: {
   title: string;
   text: string;
   url?: string;
+  imageUrl?: string;
 }): Promise<boolean> {
+  const shareUrl = params.url || APP_URL;
+
   if (typeof navigator !== "undefined" && navigator.share) {
     try {
       await navigator.share({
         title: params.title,
         text: params.text,
-        url: params.url || APP_URL,
+        url: shareUrl,
       });
       return true;
     } catch {
-      // User cancelled or share failed
       return false;
     }
   }
 
-  // Fallback: copy to clipboard
+  // Fallback: copy to clipboard with image link
   if (typeof navigator !== "undefined" && navigator.clipboard) {
-    const shareText = `${params.title}\n${params.text}\n${params.url || APP_URL}`;
-    await navigator.clipboard.writeText(shareText);
+    const lines = [params.text, shareUrl];
+    if (params.imageUrl) {
+      lines.push(params.imageUrl);
+    }
+    await navigator.clipboard.writeText(lines.join("\n"));
     return true;
   }
 
