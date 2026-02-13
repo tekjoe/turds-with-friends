@@ -6,6 +6,7 @@ import "leaflet.heat";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import { useEffect, useRef, useCallback, useState } from "react";
 import { LocationComments } from "./LocationComments";
+import { TerritoryLayer } from "./TerritoryLayer";
 import type { PublicBathroom } from "@/lib/overpass";
 
 interface LocationPin {
@@ -289,6 +290,7 @@ interface MapInnerProps {
   userAvatar: string | null;
   showHeatmap?: boolean;
   showBathrooms?: boolean;
+  showTerritories?: boolean;
   focusPinId?: string | null;
 }
 
@@ -298,6 +300,7 @@ export default function MapInner({
   userAvatar,
   showHeatmap = false,
   showBathrooms = false,
+  showTerritories = false,
   focusPinId,
 }: MapInnerProps) {
   const [bathrooms, setBathrooms] = useState<PublicBathroom[]>([]);
@@ -347,6 +350,7 @@ export default function MapInner({
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <HeatmapLayer points={heatPoints} />
+        <TerritoryLayer enabled={showTerritories} />
         <BathroomFetcher enabled={showBathrooms} onBathrooms={handleBathrooms} />
         <MyLocationButton />
         {focusPin && <FocusPin pin={focusPin} markerRefs={markerRefs} />}

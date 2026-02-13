@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
+import { coordToH3 } from "@/lib/h3";
 
 export async function GET() {
   const supabase = await createClient();
@@ -65,6 +66,17 @@ export async function POST(request: NextRequest) {
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  // Upsert territory claim (non-fatal — don't block the response)
+  try {
+    const h3Index = coordToH3(latitude, longitude);
+    await supabase.rpc("upsert_territory_claim", {
+      p_h3_index: h3Index,
+      p_user_id: user.id,
+    });
+  } catch (e) {
+    console.error("Territory claim failed:", e);
   }
 
   return NextResponse.json({ location: data });
