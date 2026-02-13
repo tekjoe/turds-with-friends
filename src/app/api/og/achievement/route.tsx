@@ -194,7 +194,7 @@ export async function GET(request: NextRequest) {
           >
             <span style={{ fontSize: "24px" }}>💩</span>
             <span style={{ fontWeight: 700, color: "#C05621" }}>
-              bowelbuddies.app
+              bowelbuddies.com
             </span>
             <span style={{ color: "#D1D5DB" }}>|</span>
             <span>Track your gut health with friends</span>

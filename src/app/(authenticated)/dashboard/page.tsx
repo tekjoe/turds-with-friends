@@ -249,13 +249,14 @@ export default async function DashboardPage() {
 
           {/* Right Column - Sidebar */}
           <div className="space-y-6">
-            <StreakCard currentStreak={currentStreak} personalBest={longestStreak} />
+            <StreakCard currentStreak={currentStreak} personalBest={longestStreak} username={displayName} />
             <Achievements
               badges={badges}
               currentStreak={currentStreak}
               longestStreak={longestStreak}
               xpTotal={xpTotal}
               leaderboardRank={userRank}
+              username={displayName}
             />
             <FriendRanking friends={friendRankingData} />
             <QuickStats bristolCounts={bristolCounts} />
